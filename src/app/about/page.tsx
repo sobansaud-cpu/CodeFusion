@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Code2, Users, Zap, Globe, Heart } from 'lucide-react';
-import { FaLinkedin, FaXTwitter, FaGithub } from 'react-icons/fa6';
+import { FaLinkedin, FaXTwitter, FaGithub } from 'react-icons/fa6'
 import { motion } from 'framer-motion';
 
 export default function AboutPage() {

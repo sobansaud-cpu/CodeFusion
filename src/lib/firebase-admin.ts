@@ -1,15 +1,13 @@
 
+
 import { cert, initializeApp, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { readFileSync } from 'fs';
 
 if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
-  throw new Error('FIREBASE_SERVICE_ACCOUNT environment variable is not set. Please set it to the path of your service account JSON file.');
+  throw new Error('FIREBASE_SERVICE_ACCOUNT environment variable is not set. Please set it to the JSON string of your service account.');
 }
 
-const serviceAccount = JSON.parse(
-  readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT, 'utf-8')
-);
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 const app = getApps().length === 0 
   ? initializeApp({
