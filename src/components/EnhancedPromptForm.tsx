@@ -1541,7 +1541,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
 
                 {aiModel === 'gemini' && (
                   <>
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <Label>Gemini Model (enter model name)</Label>
                       <input
                         type="text"
@@ -1553,7 +1553,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       <p className="text-xs text-gray-500">
                         Enter your Gemini model name or ID.
                       </p>
-                    </div>
+                    </div> */}
                     <div className="space-y-2">
                       <Label>Gemini API Key</Label>
                       <Input
