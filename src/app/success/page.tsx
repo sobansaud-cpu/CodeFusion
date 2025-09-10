@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle , Clock } from 'lucide-react';
 
 export default function SuccessPage() {
   const router = useRouter();
@@ -31,13 +31,37 @@ export default function SuccessPage() {
           <CheckCircle className="h-16 w-16 text-green-500" />
         </div>
         
-        <h1 className="text-2xl font-bold text-white mb-4">
-          Payment Successful!
-        </h1>
-        
-        <p className="text-gray-300 mb-6">
-          Thank you for your payment! You are now a Premium user with 20 generations per day.
-        </p>
+                <h3 className="text-blue-400 font-semibold mb-2 flex items-center justify-center">
+                  <Clock className="h-5 w-5 mr-2" />
+                  Payment Under Review
+                </h3>
+                <p className="text-gray-300">
+                  Your payment has been submitted and is now under review by our admin team. 
+                  You'll receive access to premium features once approved (usually within 24 hours).
+                </p>
+                <p className="text-yellow-400 text-sm mt-4">
+                  <strong>Note:</strong> Your payment will be reviewed by our admin team. 
+                  You'll receive access to premium features once approved (usually within 24 hours).
+                </p>
+
+                              <div className="bg-gray-700 p-4 rounded-lg">
+                <h4 className="text-white font-semibold mb-2">What happens next?</h4>
+                <ul className="text-gray-300 text-sm space-y-1 text-left">
+                  <li>• Admin will review your payment details</li>
+                  <li>• You'll receive an email confirmation</li>
+                  <li>• Premium features will be activated automatically</li>
+                  <li>• You can continue using the free plan until then</li>
+                </ul>
+              </div>
+
+              <div className="bg-yellow-900/20 border border-yellow-500/30 p-4 rounded-lg">
+                <p className="text-yellow-400 text-sm">
+                  <strong>Need help?</strong> Contact us at{' '}
+                  <a href="mailto:sobansaud3@gmail.com" className="underline">
+                    sobansaud3@gmail.com
+                  </a>
+                </p>
+              </div>
         
         <div className="space-y-4">
           <Button 

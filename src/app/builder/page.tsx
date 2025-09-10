@@ -63,7 +63,7 @@ function BuilderPageContent() {
     if (!searchParams) return;
     
     if (!user) {
-      router.push('');
+      router.push('/');
       return;
     }
 

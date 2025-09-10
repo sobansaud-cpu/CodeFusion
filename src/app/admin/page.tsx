@@ -49,7 +49,7 @@ export default function AdminPage() {
     const adminLoggedIn = localStorage.getItem('adminLoggedIn');
     const adminEmail = localStorage.getItem('adminEmail');
     
-    if (!adminLoggedIn || adminEmail !== 'admin@websitebuilder.com') {
+    if (!adminLoggedIn || adminEmail !== 'sobansaud3@gmail.com') {
       router.push('/admin-login');
       return;
     }
