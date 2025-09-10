@@ -752,7 +752,7 @@ function BuilderPageContent() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">Language/Framework</label>
-                      <select
+                      {/* <select
                         id="newLanguage"
                         className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                         disabled={isGenerating}
@@ -765,7 +765,66 @@ function BuilderPageContent() {
                         <option value="python">Python</option>
                         <option value="nodejs">Node.js</option>
                         <option value="php">PHP</option>
-                      </select>
+                        <option value="react">React</option>
+                        <option value="angular">Angular</option>                        <option value=""></option>
+                        <option value="svelte">Svelte</option>
+                        <option value="nuxt">Nuxt.js</option>
+                        <option value="gatsby">Gatsby</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                      </select> */}
+
+                      <select
+  id="newLanguage"
+  className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+  disabled={isGenerating}
+>
+  {/* Frontend Frameworks */}
+  <optgroup label="Frontend Frameworks">
+    <option value="html">HTML/CSS</option>
+    <option value="react">React</option>
+    <option value="nextjs">Next.js</option>
+    <option value="vue">Vue.js</option>
+    <option value="angular">Angular</option>
+    <option value="svelte">Svelte</option>
+    <option value="nuxt">Nuxt.js</option>
+    <option value="gatsby">Gatsby</option>
+  </optgroup>
+
+  {/* Backend Frameworks */}
+  <optgroup label="Backend Frameworks">
+    <option value="nodejs-express">Node.js (Express)</option>
+    <option value="nodejs-nestjs">Node.js (NestJS)</option>
+    <option value="python-django">Python (Django)</option>
+    <option value="python-flask">Python (Flask)</option>
+    <option value="python-fastapi">Python (FastAPI)</option>
+    <option value="php-laravel">PHP (Laravel)</option>
+    <option value="php-codeigniter">PHP (CodeIgniter)</option>
+    <option value="ruby-rails">Ruby (Rails)</option>
+    <option value="ruby-sinatra">Ruby (Sinatra)</option>
+    <option value="java-spring">Java (Spring Boot)</option>
+    <option value="csharp-dotnet">C# (.NET Core)</option>
+    <option value="go-gin">Go (Gin)</option>
+    <option value="go-echo">Go (Echo)</option>
+    <option value="rust-actix">Rust (Actix)</option>
+    <option value="rust-rocket">Rust (Rocket)</option>
+  </optgroup>
+
+  {/* Database Types */}
+  <optgroup label="Databases">
+    <option value="sqlite">SQLite</option>
+    <option value="postgresql">PostgreSQL</option>
+    <option value="mysql">MySQL</option>
+    <option value="mongodb">MongoDB</option>
+    <option value="redis">Redis</option>
+    <option value="sqlserver">SQL Server</option>
+    <option value="oracle">Oracle</option>
+    <option value="couchdb">CouchDB</option>
+  </optgroup>
+</select>
+
                     </div>
                     <Button 
                       onClick={() => {
