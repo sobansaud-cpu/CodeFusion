@@ -197,6 +197,8 @@ function PaymentSelectionPageInner() {
                   <div className="space-y-2 text-gray-300">
                     <p><span className="font-medium">Account Name:</span> Muhammad Noaman Sauod</p>
                     <p><span className="font-medium">Account Number:</span> 03232204085</p>
+                    <p className="text-green-400 text-sm">You will get premium by buying for Rs. 2800.</p>
+
                   </div>
                 </div>
                 
@@ -271,6 +273,7 @@ function PaymentSelectionPageInner() {
         </div>
 
         {/* Payment Instructions */}
+       {/* Payment Instructions */}
         {selectedMethod === 'easypaisa' && (
           <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
@@ -285,7 +288,7 @@ function PaymentSelectionPageInner() {
                   <h3 className="text-blue-400 font-semibold mb-2">Step by Step:</h3>
                   <ol className="list-decimal list-inside space-y-2 text-gray-300">
                     <li>Open your EasyPaisa or JazzCash app</li>
-                    <li>Send Rs.6000 to account number: <span className="font-mono text-blue-400">03232204085</span></li>
+                    <li>Send Rs.2800 to account number: <span className="font-mono text-blue-400">03232204085</span></li>
                     <li>Take a screenshot of the successful payment</li>
                     <li>Upload the screenshot above</li>
                                 
@@ -322,6 +325,7 @@ function PaymentSelectionPageInner() {
             </CardContent>
           </Card>
         )}
+
 
         {selectedMethod === 'polar' && (
           <Card className="bg-gray-800 border-gray-700">
