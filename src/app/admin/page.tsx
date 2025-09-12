@@ -116,7 +116,7 @@ export default function AdminPage() {
   const approvePayment = async (paymentId: string) => {
     if (confirm('Approve this payment and upgrade user to premium?')) {
       try {
-        const adminEmail = localStorage.getItem('adminEmail') || 'admin@websitebuilder.com';
+        const adminEmail = localStorage.getItem('adminEmail') || 'sobansaud3@gmail.com';
         
         const response = await fetch('/api/payment-status', {
           method: 'PUT',
@@ -175,7 +175,7 @@ export default function AdminPage() {
   const rejectPayment = async (paymentId: string) => {
     if (confirm('Reject this payment request?')) {
       try {
-        const adminEmail = localStorage.getItem('adminEmail') || 'admin@websitebuilder.com';
+        const adminEmail = localStorage.getItem('adminEmail') || 'sobansaud3@gmail.com';
         
         const response = await fetch('/api/payment-status', {
           method: 'PUT',
@@ -245,7 +245,7 @@ export default function AdminPage() {
     );
   }
 
-  if (!adminLoggedIn || adminEmail !== 'admin@websitebuilder.com') {
+  if (!adminLoggedIn || adminEmail !== 'sobansaud3@gmail.com') {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center">
