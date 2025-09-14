@@ -115,7 +115,7 @@ export default function ChatPage() {
     const welcomeMessage: Message = {
       id: '1',
       role: 'assistant',
-      content: 'Hello! I\'m **CodeFusion AI**, your intelligent coding assistant. I can help you with:\n\n🚀 **Code Generation** - Create websites, apps, and APIs\n🔍 **Code Review** - Analyze and improve your code\n🐛 **Debugging** - Find and fix issues\n📚 **Learning** - Explain concepts and best practices\n🖼️ **Image Analysis** - Understand and work with images\n🎨 **Image Generation** - Create custom images for your projects\n\nWhat would you like to work on today?',
+      content: "👋 Hey! I'm **CodeFusion AI**, your smart coding assistant. I can help you with:\n\n🚀 **Code Generation** – Build websites, apps & APIs\n🔍 **Code Review** – Analyze and improve your code\n🐛 **Debugging** – Find and fix errors\n📚 **Learning** – Explain concepts & best practices\n🖼️ **Image Analysis** – Understand and work with visuals\n🎨 **Image Generation** – Create unique designs for your projects\n\n✨ Fact: I was proudly created by **Muhammad Soban Saud**, Founder of CodeFusion.AI.",
       timestamp: new Date(),
       type: 'text'
     };
