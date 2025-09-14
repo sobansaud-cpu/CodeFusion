@@ -235,7 +235,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-500" />
                 <h3 className="font-semibold">Frontend</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  UI/UX with live preview
+                Website UI/UX
                 </p>
               </div>
             </button>
@@ -376,7 +376,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <Label className="text-base font-semibold">Choose Frontend Framework</Label>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Select your preferred frontend technology. Live preview will be available instantly.
+                Select your preferred frontend technology. Live preview will be available in future.
               </p>
 
             {/* Frontend Framework Dropdown */}
@@ -435,7 +435,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <Label className="text-base font-semibold">Choose Backend Framework</Label>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Select your preferred backend technology. Terminal execution will be available for testing.
+                Select your preferred backend technology. One click deploy in future.
               </p>
 
               <div className="space-y-4">
