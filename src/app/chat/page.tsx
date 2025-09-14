@@ -678,7 +678,7 @@ export default function ChatPage() {
                   />
 
                   {/* Input Actions */}
-                  <div className="absolute right-3 bottom-3 flex items-center space-x-2">
+                  {/* <div className="absolute right-3 bottom-3 flex items-center space-x-2">
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -709,7 +709,43 @@ export default function ChatPage() {
                     <Send className="w-5 h-5" />
                   )}
                 </Button>
-              </div>
+              </div> */}
+
+              <div className="absolute right-3 bottom-3 flex items-center space-x-2">
+  {/* Hidden file input */}
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="hidden"
+  />
+
+  {/* Image Upload Button */}
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => fileInputRef.current?.click()}
+    disabled={isLoading}
+    className="flex items-center justify-center text-gray-400 hover:text-white h-12 w-12 rounded-2xl shadow-lg bg-gray-800"
+  >
+    <ImageIcon className="w-5 h-5" />
+  </Button>
+
+  {/* Send Button */}
+  <Button
+    onClick={handleSendMessage}
+    disabled={isLoading || (!input.trim() && !selectedImage)}
+    className="flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-12 w-12 rounded-2xl shadow-lg"
+  >
+    {isLoading ? (
+      <Loader2 className="w-5 h-5 animate-spin" />
+    ) : (
+      <Send className="w-5 h-5" />
+    )}
+  </Button>
+</div>
+
 
               {/* Quick Tips */}
               <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
