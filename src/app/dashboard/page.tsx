@@ -201,7 +201,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex flex-col sm:flex-row items-center justify-between py-4 gap-4">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
@@ -209,21 +209,21 @@ export default function DashboardPage() {
                 </div>
                 <h1 className="text-xl font-bold text-slate-900">CodeFusion</h1>
               </div>
-              <span className="text-slate-400">|</span>
-              <span className="text-slate-600 font-medium">Dashboard</span>
+              <span className="hidden md:inline text-slate-400">|</span>
+              <span className="hidden md:inline text-slate-600 font-medium">Dashboard</span>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" asChild>
+            <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-end">
+              <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-initial">
                 <Link href="/builder">
                   <Plus className="w-4 h-4 mr-2" />
-                  New Project
+                  <span className="hidden sm:inline">New Project</span>
                 </Link>
               </Button>
-              <Button size="sm" asChild>
+              <Button size="sm" asChild className="flex-1 sm:flex-initial">
                 <Link href="/builder">
                   <Zap className="w-4 h-4 mr-2" />
-                  Generate
+                  <span className="hidden sm:inline">Generate</span>
                 </Link>
               </Button>
             </div>
@@ -234,30 +234,30 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-2">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div className="flex-1">
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
                 Welcome back, {userProfile?.displayName || user.email?.split('@')[0] || 'User'}! 👋
               </h1>
-              <p className="text-slate-600 text-lg">
+              <p className="text-slate-600 text-base md:text-lg">
                 Manage your AI-generated websites and create amazing new projects
               </p>
             </div>
             
             {/* Stats Cards */}
-            <div className="flex space-x-4">
-              <Card className="w-32 text-center">
-                <CardContent className="pt-4">
-                  <div className="text-2xl font-bold text-blue-600">{projects.length}</div>
-                  <div className="text-sm text-slate-600">Projects</div>
+            <div className="flex space-x-2 sm:space-x-4 w-full lg:w-auto">
+              <Card className="flex-1 lg:w-32 text-center">
+                <CardContent className="p-4 md:pt-4">
+                  <div className="text-xl md:text-2xl font-bold text-blue-600">{projects.length}</div>
+                  <div className="text-xs md:text-sm text-slate-600">Projects</div>
                 </CardContent>
               </Card>
-              <Card className="w-32 text-center">
-                <CardContent className="pt-4">
-                  <div className="text-2xl font-bold text-green-600">
+              <Card className="flex-1 lg:w-32 text-center">
+                <CardContent className="p-4 md:pt-4">
+                  <div className="text-xl md:text-2xl font-bold text-green-600">
                     {userProfile?.plan === 'pro' ? '20' : '3'}
                   </div>
-                  <div className="text-sm text-slate-600">Daily Limit</div>
+                  <div className="text-xs md:text-sm text-slate-600">Daily Limit</div>
                 </CardContent>
               </Card>
             </div>
@@ -267,21 +267,21 @@ export default function DashboardPage() {
         {/* Account Status */}
         <div className="mb-8">
           <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
                     {userProfile?.plan === 'pro' ? (
-                      <Crown className="w-6 h-6 text-white" />
+                      <Crown className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     ) : (
-                      <Star className="w-6 h-6 text-white" />
+                      <Star className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     )}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-base md:text-lg font-semibold text-slate-900">
                       {userProfile?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
                     </h3>
-                    <p className="text-slate-600">
+                    <p className="text-slate-600 text-sm md:text-base">
                       {userProfile?.plan === 'pro' 
                         ? 'Unlimited projects with 20 generations per day' 
                         : 'Upgrade to Pro for unlimited projects and 20 generations per day'
@@ -290,7 +290,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 {userProfile?.plan !== 'pro' && (
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 w-full md:w-auto">
                     <Crown className="w-4 h-4 mr-2" />
                     Upgrade to Pro
                     <Link href="/payment-selection"></Link>
@@ -303,12 +303,12 @@ export default function DashboardPage() {
 
         {/* Search and Filters */}
         <div className="mb-6">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <div className="flex-1 max-w-md">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+            <div className="w-full md:max-w-md">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <Input
-                  placeholder="Search projects by name or description..."
+                  placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 bg-white border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-slate-900 placeholder-slate-500 font-medium"
@@ -332,18 +332,18 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4 w-full md:w-auto">
               <select
                 value={selectedFramework}
                 onChange={(e) => setSelectedFramework(e.target.value)}
-                className="px-4 py-2.5 border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-medium shadow-sm hover:border-slate-300 transition-colors"
+                className="px-3 py-2 md:px-4 md:py-2.5 border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-medium shadow-sm hover:border-slate-300 transition-colors w-full md:w-auto text-sm md:text-base"
               >
                 {frameworks.map(framework => (
                   <option key={framework} value={framework}>
                     {framework === 'all' 
-  ? '🌐 All Frameworks' 
-  : `⚡ ${(framework || 'unknown').toString().toUpperCase()}`}
-
+                      ? '🌐 All Frameworks' 
+                      : `⚡ ${(framework || 'unknown').toString().toUpperCase()}`
+                    }
                   </option>
                 ))}
               </select>
@@ -351,7 +351,7 @@ export default function DashboardPage() {
               <div className="flex border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2.5 transition-all duration-200 ${
+                  className={`p-2 md:p-2.5 transition-all duration-200 ${
                     viewMode === 'grid' 
                       ? 'bg-blue-100 text-blue-600 border-r border-slate-200' 
                       : 'text-slate-600 hover:bg-slate-50'
@@ -361,7 +361,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2.5 transition-all duration-200 ${
+                  className={`p-2 md:p-2.5 transition-all duration-200 ${
                     viewMode === 'list' 
                       ? 'bg-blue-100 text-blue-600' 
                       : 'text-slate-600 hover:bg-slate-50'
@@ -376,14 +376,14 @@ export default function DashboardPage() {
 
         {/* Projects Section */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
             <div className="flex items-center space-x-3">
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h2 className="text-xl md:text-2xl font-bold text-slate-900">
                 Your Projects ({filteredProjects.length})
               </h2>
               {(searchTerm || selectedFramework !== 'all') && (
                 <div className="flex items-center space-x-2">
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200 text-xs">
                     🔍 Filtered
                   </Badge>
                   <Button 
@@ -393,14 +393,14 @@ export default function DashboardPage() {
                       setSearchTerm('');
                       setSelectedFramework('all');
                     }}
-                    className="text-xs text-slate-500 hover:text-slate-700"
+                    className="text-xs text-slate-500 hover:text-slate-700 hidden sm:block"
                   >
                     Clear filters
                   </Button>
                 </div>
               )}
             </div>
-            <Button asChild>
+            <Button asChild className="w-full sm:w-auto">
               <Link href="/builder">
                 <Plus className="w-4 h-4 mr-2" />
                 Create New Project
@@ -416,9 +416,9 @@ export default function DashboardPage() {
               </div>
             </div>
           ) : filteredProjects.length === 0 ? (
-            <Card className="text-center py-16">
+            <Card className="text-center py-12 md:py-16">
               <CardContent>
-                <div className="mx-auto h-24 w-24 text-slate-300 mb-4">
+                <div className="mx-auto h-20 w-20 md:h-24 md:w-24 text-slate-300 mb-4">
                   {searchTerm || selectedFramework !== 'all' ? (
                     <Search className="w-full h-full" />
                   ) : (
@@ -428,7 +428,7 @@ export default function DashboardPage() {
                 <h3 className="text-lg font-medium text-slate-900 mb-2">
                   {searchTerm || selectedFramework !== 'all' ? 'No projects found' : 'No projects yet'}
                 </h3>
-                <p className="text-slate-600 mb-6">
+                <p className="text-slate-600 mb-6 text-sm md:text-base">
                   {searchTerm || selectedFramework !== 'all' 
                     ? `No projects match your search "${searchTerm}" or framework "${selectedFramework}". Try adjusting your filters.`
                     : 'Start building amazing websites with AI. Your first project is just a prompt away!'
@@ -441,11 +441,12 @@ export default function DashboardPage() {
                       setSearchTerm('');
                       setSelectedFramework('all');
                     }}
+                    className="text-sm md:text-base"
                   >
                     Clear Filters
                   </Button>
                 ) : (
-                  <Button asChild>
+                  <Button asChild className="text-sm md:text-base">
                     <Link href="/builder">
                       <Sparkles className="w-4 h-4 mr-2" />
                       Create Your First Project
@@ -455,16 +456,19 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+            <div className={viewMode === 'grid' 
+              ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6' 
+              : 'space-y-4'
+            }>
               {filteredProjects.map((project) => (
-                <Card key={project.id} className="group hover:shadow-lg transition-all duration-200 border-slate-200 hover:border-blue-300">
+                <Card key={project.id} className="group hover:shadow-lg transition-all duration-200 border-slate-200 hover:border-blue-300 h-full flex flex-col">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <CardTitle className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        <CardTitle className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
                           {project.name}
                         </CardTitle>
-                        <div className="flex items-center space-x-2 mt-2">
+                        <div className="flex items-center space-x-2 mt-2 flex-wrap gap-y-2">
                           {getFrameworkBadge(project.framework)}
                           <span className="text-xs text-slate-500">
                             {formatDate(project.createdAt)}
@@ -485,10 +489,10 @@ export default function DashboardPage() {
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
-                            {/* <Link href={`/preview/${project.id}`} target="_blank">
+                            <Link href={`/preview/${project.id}`} target="_blank">
                               <Eye className="w-4 h-4 mr-2" />
                               View Live
-                            </Link> */}
+                            </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
                             <Link href={`/builder?view=${project.id}`}>
@@ -513,16 +517,14 @@ export default function DashboardPage() {
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="pb-4">
+                  <CardContent className="pb-4 flex-1">
                     <p className="text-slate-600 text-sm line-clamp-2 mb-4">
                       {project.prompt}
                     </p>
                     
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs text-slate-500">
-                        <Calendar className="w-3 h-3" />
-                        <span>Created {formatDate(project.createdAt)}</span>
-                      </div>
+                    <div className="flex items-center space-x-2 text-xs text-slate-500">
+                      <Calendar className="w-3 h-3" />
+                      <span>Created {formatDate(project.createdAt)}</span>
                     </div>
                   </CardContent>
                   
@@ -534,12 +536,12 @@ export default function DashboardPage() {
                           Edit
                         </Link>
                       </Button>
-                      {/* <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Button variant="outline" size="sm" className="flex-1" asChild>
                         <Link href={`/preview/${project.id}`} target="_blank">
                           <Play className="w-4 h-4 mr-2" />
                           Preview
                         </Link>
-                      </Button> */}
+                      </Button>
                       <Button 
                         variant="outline" 
                         size="sm" 
@@ -559,53 +561,53 @@ export default function DashboardPage() {
         {/* Quick Actions */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link href="/builder">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-                <CardContent className="p-6">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
+                <CardContent className="p-4 md:p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Sparkles className="w-6 h-6 text-white" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                      <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900">Generate New Website</h4>
-                      <p className="text-sm text-slate-600">Create a new AI-powered website</p>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">Generate New Website</h4>
+                      <p className="text-sm text-slate-600 line-clamp-2">Create a new AI-powered website</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
             </Link>
             
             <Link href="/tutorials">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-                <CardContent className="p-6">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
+                <CardContent className="p-4 md:p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <FileText className="w-6 h-6 text-white" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                      <FileText className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900">View Tutorials</h4>
-                      <p className="text-sm text-slate-600">Learn how to use CodeFusion</p>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">View Tutorials</h4>
+                      <p className="text-sm text-slate-600 line-clamp-2">Learn how to use CodeFusion</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-green-600 transition-colors" />
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-green-600 transition-colors flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
             </Link>
             
             <Link href="/pricing">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-                <CardContent className="p-6">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
+                <CardContent className="p-4 md:p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <img src="/logostart.png" alt="Logo" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                      <Crown className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900">Upgrade Plan</h4>
-                      <p className="text-sm text-slate-600">Get unlimited generations</p>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">Upgrade Plan</h4>
+                      <p className="text-sm text-slate-600 line-clamp-2">Get unlimited generations</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-purple-600 transition-colors" />
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-purple-600 transition-colors flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
@@ -616,21 +618,22 @@ export default function DashboardPage() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={!!showDeleteDialog} onOpenChange={() => setShowDeleteDialog(null)}>
-        <DialogContent>
+        <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Delete Project</DialogTitle>
             <DialogDescription>
               Are you sure you want to delete this project? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-end space-x-3">
-            <Button variant="outline" onClick={() => setShowDeleteDialog(null)}>
+          <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+            <Button variant="outline" onClick={() => setShowDeleteDialog(null)} className="w-full sm:w-auto">
               Cancel
             </Button>
             <Button 
               variant="destructive" 
               onClick={() => showDeleteDialog && handleDelete(showDeleteDialog)}
               disabled={deletingId === showDeleteDialog}
+              className="w-full sm:w-auto"
             >
               {deletingId === showDeleteDialog ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

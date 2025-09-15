@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
@@ -22,7 +20,6 @@ function SearchParamsWrapper({ children }: { children: (searchParams: URLSearchP
   const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams());
   
   useEffect(() => {
-    // Get search params from window location on client side
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       setSearchParams(params);
@@ -52,7 +49,6 @@ function BuilderPageContent() {
   const initialPrompt = searchParams?.get('prompt') || '';
 
   useEffect(() => {
-    // Get search params from window location on client side
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       setSearchParams(params);
@@ -67,7 +63,6 @@ function BuilderPageContent() {
       return;
     }
 
-    // Determine action mode based on search params
     if (editProjectId) {
       setActionMode('edit');
       loadProjectForEdit(editProjectId);
@@ -87,7 +82,6 @@ function BuilderPageContent() {
     checkGenerationLimits();
   }, [user, router, searchParams, editProjectId, viewProjectId, downloadProjectId, githubProjectId]);
 
-  // Refresh generation limits when user profile changes
   useEffect(() => {
     if (user && userProfile) {
       checkGenerationLimits();
@@ -98,9 +92,7 @@ function BuilderPageContent() {
     try {
       const response = await fetch('/api/check-limits', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user?.uid }),
       });
       
@@ -113,7 +105,6 @@ function BuilderPageContent() {
             : `You have reached your daily limit (20/24h). Limit resets in 24 hours from your first generation.`;
           setError(errorMsg);
         } else {
-          // Clear error if user has generations available
           setError(null);
         }
       }
@@ -177,12 +168,10 @@ function BuilderPageContent() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       
-      // Immediately stop loading and show success
       setIsGenerating(false);
       setActionMessage('✅ Download completed successfully! Check your downloads folder.');
       toast.success('🎉 Project downloaded successfully! Check your downloads folder.');
       
-      // Show success message briefly then redirect to dashboard
       setTimeout(() => {
         setActionMessage('');
         router.push('/dashboard');
@@ -192,11 +181,7 @@ function BuilderPageContent() {
       setIsGenerating(false);
       toast.error(error.message || 'Failed to download project');
       setActionMessage('❌ Download failed. Please try again.');
-      
-      // Clear error message after 3 seconds
-      setTimeout(() => {
-        setActionMessage('');
-      }, 3000);
+      setTimeout(() => setActionMessage(''), 3000);
     }
   };
 
@@ -220,8 +205,6 @@ function BuilderPageContent() {
       if (result.success) {
         toast.success(`🚀 Successfully pushed to GitHub: ${result.repoUrl || repoName}`);
         setActionMessage('✅ Project pushed to GitHub successfully! 🎉');
-        
-        // Show additional info in center
         setTimeout(() => {
           setActionMessage('🔗 Check your GitHub repository for the latest code!');
           setTimeout(() => setActionMessage(''), 4000);
@@ -240,10 +223,8 @@ function BuilderPageContent() {
 
   const handleSaveProject = async () => {
     if (!currentProject || !user) return;
-    
     try {
       setIsGenerating(true);
-      
       const result = await updateProject(currentProject.id, {
         name: currentProject.name,
         prompt: currentProject.prompt,
@@ -251,16 +232,11 @@ function BuilderPageContent() {
         files: currentProject.files,
         userId: user.uid
       });
-      
       if (result.success) {
         toast.success('✅ Project changes saved successfully!');
         setActionMessage('✅ Project updated and saved!');
         setTimeout(() => setActionMessage(''), 3000);
-        
-        // Optionally navigate back to dashboard after saving
-        setTimeout(() => {
-          router.push('/dashboard');
-        }, 2000);
+        setTimeout(() => router.push('/dashboard'), 2000);
       } else {
         throw new Error(result.error || 'Failed to save project');
       }
@@ -419,7 +395,7 @@ function BuilderPageContent() {
     return `codefusion-${date}-${randomId}`;
   };
 
-  useEffect(() => {
+   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isGenerating) {
         e.preventDefault();
@@ -468,7 +444,8 @@ function BuilderPageContent() {
     }
   }, [actionMessage, currentProject]);
 
-  if (!searchParams) {
+
+    if (!searchParams || !user) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader2 className="h-12 w-12 animate-spin" />
@@ -485,64 +462,57 @@ function BuilderPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <div className="max-w-7xl mx-auto p-6">
-        {/* Enhanced Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 sm:p-6 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header Section */}
+        <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center space-y-6 md:space-y-0">
+          <div className="space-y-3 flex-1 min-w-0">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent truncate">
+                  {actionMode === 'edit' ? 'Edit Project' :
+                   actionMode === 'view' ? 'View Project' :
+                   actionMode === 'download' ? 'Downloading...' :
+                   actionMode === 'github' ? 'Push to GitHub' :
+                   'AI Website Builder'}
+                </h1>
+                <p className="text-gray-300 text-lg truncate">
+                  {actionMode === 'edit' ? 'Add new features or modify your existing project' :
+                   actionMode === 'view' ? 'Review your project code' :
+                   actionMode === 'download' ? 'Downloading your project files...' :
+                   actionMode === 'github' ? 'Pushing your project to GitHub...' :
+                   'Create professional websites with AI in any programming language'}
+                </p>
+              </div>
+            </div>
+            {userProfile && actionMode === 'generate' && (
+              <div className="flex flex-wrap gap-4 mt-4">
+                <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700 flex-shrink-0">
+                  <div className={`w-3 h-3 rounded-full ${userProfile.plan === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-blue-500'}`}></div>
+                  <span className="text-sm text-gray-300 truncate">{userProfile.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}</span>
                 </div>
-                <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                    {actionMode === 'edit' ? 'Edit Project' : 
-                     actionMode === 'view' ? 'View Project' :
-                     actionMode === 'download' ? 'Downloading...' :
-                     actionMode === 'github' ? 'Push to GitHub' :
-                     'AI Website Builder'}
-                  </h1>
-                  <p className="text-gray-300 text-lg">
-                    {actionMode === 'edit' ? 'Add new features or modify your existing project' :
-                     actionMode === 'view' ? 'Review your project code' :
-                     actionMode === 'download' ? 'Downloading your project files...' :
-                     actionMode === 'github' ? 'Pushing your project to GitHub...' :
-                     'Create professional websites with AI in any programming language'}
-                  </p>
+                <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700 flex-shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span className="text-sm text-gray-300 truncate">{remainingGenerations} generations remaining</span>
                 </div>
               </div>
-              
-              {userProfile && actionMode === 'generate' && (
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700">
-                    <div className={`w-3 h-3 rounded-full ${userProfile.plan === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-blue-500'}`} />
-                    <span className="text-sm text-gray-300">
-                      {userProfile.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700">
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                    <span className="text-sm text-gray-300">
-                      {remainingGenerations} generations remaining
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            {actionMode !== 'generate' && (
-              <Button 
-                variant="outline" 
-                onClick={() => router.push('/dashboard')}
-                className="text-white border-gray-600 hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 px-6 py-2"
-              >
-                ← Back to Dashboard
-              </Button>
             )}
           </div>
+          {actionMode !== 'generate' && (
+            <Button
+              variant="outline"
+              onClick={() => router.push('/dashboard')}
+              className="text-white border-gray-600 hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 px-6 py-2 flex-shrink-0"
+            >
+              ← Back to Dashboard
+            </Button>
+          )}
         </div>
 
+        {/* Error Alert */}
         {error && (
           <Alert className="mb-6 bg-red-900/50 border-red-500 text-red-200">
             <AlertCircle className="h-4 w-4" />
@@ -550,40 +520,13 @@ function BuilderPageContent() {
           </Alert>
         )}
 
+        {/* Action message overlay */}
         {actionMessage && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-gray-800 border border-gray-600 rounded-lg p-8 max-w-md mx-4 text-center">
-      <div className="text-4xl mb-4">
-        {actionMessage.includes('✅') ? '✅' : 
-         actionMessage.includes('❌') ? '❌' : 
-         actionMessage.includes('📦') ? '📦' : '🎯'}
-      </div>
-      <h3 className="text-xl font-semibold text-white mb-2">
-        {actionMessage.includes('Download completed') ? 'Download Successful!' :
-         actionMessage.includes('Download failed') ? 'Download Failed' :
-         actionMessage.includes('Preparing download') ? 'Preparing Download' :
-         'Action Completed'}
-      </h3>
-      <p className="text-gray-300">
-        {actionMessage}
-      </p>
-      {/* Close button add karen */}
-      <button 
-        onClick={() => setActionMessage(null)}
-        className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-)}
-
-        {/* {actionMessage && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 border border-gray-600 rounded-lg p-8 max-w-md mx-4 text-center">
-              <div className="text-4xl mb-4">
-                {actionMessage.includes('✅') ? '✅' : 
-                 actionMessage.includes('❌') ? '❌' : 
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 border border-gray-600 rounded-lg p-8 max-w-md w-full text-center">
+              <div className="text-4xl mb-4 select-none">
+                {actionMessage.includes('✅') ? '✅' :
+                 actionMessage.includes('❌') ? '❌' :
                  actionMessage.includes('📦') ? '📦' : '🎯'}
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">
@@ -592,52 +535,54 @@ function BuilderPageContent() {
                  actionMessage.includes('Preparing download') ? 'Preparing Download' :
                  'Action Completed'}
               </h3>
-              <p className="text-gray-300">
-                {actionMessage}
-              </p>
+              <p className="text-gray-300 break-words">{actionMessage}</p>
+              <button 
+                onClick={() => setActionMessage(null)}
+                className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                Close
+              </button>
             </div>
           </div>
-        )} */}
+        )}
 
-        {/* Show different content based on action mode */}
+        {/* Main Content by Action Mode */}
         {actionMode === 'generate' ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)]">
-            {/* Enhanced Left Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)] overflow-auto">
+            {/* Left Panel */}
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl flex flex-col">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-white">Describe Your Project</h2>
+                <h2 className="text-2xl font-bold text-white truncate">Describe Your Project</h2>
               </div>
-              <EnhancedPromptForm
-                onSubmitAction={handleGenerate}
-                loading={isGenerating}
-                remainingGenerations={remainingGenerations}
-                initialPrompt={initialPrompt}
-              />
+              <div className="flex-grow min-h-0 overflow-auto">
+                <EnhancedPromptForm
+                  onSubmitAction={handleGenerate}
+                  loading={isGenerating}
+                  remainingGenerations={remainingGenerations}
+                  initialPrompt={initialPrompt}
+                />
+              </div>
             </div>
 
-            {/* Enhanced Right Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden">
+            {/* Right Panel */}
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden flex flex-col">
               {isGenerating ? (
-                <div className="h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700">
-                  <div className="text-center space-y-4">
-                    <div className="relative">
-                      <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
-                        <Loader2 className="w-10 h-10 text-white animate-spin" />
-                      </div>
-                      <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
+                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6">
+                  <div className="relative mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
+                      <Loader2 className="w-10 h-10 text-white animate-spin" />
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">AI is generating your project...</h3>
-                      <p className="text-gray-300 text-lg">This may take a few moments</p>
-                    </div>
-                    <div className="flex space-x-2 justify-center">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                    </div>
+                    <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">AI is generating your project...</h3>
+                  <p className="text-gray-300 text-lg">This may take a few moments</p>
+                  <div className="flex space-x-2 justify-center mt-6" aria-hidden="true">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                 </div>
               ) : currentProject ? (
@@ -645,7 +590,7 @@ function BuilderPageContent() {
                   files={currentProject.files}
                   language={currentProject.framework}
                   isBackendOnly={currentProject.framework === 'python' || currentProject.framework === 'nodejs'}
-                  isFrontend={currentProject.framework === 'react' || currentProject.framework === 'nextjs' || currentProject.framework === 'vue' || currentProject.framework === 'html'}
+                  isFrontend={['react', 'nextjs', 'vue', 'html'].includes(currentProject.framework)}
                   projectType={currentProject.projectType}
                   projectId={currentProject.id}
                   onDownload={() => handleDownload(currentProject.id)}
@@ -653,42 +598,28 @@ function BuilderPageContent() {
                   // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
                 />
               ) : (
-                <div className="h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700">
-                  <div className="text-center space-y-6">
-                    <div className="relative">
-                      <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
-                        <div className="text-4xl">🚀</div>
-                      </div>
-                      <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-pulse" />
+                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6">
+                  <div className="relative mb-6">
+                    <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
+                      <div className="text-4xl">🚀</div>
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-white mb-3">Ready to create?</h3>
-                      <p className="text-gray-300 text-lg max-w-md mx-auto">
-                        Describe your project in any language and watch AI build it! 
-                        Create stunning websites, powerful applications, and more.
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-center space-x-4 text-sm text-gray-400">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                        <span>Frontend</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                        <span>Backend</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span>Database</span>
-                      </div>
-                    </div>
+                    <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-pulse" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-3">Ready to create?</h3>
+                  <p className="text-gray-300 text-lg max-w-md mx-auto text-center">
+                    Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
+                  </p>
+                  <div className="flex items-center justify-center space-x-4 text-sm text-gray-400 mt-6">
+                    <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-blue-500 rounded-full" />Frontend</div>
+                    <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-purple-500 rounded-full" />Backend</div>
+                    <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-green-500 rounded-full" />Database</div>
                   </div>
                 </div>
               )}
             </div>
           </div>
         ) : actionMode === 'edit' && currentProject ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)] overflow-auto">
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -752,30 +683,6 @@ function BuilderPageContent() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">Language/Framework</label>
-                      {/* <select
-                        id="newLanguage"
-                        className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
-                        disabled={isGenerating}
-                      >
-                        <option value="html">HTML/CSS</option>
-                        <option value="react">React</option>
-                        <option value="nextjs">Next.js</option>
-                        <option value="vue">Vue.js</option>
-                        <option value="angular">Angular</option>
-                        <option value="python">Python</option>
-                        <option value="nodejs">Node.js</option>
-                        <option value="php">PHP</option>
-                        <option value="react">React</option>
-                        <option value="angular">Angular</option>                        <option value=""></option>
-                        <option value="svelte">Svelte</option>
-                        <option value="nuxt">Nuxt.js</option>
-                        <option value="gatsby">Gatsby</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                      </select> */}
-
                       <select
   id="newLanguage"
   className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
@@ -955,6 +862,7 @@ function BuilderPageContent() {
             </div>
           </div>
         ) : (
+          // Loading and fallback UI for unhandled modes or loading states
           <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
             <div className="text-center space-y-4">
               <div className="relative">
@@ -963,7 +871,7 @@ function BuilderPageContent() {
                 </div>
                 <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Processing...</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Loading...</h3>
               <p className="text-gray-300 text-lg">Please wait...</p>
             </div>
           </div>
@@ -975,9 +883,6 @@ function BuilderPageContent() {
     </div>
   );
 }
-
-
-
 
 export default function BuilderPage() {
   return (

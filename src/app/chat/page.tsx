@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -31,6 +31,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+
 interface Message {
   id: string;
   role: "user" | "assistant";
@@ -42,6 +43,7 @@ interface Message {
   codeLanguage?: string;
 }
 
+
 interface ChatConversation {
   id: string;
   title: string;
@@ -50,8 +52,10 @@ interface ChatConversation {
   updatedAt: Date;
 }
 
+
 export default function ChatPage() {
   const { user, signOut } = useAuth();
+
 
   // Chat state
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
@@ -63,6 +67,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
+
   // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editingConversationId, setEditingConversationId] = useState<
@@ -70,10 +75,12 @@ export default function ChatPage() {
   >(null);
   const [editingTitle, setEditingTitle] = useState("");
 
+
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
+
 
   // Initialize with welcome message
   useEffect(() => {
@@ -81,6 +88,7 @@ export default function ChatPage() {
       createNewConversation();
     }
   }, []);
+
 
   // Load conversation messages when switching
   useEffect(() => {
@@ -94,14 +102,17 @@ export default function ChatPage() {
     }
   }, [currentConversationId, conversations]);
 
+
   // Auto-scroll to bottom
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
 
   // Focus edit input when editing starts
   useEffect(() => {
@@ -111,11 +122,13 @@ export default function ChatPage() {
     }
   }, [editingConversationId]);
 
+
   // Helper functions
   const generateConversationTitle = (firstMessage: string): string => {
     const words = firstMessage.split(" ").slice(0, 6);
     return words.join(" ") + (firstMessage.split(" ").length > 6 ? "..." : "");
   };
+
 
   const createNewConversation = () => {
     const welcomeMessage: Message = {
@@ -127,6 +140,7 @@ export default function ChatPage() {
       type: "text",
     };
 
+
     const newConversation: ChatConversation = {
       id: Date.now().toString(),
       title: "New Chat",
@@ -135,10 +149,12 @@ export default function ChatPage() {
       updatedAt: new Date(),
     };
 
+
     setConversations((prev) => [newConversation, ...prev]);
     setCurrentConversationId(newConversation.id);
     setMessages([welcomeMessage]);
   };
+
 
   const deleteConversation = (conversationId: string) => {
     setConversations((prev) => prev.filter((c) => c.id !== conversationId));
@@ -151,6 +167,7 @@ export default function ChatPage() {
       }
     }
   };
+
 
   const updateConversationTitle = (
     conversationId: string,
@@ -167,6 +184,7 @@ export default function ChatPage() {
     setEditingTitle("");
   };
 
+
   const updateConversationMessages = (
     conversationId: string,
     newMessages: Message[]
@@ -179,6 +197,7 @@ export default function ChatPage() {
       )
     );
   };
+
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -193,6 +212,7 @@ export default function ChatPage() {
     }
   };
 
+
   const handleSendMessage = async () => {
     if (!input.trim() && !selectedImage) return;
     if (!user) {
@@ -200,10 +220,12 @@ export default function ChatPage() {
       return;
     }
 
+
     if (!currentConversationId) {
       createNewConversation();
       return;
     }
+
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -214,8 +236,10 @@ export default function ChatPage() {
       imageUrl: selectedImage ? URL.createObjectURL(selectedImage) : undefined,
     };
 
+
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
+
 
     // Update conversation title if it's the first user message
     if (messages.length === 1 && messages[0].role === "assistant") {
@@ -223,11 +247,14 @@ export default function ChatPage() {
       updateConversationTitle(currentConversationId, title);
     }
 
+
     setInput("");
     setIsLoading(true);
 
+
     try {
       let response;
+
 
       if (selectedImage) {
         // Convert image to base64
@@ -240,6 +267,7 @@ export default function ChatPage() {
           };
           reader.readAsDataURL(selectedImage);
         });
+
 
         response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/chat/image`,
@@ -270,11 +298,14 @@ export default function ChatPage() {
         });
       }
 
+
       if (!response.ok) {
         throw new Error("Failed to get AI response");
       }
 
+
       const data = await response.json();
+
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -286,9 +317,11 @@ export default function ChatPage() {
         isImageGeneration: data.intent === "image_generation",
       };
 
+
       const finalMessages = [...newMessages, aiResponse];
       setMessages(finalMessages);
       updateConversationMessages(currentConversationId, finalMessages);
+
 
       setSelectedImage(null);
       if (fileInputRef.current) {
@@ -302,10 +335,12 @@ export default function ChatPage() {
     }
   };
 
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard!");
   };
+
 
   const formatMessage = (content: string) => {
     // Simple markdown-like formatting
@@ -318,11 +353,13 @@ export default function ChatPage() {
       );
   };
 
+
   const detectCodeBlocks = (content: string) => {
-    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+    const codeBlockRegex = /``````/g;
     const parts = [];
     let lastIndex = 0;
     let match;
+
 
     while ((match = codeBlockRegex.exec(content)) !== null) {
       // Add text before code block
@@ -333,6 +370,7 @@ export default function ChatPage() {
         });
       }
 
+
       // Add code block
       parts.push({
         type: "code",
@@ -340,8 +378,10 @@ export default function ChatPage() {
         content: match[2].trim(),
       });
 
+
       lastIndex = match.index + match[0].length;
     }
+
 
     // Add remaining text
     if (lastIndex < content.length) {
@@ -351,13 +391,15 @@ export default function ChatPage() {
       });
     }
 
+
     return parts.length > 0 ? parts : [{ type: "text", content }];
   };
 
+
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center px-4">
+        <div className="text-center max-w-sm">
           <Bot className="w-16 h-16 mx-auto mb-4 text-blue-400" />
           <h2 className="text-2xl font-bold text-white mb-2">
             Sign in to continue
@@ -368,14 +410,15 @@ export default function ChatPage() {
     );
   }
 
+
   return (
-    <div className="h-screen bg-gray-900 text-white flex overflow-hidden">
+    <div className="h-screen bg-gray-900 text-white flex flex-col md:flex-row overflow-hidden">
       {/* Sidebar */}
       <motion.div
         initial={false}
         animate={{ width: sidebarOpen ? 260 : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="bg-gray-950 border-r border-gray-800 flex flex-col overflow-hidden"
+        className="bg-gray-950 border-r border-gray-800 flex flex-col overflow-hidden shrink-0 z-20"
       >
         <div className="p-4 border-b border-gray-800">
           <Button
@@ -387,8 +430,9 @@ export default function ChatPage() {
           </Button>
         </div>
 
+
         {/* Conversations List */}
-        <div className="flex-1 overflow-y-auto p-2">
+        <div className="flex-1 overflow-y-auto p-2 min-w-[220px] max-w-xs">
           <AnimatePresence>
             {conversations.map((conversation) => (
               <motion.div
@@ -431,6 +475,7 @@ export default function ChatPage() {
                   )}
                 </div>
 
+
                 {/* Conversation Actions */}
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
                   <Button
@@ -442,6 +487,7 @@ export default function ChatPage() {
                       setEditingTitle(conversation.title);
                     }}
                     className="h-6 w-6 p-0 text-gray-400 hover:text-white"
+                    aria-label="Edit conversation title"
                   >
                     <Edit3 className="w-3 h-3" />
                   </Button>
@@ -453,6 +499,7 @@ export default function ChatPage() {
                       deleteConversation(conversation.id);
                     }}
                     className="h-6 w-6 p-0 text-gray-400 hover:text-red-400"
+                    aria-label="Delete conversation"
                   >
                     <Trash2 className="w-3 h-3" />
                   </Button>
@@ -462,10 +509,11 @@ export default function ChatPage() {
           </AnimatePresence>
         </div>
 
+
         {/* User Profile */}
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+        <div className="p-4 border-t border-gray-800 flex-shrink-0">
+          <div className="flex items-center space-x-3 min-w-0">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shrink-0">
               <User className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
@@ -477,7 +525,8 @@ export default function ChatPage() {
               variant="ghost"
               size="sm"
               onClick={signOut}
-              className="text-gray-400 hover:text-white h-8 w-8 p-0"
+              className="text-gray-400 hover:text-white h-8 w-8 p-0 shrink-0"
+              aria-label="Sign Out"
             >
               <LogOut className="w-4 h-4" />
             </Button>
@@ -485,16 +534,18 @@ export default function ChatPage() {
         </div>
       </motion.div>
 
+
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800 p-4 flex items-center justify-between">
+        <div className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800 p-4 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="text-gray-400 hover:text-white"
+              aria-label="Toggle Sidebar"
             >
               {sidebarOpen ? (
                 <ChevronLeft className="w-4 h-4" />
@@ -503,25 +554,26 @@ export default function ChatPage() {
               )}
             </Button>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
                 <Bot className="w-4 h-4 text-white" />
               </div>
-              <h1 className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent select-none">
                 Ask CodeFusion
               </h1>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1 text-xs text-gray-400">
+          <div className="flex items-center space-x-2 min-w-max">
+            <div className="flex items-center space-x-1 text-xs text-gray-400 select-none">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
               <span>Online</span>
             </div>
           </div>
         </div>
 
+
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-6">
+          <div className="max-w-4xl mx-auto flex flex-col space-y-6">
             <AnimatePresence>
               {messages.map((message) => (
                 <motion.div
@@ -529,18 +581,15 @@ export default function ChatPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className={`mb-6 ${
-                    message.role === "user" ? "ml-12" : "mr-12"
+                  className={`flex ${
+                    message.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
-                    className={`flex space-x-4 ${
-                      message.role === "user"
-                        ? "flex-row-reverse space-x-reverse"
-                        : ""
+                    className={`flex space-x-4 max-w-[100%] sm:max-w-[85%] md:max-w-[70%] ${
+                      message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
                     }`}
                   >
-                    {/* Avatar */}
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                         message.role === "user"
@@ -555,12 +604,11 @@ export default function ChatPage() {
                       )}
                     </div>
 
-                    {/* Message Content */}
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`rounded-2xl p-4 ${
+                        className={`rounded-2xl p-4 break-words ${
                           message.role === "user"
-                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white ml-auto max-w-[80%]"
+                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white max-w-full"
                             : "bg-gray-800/50 backdrop-blur-sm text-gray-100 border border-gray-700/50"
                         }`}
                       >
@@ -568,16 +616,12 @@ export default function ChatPage() {
                           <div className="mb-3">
                             <img
                               src={message.imageUrl}
-                              alt={
-                                message.isImageGeneration
-                                  ? "Generated Image"
-                                  : "Uploaded"
-                              }
+                              alt={message.isImageGeneration ? "Generated Image" : "Uploaded"}
                               className="max-w-full h-auto rounded-lg border border-gray-600"
                               style={{ maxHeight: "300px" }}
                             />
                             {message.isImageGeneration && (
-                              <div className="mt-2 flex items-center space-x-2 text-xs text-purple-300">
+                              <div className="mt-2 flex items-center space-x-2 text-xs text-purple-300 select-none">
                                 <Sparkles className="w-3 h-3" />
                                 <span>AI Generated Image</span>
                               </div>
@@ -585,57 +629,50 @@ export default function ChatPage() {
                           </div>
                         )}
 
-                        {/* Render message content with code blocks */}
                         <div className="space-y-3">
-                          {detectCodeBlocks(message.content).map(
-                            (part, index) => (
-                              <div key={index}>
-                                {part.type === "code" ? (
-                                  <div className="relative">
-                                    <div className="flex items-center justify-between bg-gray-900 px-4 py-2 rounded-t-lg border-b border-gray-700">
-                                      <div className="flex items-center space-x-2">
-                                        <Code className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm text-gray-400 capitalize">
-                                          {part.language}
-                                        </span>
-                                      </div>
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() =>
-                                          copyToClipboard(part.content)
-                                        }
-                                        className="text-gray-400 hover:text-white h-6 px-2"
-                                      >
-                                        <Copy className="w-3 h-3" />
-                                      </Button>
+                          {detectCodeBlocks(message.content).map((part, index) => (
+                            <div key={index}>
+                              {part.type === "code" ? (
+                                <div className="relative">
+                                  <div className="flex items-center justify-between bg-gray-900 px-4 py-2 rounded-t-lg border-b border-gray-700 select-text">
+                                    <div className="flex items-center space-x-2">
+                                      <Code className="w-4 h-4 text-gray-400" />
+                                      <span className="text-sm text-gray-400 capitalize select-text">
+                                        {part.language}
+                                      </span>
                                     </div>
-                                    <SyntaxHighlighter
-                                      language={part.language}
-                                      style={vscDarkPlus}
-                                      customStyle={{
-                                        margin: 0,
-                                        borderRadius: "0 0 0.5rem 0.5rem",
-                                        fontSize: "0.875rem",
-                                      }}
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => copyToClipboard(part.content)}
+                                      className="text-gray-400 hover:text-white h-6 px-2"
+                                      aria-label="Copy code"
                                     >
-                                      {part.content}
-                                    </SyntaxHighlighter>
+                                      <Copy className="w-3 h-3" />
+                                    </Button>
                                   </div>
-                                ) : (
-                                  <div
-                                    className="prose prose-invert max-w-none"
-                                    dangerouslySetInnerHTML={{
-                                      __html: formatMessage(part.content),
+                                  <SyntaxHighlighter
+                                    language={part.language}
+                                    style={vscDarkPlus}
+                                    customStyle={{
+                                      margin: 0,
+                                      borderRadius: "0 0 0.5rem 0.5rem",
+                                      fontSize: "0.875rem",
                                     }}
-                                  />
-                                )}
-                              </div>
-                            )
-                          )}
+                                  >
+                                    {part.content}
+                                  </SyntaxHighlighter>
+                                </div>
+                              ) : (
+                                <div
+                                  className="prose prose-invert max-w-none break-words"
+                                  dangerouslySetInnerHTML={{ __html: formatMessage(part.content) }}
+                                />
+                              )}
+                            </div>
+                          ))}
                         </div>
 
-                        {/* Message Actions */}
                         {message.role === "assistant" && (
                           <div className="flex items-center space-x-2 mt-3 pt-3 border-t border-gray-700/50">
                             <Button
@@ -656,142 +693,140 @@ export default function ChatPage() {
               ))}
             </AnimatePresence>
 
+
             {/* Loading Indicator */}
             {isLoading && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 mr-12"
+                className="justify-end flex"
               >
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 max-w-[85%] md:max-w-[70%]">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
-                  <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                        <div
-                          className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.1s" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
-                      </div>
-                      <span className="text-gray-300 text-sm">
-                        CodeFusion is thinking...
-                      </span>
+                  <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-4 flex items-center space-x-3">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                      <div
+                        className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
                     </div>
+                    <span className="text-gray-300 text-sm select-none">
+                      CodeFusion is thinking...
+                    </span>
                   </div>
                 </div>
               </motion.div>
             )}
+
 
             <div ref={messagesEndRef} />
           </div>
         </div>
 
+
         {/* Input Area */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border-t border-gray-800 p-4">
-          <div className="max-w-4xl mx-auto">
+        <div className="bg-gray-900/50 backdrop-blur-sm border-t border-gray-800 p-4 flex-shrink-0">
+          <div className="max-w-4xl mx-auto px-2 sm:px-0">
             {selectedImage && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-4 p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 backdrop-blur-sm"
+                className="mb-4 p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 backdrop-blur-sm flex items-center justify-between"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <ImageIcon className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-white">
-                        {selectedImage.name}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {(selectedImage.size / 1024 / 1024).toFixed(1)} MB •
-                        Ready to analyze
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                    <ImageIcon className="w-5 h-5 text-white" />
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedImage(null)}
-                    className="text-gray-400 hover:text-white h-8 w-8 p-0"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
+                  <div className="min-w-0 overflow-hidden">
+                    <p className="text-sm font-medium text-white truncate">
+                      {selectedImage.name}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {(selectedImage.size / 1024 / 1024).toFixed(1)} MB • Ready to analyze
+                    </p>
+                  </div>
                 </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedImage(null)}
+                  className="text-gray-400 hover:text-white h-8 w-8 p-0 shrink-0"
+                  aria-label="Remove selected image"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
               </motion.div>
             )}
 
-            <div className="relative">
-              <div className="flex items-end space-x-3">
-                <div className="flex-1">
-                  <Textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Message CodeFusion AI... (Try: 'Generate an image of a sunset' or 'Create a React component')"
-                    className="min-h-[60px] max-h-[200px] bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 resize-none rounded-2xl px-4 py-3 pr-12 backdrop-blur-sm focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSendMessage();
-                      }
-                    }}
-                    disabled={isLoading}
-                  />
 
-                  { /* Input Actions*/ }
-                  <div className="absolute right-12 bottom-3 flex items-center space-x-5">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      className="hidden"
-                    />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={isLoading}
-                      className="text-yellow-400 hover:text-white h-12 w-12 p-12 "
-                    >
-                      <ImageIcon className="w-8 h-8" />
+            <div className="relative flex items-end space-x-3">
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Message CodeFusion AI... (Try: 'Generate an image of a sunset' or 'Create a React component')"
+                className="min-h-[60px] max-h-[200px] bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 resize-none rounded-2xl px-4 py-3 pr-12 backdrop-blur-sm focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 flex-1"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                disabled={isLoading}
+                aria-label="Chat input"
+              />
 
-                    </Button>
-                  </div>
-                </div>
 
+              {/* Input Actions */}
+              <div className="absolute right-12 bottom-3 flex items-center space-x-5">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
                 <Button
-                  onClick={handleSendMessage}
-                  disabled={isLoading || (!input.trim() && !selectedImage)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 h-13 w-10 px-8 rounded-2xl shadow-lg"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isLoading}
+                  className="text-yellow-400 hover:text-white h-12 w-12 p-0"
+                  aria-label="Upload image"
                 >
-                  {isLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4" />
-                  )}
+                  <ImageIcon className="w-8 h-8" />
                 </Button>
-              </div> 
-
-         
-
-            
-              {/* Quick Tips */}
-              <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center space-x-4">
-                  <span>💡 Try: "Generate an image of..."</span>
-                  <span>🔧 Or: "Create a React component"</span>
-                </div>
-                <div>Press Enter to send • Shift+Enter for new line</div>
               </div>
+
+
+              <Button
+                onClick={handleSendMessage}
+                disabled={isLoading || (!input.trim() && !selectedImage)}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 h-13 w-10 px-8 rounded-2xl shadow-lg flex items-center justify-center"
+                aria-label="Send message"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+              </Button>
+            </div>
+
+
+            {/* Quick Tips */}
+            <div className="mt-3 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="flex items-center space-x-4">
+                <span>💡 Try: "Generate an image of..."</span>
+                <span>🔧 Or: "Create a React component"</span>
+              </div>
+              <div>Press Enter to send • Shift+Enter for new line</div>
             </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -123,7 +122,6 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       }
       setSelectedImage(file);
       
-      // Create a preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setImagePreview(e.target?.result as string);
@@ -144,33 +142,27 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   };
 
   const enhancePrompt = () => {
-    // Simple prompt enhancement logic - in a real app, this would call an API
     const enhanced = `Create a complete, production-ready ${projectType} application with the following requirements: ${prompt}. 
     Include modern UI/UX design principles, responsive layout, accessibility features, and clean, maintainable code structure.`;
-    
     setPrompt(enhanced);
     toast.success('Prompt enhanced!');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!prompt.trim()) {
       toast.error('Please enter a project description');
       return;
     }
-
     const options: any = {
       projectType,
       aiModel,
       apiKey: customApiKey || undefined
     };
-
     if (selectedImage) {
       options.hasImage = true;
       options.imageFile = selectedImage;
     }
-
     if (projectType === 'fullstack') {
       options.frontendFramework = frontendFramework;
       options.backendFramework = backendFramework;
@@ -221,59 +213,47 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <button
               type="button"
               onClick={() => setProjectType('frontend')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md ${
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'frontend'
                   ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <div className="text-center">
-                <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-500" />
-                <h3 className="font-semibold">Frontend</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                Website UI/UX
-                </p>
-              </div>
+              <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-500" />
+              <h3 className="font-semibold">Frontend</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Website UI/UX</p>
             </button>
 
             <button
               type="button"
               onClick={() => setProjectType('backend')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md ${
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'backend'
                   ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <div className="text-center">
-                <Settings className="h-8 w-8 mx-auto mb-2 text-green-500" />
-                <h3 className="font-semibold">Backend</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  API & database logic
-                </p>
-              </div>
+              <Settings className="h-8 w-8 mx-auto mb-2 text-green-500" />
+              <h3 className="font-semibold">Backend</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">API & database logic</p>
             </button>
 
             <button
               type="button"
               onClick={() => setProjectType('fullstack')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md ${
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'fullstack'
                   ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-lg'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <div className="text-center">
-                <Globe className="h-8 w-8 mx-auto mb-2 text-purple-500" />
-                <h3 className="font-semibold">Full-Stack</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Complete application
-                </p>
-              </div>
+              <Globe className="h-8 w-8 mx-auto mb-2 text-purple-500" />
+              <h3 className="font-semibold">Full-Stack</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Complete application</p>
             </button>
           </div>
         </CardContent>
@@ -283,9 +263,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle>Project Description</CardTitle>
-          <CardDescription>
-            Describe what you want to build in detail
-          </CardDescription>
+          <CardDescription>Describe what you want to build in detail</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative">
@@ -342,6 +320,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                   size="sm"
                   onClick={removeImage}
                   className="h-6 w-6 p-0 text-gray-500 hover:text-red-500"
+                  aria-label="Remove image"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -361,12 +340,10 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Code2 className="h-5 w-5" />
-            {projectType === 'frontend' ? 'Frontend Framework' :
-             projectType === 'backend' ? 'Backend Framework' : 'Technology Stack'}
+            {projectType === 'frontend' ? 'Frontend Framework' : 
+              projectType === 'backend' ? 'Backend Framework' : 'Technology Stack'}
           </CardTitle>
-          <CardDescription>
-            {getProjectTypeDescription()}
-          </CardDescription>
+          <CardDescription>{getProjectTypeDescription()}</CardDescription>
         </CardHeader>
         <CardContent>
           {projectType === 'frontend' ? (
@@ -378,13 +355,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Select your preferred frontend technology. Live preview will be available in future.
               </p>
-
-            {/* Frontend Framework Dropdown */}
+              {/* Frontend Framework Dropdown */}
               <div className="space-y-4">
                 <button
                   type="button"
                   onClick={() => toggleSection('frontend')}
                   className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  aria-expanded={expandedSection === 'frontend'}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -425,9 +402,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                   </div>
                 )}
               </div>
-              </div>
-          
-            
+            </div>
           ) : projectType === 'backend' ? (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
@@ -437,12 +412,12 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Select your preferred backend technology. One click deploy in future.
               </p>
-
               <div className="space-y-4">
                 <button
                   type="button"
                   onClick={() => toggleSection('backend')}
                   className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  aria-expanded={expandedSection === 'backend'}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
@@ -502,6 +477,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                   type="button"
                   onClick={() => toggleSection('frontend')}
                   className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  aria-expanded={expandedSection === 'frontend'}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -549,6 +525,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                   type="button"
                   onClick={() => toggleSection('backend')}
                   className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  aria-expanded={expandedSection === 'backend'}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
@@ -596,6 +573,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                   type="button"
                   onClick={() => toggleSection('database')}
                   className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  aria-expanded={expandedSection === 'database'}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
@@ -648,9 +626,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
             <Settings className="h-5 w-5" />
             Advanced Options
           </CardTitle>
-          <CardDescription>
-            Customize AI model and additional settings
-          </CardDescription>
+          <CardDescription>Customize AI model and additional settings</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -692,13 +668,11 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       value={customApiKey}
                       onChange={(e) => setCustomApiKey(e.target.value)}
                     />
-                    <p className="text-xs text-gray-500">
-                      Required for OpenRouter models
-                    </p>
+                    <p className="text-xs text-gray-500">Required for OpenRouter models</p>
                   </div>
                 )}
 
-                {(aiModel === 'gpt-4o' || aiModel === 'gpt-4' || 
+                {(aiModel === 'gpt-4o' || aiModel === 'gpt-4' ||
                   aiModel === 'claude-3-opus' || aiModel === 'claude-3-sonnet') && (
                   <div className="space-y-2">
                     <Label>API Key (Optional)</Label>
@@ -795,5 +769,3 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
     </div>
   );
 };
-
-
