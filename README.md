@@ -291,10 +291,22 @@ CodeFusion AI delivers an enterprise-grade AI-powered website builder, combining
 **This marks the proud launch of my very first startup project.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) 
-[![Node.js](https://img.shields.io/badge/Node.js-18+-blue)](https://nodejs.org/en/) 
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/) 
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-blue?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/) 
-[![AI Models](https://img.shields.io/badge/AI%20Models-8+-blueviolet)](#) 
-[![Deploy](https://img.shields.io/badge/Deployment-Vercel%20|%20Netlify-brightgreen)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-blue?logo=tailwind-css)](https://tailwindcss.com/) 
+[![Polar.sh](https://img.shields.io/badge/Polar.sh-Payment-blueviolet)](https://polar.sh/) 
+[![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-yellowgreen)](https://firebase.google.com/) 
+[![Firebase Auth](https://img.shields.io/badge/Firebase_Auth-Yes-yellowgreen)](https://firebase.google.com/products/auth)
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)](https://github.com/) 
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel-brightgreen?logo=vercel)](https://vercel.com/) 
+[![Railway](https://img.shields.io/badge/Deployment-Railway-brightgreen?logo=railway)](https://railway.app/)
+[![Hugging Face](https://img.shields.io/badge/HuggingFace-ML-orange?logo=huggingface)](https://huggingface.co/)
+[![OpenAI Agents SDK](https://img.shields.io/badge/OpenAI_Agents-blueviolet)](https://openai.com/)
+[![Gemini](https://img.shields.io/badge/Gemini-AI-blue)](#)
+[![AI Models](https://img.shields.io/badge/AI%20Models-8+-blueviolet)](#)
+
 
 CodeFusion AI is a comprehensive, production-ready AI-powered website builder supporting **30+ programming languages**.  
 It enables users to generate **frontend**, **backend**, or **full-stack** websites with integrated databases using modern technologies — all powered by advanced AI models.  
