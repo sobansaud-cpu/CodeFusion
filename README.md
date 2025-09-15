@@ -305,7 +305,12 @@ CodeFusion AI delivers an enterprise-grade AI-powered website builder, combining
 [![Hugging Face](https://img.shields.io/badge/HuggingFace-ML-orange?logo=huggingface)](https://huggingface.co/)
 [![OpenAI Agents SDK](https://img.shields.io/badge/OpenAI_Agents-blueviolet)](https://openai.com/)
 [![Gemini](https://img.shields.io/badge/Gemini-AI-blue)](#)
-[![AI Models](https://img.shields.io/badge/AI%20Models-8+-blueviolet)](#)
+[![EasyPaisa](https://img.shields.io/badge/EasyPaisa-Payment-blue?logo=easypaisa)](#)
+[![JazzCash](https://img.shields.io/badge/JazzCash-Payment-red?logo=jazzcash)](#)
+[![Hostinger](https://img.shields.io/badge/Hostinger-Hosting-purple?logo=hostinger)](https://www.hostinger.com/)
+[![Startup](https://img.shields.io/badge/Startup-SobanSaud-orange)](#)
+[![1000$ Challenge](https://img.shields.io/badge/Challenge-1000%24-red)](#)
+
 
 
 CodeFusion AI is a comprehensive, production-ready AI-powered website builder supporting **30+ programming languages**.  
