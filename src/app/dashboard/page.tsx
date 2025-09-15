@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -489,10 +490,10 @@ export default function DashboardPage() {
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
-                            <Link href={`/preview/${project.id}`} target="_blank">
+                            {/* <Link href={`/preview/${project.id}`} target="_blank">
                               <Eye className="w-4 h-4 mr-2" />
                               View Live
-                            </Link>
+                            </Link> */}
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
                             <Link href={`/builder?view=${project.id}`}>
@@ -536,12 +537,12 @@ export default function DashboardPage() {
                           Edit
                         </Link>
                       </Button>
-                      <Button variant="outline" size="sm" className="flex-1" asChild>
+                      {/* <Button variant="outline" size="sm" className="flex-1" asChild>
                         <Link href={`/preview/${project.id}`} target="_blank">
                           <Play className="w-4 h-4 mr-2" />
                           Preview
                         </Link>
-                      </Button>
+                      </Button> */}
                       <Button 
                         variant="outline" 
                         size="sm" 
