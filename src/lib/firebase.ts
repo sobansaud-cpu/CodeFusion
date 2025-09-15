@@ -2,13 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { initializeFirestore, persistentLocalCache } from "firebase/firestore";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAUUXe9HssGwJGZwG6TlAEoon7QWSg1x5g",
-  authDomain: "my-startup-71f49.firebaseapp.com",
-  projectId: "my-startup-71f49",
-  storageBucket: "my-startup-71f49.appspot.com",
-  messagingSenderId: "225212801671",
-  appId: "1:225212801671:web:a9ceb17eb42f0c935c8e22",
+  apiKey: "AIzaSyCX94C55vOE13zBmx6gN545H7gfwEGVRfc",
+  authDomain: "codefusion-49c5b.firebaseapp.com",
+  projectId: "codefusion-49c5b",
+  storageBucket: "codefusion-49c5b.firebasestorage.app",
+  messagingSenderId: "537454391445",
+  appId: "1:537454391445:web:8d36fdbcc808599d62ab9c"
 };
 
 const app = initializeApp(firebaseConfig);
