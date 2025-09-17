@@ -128,7 +128,8 @@ function PaymentSelectionPageInner() {
 
     // ✅ Redirect directly to Polar.sh checkout link for Pro plan
     window.location.href =
-      'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_U1bJ7wnspUO2KQInV1i9snbwsfJOQuesac1E14F2AFY/redirect';
+    "https://buy.polar.sh/polar_cl_uUeyg1Ax7ItNiOjjNGBUkr3OoxiWPNsJYRaZG0koZtR/redirect";
+// 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_U1bJ7wnspUO2KQInV1i9snbwsfJOQuesac1E14F2AFY/redirect';
 
     // If you want to first show success then redirect later:
     // router.push('/payment-success?method=polar&plan=' + plan);

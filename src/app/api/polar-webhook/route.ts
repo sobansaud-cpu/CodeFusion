@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
-// Sandbox credentials
-const POLAR_PRO_PRODUCT_ID = '0547adf0-d790-473c-99a9-ba56d65c06df';
-const POLAR_WEBHOOK_SECRET = 'polar_whs_P1rJZFTGG2d7nce535LLDScO80zlhSmmhthNG4gQ01n';
+// Live credentials
+// const POLAR_PRO_PRODUCT_ID = '0547adf0-d790-473c-99a9-ba56d65c06df';
+// const POLAR_WEBHOOK_SECRET = 'polar_whs_P1rJZFTGG2d7nce535LLDScO80zlhSmmhthNG4gQ01n';
+const POLAR_PRO_PRODUCT_ID = 'b2b22887-75f1-438f-a77d-f715748504dd';
+const POLAR_WEBHOOK_SECRET = 'polar_whs_BkAE2k4vfB9lic8GwDv3K5GfmPM89mDaHxOUR0qyUUo';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -13,7 +15,7 @@ export async function POST(req: NextRequest) {
   // For now, assume it's valid
 
   try {
-    // Handle Polar.sh sandbox order events
+    // Handle Polar.sh Live  order events
     if ((body.type === 'order.created' || body.type === 'order.updated' || body.type === 'order.paid') && body.data.product_id === POLAR_PRO_PRODUCT_ID && body.data.status === 'paid') {
       const data = body.data;
       const userEmail = data.customer?.email || '';
