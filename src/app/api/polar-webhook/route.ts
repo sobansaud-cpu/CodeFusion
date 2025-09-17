@@ -3,8 +3,6 @@ import { db } from '@/lib/firebase';
 import { doc, updateDoc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 // Live credentials
-// const POLAR_PRO_PRODUCT_ID = '0547adf0-d790-473c-99a9-ba56d65c06df';
-// const POLAR_WEBHOOK_SECRET = 'polar_whs_P1rJZFTGG2d7nce535LLDScO80zlhSmmhthNG4gQ01n';
 const POLAR_PRO_PRODUCT_ID = 'b2b22887-75f1-438f-a77d-f715748504dd';
 const POLAR_WEBHOOK_SECRET = 'polar_whs_BkAE2k4vfB9lic8GwDv3K5GfmPM89mDaHxOUR0qyUUo';
 

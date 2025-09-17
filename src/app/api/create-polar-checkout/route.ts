@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get('userId');
-  // const productId = 'a66f61fa-8ed2-46b9-a2e2-44475e5a401d'; // Pro plan product ID
   const productId = 'b2b22887-75f1-438f-a77d-f715748504dd';
   const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?plan=pro`;
   const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`;
