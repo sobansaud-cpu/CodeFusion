@@ -20,9 +20,6 @@ import {
   Zap
 } from 'lucide-react';
 
-
-
-
 function PaymentSelectionPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -129,10 +126,6 @@ function PaymentSelectionPageInner() {
     // ✅ Redirect directly to Polar.sh checkout link for Pro plan
     window.location.href =
     "https://buy.polar.sh/polar_cl_uUeyg1Ax7ItNiOjjNGBUkr3OoxiWPNsJYRaZG0koZtR";
-// 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_U1bJ7wnspUO2KQInV1i9snbwsfJOQuesac1E14F2AFY/redirect';
-
-    // If you want to first show success then redirect later:
-    // router.push('/payment-success?method=polar&plan=' + plan);
   } catch (error) {
     console.error('Error processing payment:', error);
     alert('Error processing payment. Please try again.');
@@ -146,10 +139,6 @@ function PaymentSelectionPageInner() {
     router.push('/pricing');
   };
 
-  // if (!user) {
-  //   router.push('');
-  //   return null;
-  // }
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -174,7 +163,6 @@ function PaymentSelectionPageInner() {
             </p>
             <div className="mt-4">
               <Badge variant="default" className="text-lg px-4 py-2">
-                {/* <DollarSign className="h-4 w-4 mr-2" /> */}
                 ${amount}
               </Badge>
             </div>

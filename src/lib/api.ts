@@ -1,5 +1,3 @@
-
-
 export interface GenerateSiteRequest {
   prompt: string;
   language: string;
