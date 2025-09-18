@@ -90,6 +90,11 @@ Explore the live site: [https://www.codefusion.site/](https://www.codefusion.sit
 
 ---
 
+## 📂 Frontend Repository
+
+- Github Repo:
+  [https://github.com/sobansaud-cpu/CodeFusion](https://github.com/sobansaud-cpu/CodeFusion)
+
 ## 📂 Backend Repositories & Running URLs
 
 - Hugging Face Backend Repo:  
