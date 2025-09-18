@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -19,18 +19,14 @@ import {
   X,
   Trash2,
   Edit3,
-  Settings,
   LogOut,
   ChevronLeft,
-  ChevronRight,
   Code,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-
 
 interface Message {
   id: string;
@@ -43,7 +39,6 @@ interface Message {
   codeLanguage?: string;
 }
 
-
 interface ChatConversation {
   id: string;
   title: string;
@@ -52,69 +47,45 @@ interface ChatConversation {
   updatedAt: Date;
 }
 
-
 export default function ChatPage() {
   const { user, signOut } = useAuth();
 
-
-  // Chat state
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
-  const [currentConversationId, setCurrentConversationId] = useState<
-    string | null
-  >(null);
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-
-  // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [editingConversationId, setEditingConversationId] = useState<
-    string | null
-  >(null);
+  const [editingConversationId, setEditingConversationId] = useState<string | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
 
-
-  // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
 
-
-  // Initialize with welcome message
   useEffect(() => {
     if (conversations.length === 0) {
       createNewConversation();
     }
   }, []);
 
-
-  // Load conversation messages when switching
   useEffect(() => {
     if (currentConversationId) {
-      const conversation = conversations.find(
-        (c) => c.id === currentConversationId
-      );
-      if (conversation) {
-        setMessages(conversation.messages);
-      }
+      const conversation = conversations.find((c) => c.id === currentConversationId);
+      if (conversation) setMessages(conversation.messages);
     }
   }, [currentConversationId, conversations]);
 
-
-  // Auto-scroll to bottom
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-
-  // Focus edit input when editing starts
   useEffect(() => {
     if (editingConversationId && editInputRef.current) {
       editInputRef.current.focus();
@@ -122,14 +93,15 @@ export default function ChatPage() {
     }
   }, [editingConversationId]);
 
-
-  // Helper functions
   const generateConversationTitle = (firstMessage: string): string => {
     const words = firstMessage.split(" ").slice(0, 6);
     return words.join(" ") + (firstMessage.split(" ").length > 6 ? "..." : "");
   };
 
+  // Responsive toggle for sidebar in small screens will be controlled by sidebarOpen state
+  // Layout adjustments will use Tailwind CSS flex-col on mobile and flex-row on medium+ screens
 
+  // Create new conversation with welcome message
   const createNewConversation = () => {
     const welcomeMessage: Message = {
       id: "1",
@@ -140,7 +112,6 @@ export default function ChatPage() {
       type: "text",
     };
 
-
     const newConversation: ChatConversation = {
       id: Date.now().toString(),
       title: "New Chat",
@@ -149,61 +120,42 @@ export default function ChatPage() {
       updatedAt: new Date(),
     };
 
-
     setConversations((prev) => [newConversation, ...prev]);
     setCurrentConversationId(newConversation.id);
     setMessages([welcomeMessage]);
   };
 
-
   const deleteConversation = (conversationId: string) => {
     setConversations((prev) => prev.filter((c) => c.id !== conversationId));
     if (currentConversationId === conversationId) {
       const remaining = conversations.filter((c) => c.id !== conversationId);
-      if (remaining.length > 0) {
-        setCurrentConversationId(remaining[0].id);
-      } else {
-        createNewConversation();
-      }
+      if (remaining.length > 0) setCurrentConversationId(remaining[0].id);
+      else createNewConversation();
     }
   };
 
-
-  const updateConversationTitle = (
-    conversationId: string,
-    newTitle: string
-  ) => {
+  const updateConversationTitle = (conversationId: string, newTitle: string) => {
     setConversations((prev) =>
       prev.map((c) =>
-        c.id === conversationId
-          ? { ...c, title: newTitle, updatedAt: new Date() }
-          : c
+        c.id === conversationId ? { ...c, title: newTitle, updatedAt: new Date() } : c
       )
     );
     setEditingConversationId(null);
     setEditingTitle("");
   };
 
-
-  const updateConversationMessages = (
-    conversationId: string,
-    newMessages: Message[]
-  ) => {
+  const updateConversationMessages = (conversationId: string, newMessages: Message[]) => {
     setConversations((prev) =>
       prev.map((c) =>
-        c.id === conversationId
-          ? { ...c, messages: newMessages, updatedAt: new Date() }
-          : c
+        c.id === conversationId ? { ...c, messages: newMessages, updatedAt: new Date() } : c
       )
     );
   };
-
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
-        // 10MB limit
         toast.error("Image size must be less than 10MB");
         return;
       }
@@ -212,7 +164,6 @@ export default function ChatPage() {
     }
   };
 
-
   const handleSendMessage = async () => {
     if (!input.trim() && !selectedImage) return;
     if (!user) {
@@ -220,12 +171,10 @@ export default function ChatPage() {
       return;
     }
 
-
     if (!currentConversationId) {
       createNewConversation();
       return;
     }
-
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -236,28 +185,21 @@ export default function ChatPage() {
       imageUrl: selectedImage ? URL.createObjectURL(selectedImage) : undefined,
     };
 
-
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
 
-
-    // Update conversation title if it's the first user message
     if (messages.length === 1 && messages[0].role === "assistant") {
       const title = generateConversationTitle(userMessage.content);
       updateConversationTitle(currentConversationId, title);
     }
 
-
     setInput("");
     setIsLoading(true);
-
 
     try {
       let response;
 
-
       if (selectedImage) {
-        // Convert image to base64
         const reader = new FileReader();
         const imageBase64 = await new Promise<string>((resolve) => {
           reader.onload = () => {
@@ -268,22 +210,18 @@ export default function ChatPage() {
           reader.readAsDataURL(selectedImage);
         });
 
-
-        response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/chat/image`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              message: input.trim() || "Analyze this image",
-              userId: user.uid,
-              imageData: imageBase64,
-              conversationId: currentConversationId,
-            }),
-          }
-        );
+        response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/image`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: input.trim() || "Analyze this image",
+            userId: user.uid,
+            imageData: imageBase64,
+            conversationId: currentConversationId,
+          }),
+        });
       } else {
         response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
           method: "POST",
@@ -298,14 +236,9 @@ export default function ChatPage() {
         });
       }
 
-
-      if (!response.ok) {
-        throw new Error("Failed to get AI response");
-      }
-
+      if (!response.ok) throw new Error("Failed to get AI response");
 
       const data = await response.json();
-
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -317,16 +250,12 @@ export default function ChatPage() {
         isImageGeneration: data.intent === "image_generation",
       };
 
-
       const finalMessages = [...newMessages, aiResponse];
       setMessages(finalMessages);
       updateConversationMessages(currentConversationId, finalMessages);
 
-
       setSelectedImage(null);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
       console.error("Chat error:", error);
       toast.error("Failed to get AI response. Please try again.");
@@ -335,15 +264,12 @@ export default function ChatPage() {
     }
   };
 
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard!");
   };
 
-
   const formatMessage = (content: string) => {
-    // Simple markdown-like formatting
     return content
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.*?)\*/g, "<em>$1</em>")
@@ -353,37 +279,27 @@ export default function ChatPage() {
       );
   };
 
-
   const detectCodeBlocks = (content: string) => {
     const codeBlockRegex = /``````/g;
     const parts = [];
     let lastIndex = 0;
     let match;
 
-
     while ((match = codeBlockRegex.exec(content)) !== null) {
-      // Add text before code block
       if (match.index > lastIndex) {
         parts.push({
           type: "text",
           content: content.slice(lastIndex, match.index),
         });
       }
-
-
-      // Add code block
       parts.push({
         type: "code",
-        language: match[1] || "javascript",
-        content: match[2].trim(),
+        language: "javascript",
+        content: match[1].trim(),
       });
-
-
       lastIndex = match.index + match[0].length;
     }
 
-
-    // Add remaining text
     if (lastIndex < content.length) {
       parts.push({
         type: "text",
@@ -391,34 +307,29 @@ export default function ChatPage() {
       });
     }
 
-
     return parts.length > 0 ? parts : [{ type: "text", content }];
   };
-
 
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
           <Bot className="w-16 h-16 mx-auto mb-4 text-blue-400" />
-          <h2 className="text-2xl font-bold text-white mb-2">
-            Sign in to continue
-          </h2>
+          <h2 className="text-2xl font-bold text-white mb-2">Sign in to continue</h2>
           <p className="text-gray-400">Please sign in to use Ask CodeFusion</p>
         </div>
       </div>
     );
   }
 
-
   return (
     <div className="h-screen bg-gray-900 text-white flex flex-col md:flex-row overflow-hidden">
       {/* Sidebar */}
       <motion.div
         initial={false}
-        animate={{ width: sidebarOpen ? 260 : 0 }}
+        animate={{ width: sidebarOpen ? (window.innerWidth < 768 ? "100%" : 260) : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="bg-gray-950 border-r border-gray-800 flex flex-col overflow-hidden shrink-0 z-20"
+        className="bg-gray-950 border-r border-gray-800 flex flex-col overflow-hidden shrink-0 z-20 md:w-64"
       >
         <div className="p-4 border-b border-gray-800">
           <Button
@@ -430,9 +341,7 @@ export default function ChatPage() {
           </Button>
         </div>
 
-
-        {/* Conversations List */}
-        <div className="flex-1 overflow-y-auto p-2 min-w-[220px] max-w-xs">
+        <div className="flex-1 overflow-y-auto p-2 min-w-[220px] max-w-xs md:max-w-none">
           <AnimatePresence>
             {conversations.map((conversation) => (
               <motion.div
@@ -443,7 +352,10 @@ export default function ChatPage() {
                 className={`group relative mb-2 rounded-lg p-3 cursor-pointer transition-all hover:bg-gray-800 ${
                   currentConversationId === conversation.id ? "bg-gray-800" : ""
                 }`}
-                onClick={() => setCurrentConversationId(conversation.id)}
+                onClick={() => {
+                  setCurrentConversationId(conversation.id);
+                  if(window.innerWidth < 768) setSidebarOpen(false);
+                }}
               >
                 <div className="flex items-center space-x-2">
                   <MessageSquare className="w-4 h-4 text-gray-400 flex-shrink-0" />
@@ -452,15 +364,10 @@ export default function ChatPage() {
                       ref={editInputRef}
                       value={editingTitle}
                       onChange={(e) => setEditingTitle(e.target.value)}
-                      onBlur={() =>
-                        updateConversationTitle(conversation.id, editingTitle)
-                      }
+                      onBlur={() => updateConversationTitle(conversation.id, editingTitle)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
-                          updateConversationTitle(
-                            conversation.id,
-                            editingTitle
-                          );
+                          updateConversationTitle(conversation.id, editingTitle);
                         } else if (e.key === "Escape") {
                           setEditingConversationId(null);
                           setEditingTitle("");
@@ -469,14 +376,10 @@ export default function ChatPage() {
                       className="bg-gray-700 border-gray-600 text-white text-sm h-6 px-2"
                     />
                   ) : (
-                    <span className="text-sm text-gray-300 truncate flex-1">
-                      {conversation.title}
-                    </span>
+                    <span className="text-sm text-gray-300 truncate flex-1">{conversation.title}</span>
                   )}
                 </div>
 
-
-                {/* Conversation Actions */}
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
                   <Button
                     variant="ghost"
@@ -509,17 +412,13 @@ export default function ChatPage() {
           </AnimatePresence>
         </div>
 
-
-        {/* User Profile */}
         <div className="p-4 border-t border-gray-800 flex-shrink-0">
           <div className="flex items-center space-x-3 min-w-0">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shrink-0">
               <User className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">
-                {user?.displayName || user?.email || "User"}
-              </p>
+              <p className="text-sm font-medium text-white truncate">{user?.displayName || user?.email || "User"}</p>
             </div>
             <Button
               variant="ghost"
@@ -534,7 +433,6 @@ export default function ChatPage() {
         </div>
       </motion.div>
 
-
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
@@ -544,14 +442,10 @@ export default function ChatPage() {
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-white md:hidden"
               aria-label="Toggle Sidebar"
             >
-              {sidebarOpen ? (
-                <ChevronLeft className="w-4 h-4" />
-              ) : (
-                <Menu className="w-4 h-4" />
-              )}
+              {sidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
@@ -570,7 +464,6 @@ export default function ChatPage() {
           </div>
         </div>
 
-
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-6">
           <div className="max-w-4xl mx-auto flex flex-col space-y-6">
@@ -586,7 +479,7 @@ export default function ChatPage() {
                   }`}
                 >
                   <div
-                    className={`flex space-x-4 max-w-[100%] sm:max-w-[85%] md:max-w-[70%] ${
+                    className={`flex space-x-4 max-w-full sm:max-w-[85%] md:max-w-[70%] ${
                       message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
                     }`}
                   >
@@ -628,7 +521,6 @@ export default function ChatPage() {
                             )}
                           </div>
                         )}
-
                         <div className="space-y-3">
                           {detectCodeBlocks(message.content).map((part, index) => (
                             <div key={index}>
@@ -693,14 +585,8 @@ export default function ChatPage() {
               ))}
             </AnimatePresence>
 
-
-            {/* Loading Indicator */}
             {isLoading && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="justify-end flex"
-              >
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="justify-end flex">
                 <div className="flex space-x-4 max-w-[85%] md:max-w-[70%]">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                     <Bot className="w-4 h-4 text-white" />
@@ -708,28 +594,18 @@ export default function ChatPage() {
                   <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-4 flex items-center space-x-3">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                      <div
-                        className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.1s" }}
-                      ></div>
-                      <div
-                        className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.2s" }}
-                      ></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                     </div>
-                    <span className="text-gray-300 text-sm select-none">
-                      CodeFusion is thinking...
-                    </span>
+                    <span className="text-gray-300 text-sm select-none">CodeFusion is thinking...</span>
                   </div>
                 </div>
               </motion.div>
             )}
 
-
             <div ref={messagesEndRef} />
           </div>
         </div>
-
 
         {/* Input Area */}
         <div className="bg-gray-900/50 backdrop-blur-sm border-t border-gray-800 p-4 flex-shrink-0">
@@ -745,9 +621,7 @@ export default function ChatPage() {
                     <ImageIcon className="w-5 h-5 text-white" />
                   </div>
                   <div className="min-w-0 overflow-hidden">
-                    <p className="text-sm font-medium text-white truncate">
-                      {selectedImage.name}
-                    </p>
+                    <p className="text-sm font-medium text-white truncate">{selectedImage.name}</p>
                     <p className="text-xs text-gray-400">
                       {(selectedImage.size / 1024 / 1024).toFixed(1)} MB • Ready to analyze
                     </p>
@@ -765,7 +639,6 @@ export default function ChatPage() {
               </motion.div>
             )}
 
-
             <div className="relative flex items-end space-x-3">
               <Textarea
                 value={input}
@@ -782,8 +655,6 @@ export default function ChatPage() {
                 aria-label="Chat input"
               />
 
-
-              {/* Input Actions */}
               <div className="absolute right-12 bottom-3 flex items-center space-x-5">
                 <input
                   ref={fileInputRef}
@@ -804,23 +675,16 @@ export default function ChatPage() {
                 </Button>
               </div>
 
-
               <Button
                 onClick={handleSendMessage}
                 disabled={isLoading || (!input.trim() && !selectedImage)}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 h-13 w-10 px-8 rounded-2xl shadow-lg flex items-center justify-center"
                 aria-label="Send message"
               >
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Send className="w-4 h-4" />
-                )}
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4" />}
               </Button>
             </div>
 
-
-            {/* Quick Tips */}
             <div className="mt-3 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 space-y-2 sm:space-y-0 sm:space-x-4">
               <div className="flex items-center space-x-4">
                 <span>💡 Try: "Generate an image of..."</span>
