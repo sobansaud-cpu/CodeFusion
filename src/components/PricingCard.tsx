@@ -66,20 +66,6 @@ export const PricingCard: React.FC<PricingCardProps> = ({
           </div>
         ))}
       </CardContent>
-      
-      {/* <CardFooter>
-        <Button
-          className={`w-full ${
-            plan.id === 'pro'
-              ? 'bg-blue-600 hover:bg-blue-700'
-              : 'bg-gray-700 hover:bg-gray-600'
-          }`}
-          onClick={() => onSelect(plan)}
-          disabled={isCurrentPlan || loading}
-        >
-          {isCurrentPlan ? 'Current Plan' : `Choose ${plan.name}`}
-        </Button>
-      </CardFooter> */}
 
       <CardFooter>
   <Button
