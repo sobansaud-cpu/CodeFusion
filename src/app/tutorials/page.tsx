@@ -171,16 +171,16 @@ export default function TutorialsPage() {
       </main>
 
       {/* Chatbot Section */}
-      <section className="mt-20 max-w-screen-2xl mx-auto px-6">
+      <section className="mt-20 max-w-screen-2xl mx-auto px-4 sm:px-6">
         <Card className="bg-gradient-to-r from-purple-900 to-pink-900 border border-purple-600 rounded-xl shadow-lg">
-          <CardContent className="p-12 text-center">
-            <h2 className="text-4xl font-extrabold text-white mb-6">Need Personalized Help?</h2>
-            <p className="text-gray-200 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
+          <CardContent className="p-6 sm:p-8 md:p-12 text-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 sm:mb-6">Need Personalized Help?</h2>
+            <p className="text-gray-200 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
               Our AI-powered chatbot can answer your specific questions about CodeFusion AI, help you write better prompts, and guide you through any challenges you're facing.
             </p>
             <Button
               size="lg"
-              className="bg-white text-purple-900 hover:bg-gray-100 font-semibold px-10 py-4 rounded-lg shadow-lg transition-colors"
+              className="bg-white text-purple-900 hover:bg-gray-100 font-semibold px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg shadow-lg transition-colors"
             >
               <Link href="/chat" className="block">
                 Chat with AI Assistant
