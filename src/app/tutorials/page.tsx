@@ -63,7 +63,7 @@ export default function TutorialsPage() {
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 w-full">
       <header className="text-center mb-14 max-w-screen-2xl mx-auto px-6">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">CodeFusion.ai Tutorials</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">CodeFusion.AI Tutorials</h1>
         <p className="text-lg text-gray-300 max-w-3xl mx-auto">
           Learn everything you need to get started and succeed with CodeFusion AI through our curated video tutorials.
         </p>
@@ -85,7 +85,7 @@ export default function TutorialsPage() {
               <img
                 src={playlistThumbnail}
                 alt="Complete CodeFusion AI Playlist"
-                className="w-full h-48 object-cover rounded-lg"
+                className="w-full h-full object-cover rounded-lg"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 transition-opacity rounded-lg">
                 <Button
@@ -107,7 +107,7 @@ export default function TutorialsPage() {
                   e.stopPropagation();
                   openPlaylist();
                 }}
-                className="bg-white text-blue-800 font-bold px-10 py-3 rounded-lg shadow-lg hover:bg-gray-100 transition-colors"
+                className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white font-bold px-10 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 size="lg"
               >
                 View Playlist
@@ -126,13 +126,13 @@ export default function TutorialsPage() {
               className="bg-gray-800 border border-gray-700 rounded-xl shadow-md hover:shadow-lg transform hover:scale-[1.03] transition-transform duration-300"
             >
               <div
-                className="relative rounded-t-xl overflow-hidden cursor-pointer"
+                className="relative rounded-t-xl overflow-hidden cursor-pointer aspect-video"
                 onClick={() => openVideo(videoId)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openVideo(videoId)}
               >
-                <img src={thumbnail} alt={title} className="w-full h-64 object-cover" />
+                <img src={thumbnail} alt={title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-90 bg-black/60 transition-opacity rounded-t-xl">
                   <Button
                     size="lg"
@@ -157,7 +157,7 @@ export default function TutorialsPage() {
               <div className="px-10 pb-10">
                 <Button
                   onClick={() => openVideo(videoId)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center justify-center py-4 rounded-lg shadow-md"
+                  className="w-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white font-semibold flex items-center justify-center py-4 rounded-lg shadow-md transform hover:scale-105 transition-all duration-300"
                   aria-label={`Watch tutorial: ${title}`}
                   size="lg"
                 >

@@ -157,11 +157,11 @@ export default function HomePage() {
           <img
             src="/CODEFUSION.png"
             alt="Logo"
-            className="mb-8 h-72 w-[28rem] max-w-[90vw] object-contain rounded-3xl shadow-2xl border-4 border-purple-400"
+            className="mb-6 sm:mb-8 h-48 sm:h-60 md:h-72 w-auto max-w-[90vw] object-contain rounded-3xl shadow-2xl border-4 border-purple-400"
             style={{ boxShadow: '0 8px 48px #a855f7, 0 1px 0 #fff' }}
           />
           <h1
-            className="text-6xl md:text-8xl font-extrabold text-white text-center mb-4 animate-welcome"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white text-center mb-4 animate-welcome px-4"
             style={{
               letterSpacing: '2px',
               textShadow: '0 4px 32px #a855f7, 0 1px 0 #fff',
