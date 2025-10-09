@@ -463,7 +463,7 @@ function BuilderPageContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 sm:p-6 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-full mx-auto space-y-8">
         {/* Header Section */}
         <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center space-y-6 md:space-y-0">
           <div className="space-y-3 flex-1 min-w-0">
@@ -472,14 +472,14 @@ function BuilderPageContent() {
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent truncate">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent truncate">
                   {actionMode === 'edit' ? 'Edit Project' :
                    actionMode === 'view' ? 'View Project' :
                    actionMode === 'download' ? 'Downloading...' :
                    actionMode === 'github' ? 'Push to GitHub' :
                    'AI Website Builder'}
                 </h1>
-                <p className="text-gray-300 text-lg truncate">
+                <p className="text-gray-300 text-base sm:text-lg truncate">
                   {actionMode === 'edit' ? 'Add new features or modify your existing project' :
                    actionMode === 'view' ? 'Review your project code' :
                    actionMode === 'download' ? 'Downloading your project files...' :
@@ -548,14 +548,14 @@ function BuilderPageContent() {
 
         {/* Main Content by Action Mode */}
         {actionMode === 'generate' ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)] overflow-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-250px)]">
             {/* Left Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl flex flex-col">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl flex flex-col">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-white truncate">Describe Your Project</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-white truncate">Describe Your Project</h2>
               </div>
               <div className="flex-grow min-h-0 overflow-auto">
                 <EnhancedPromptForm
@@ -570,15 +570,15 @@ function BuilderPageContent() {
             {/* Right Panel */}
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden flex flex-col">
               {isGenerating ? (
-                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6">
+                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6 text-center">
                   <div className="relative mb-6">
                     <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
                       <Loader2 className="w-10 h-10 text-white animate-spin" />
                     </div>
                     <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">AI is generating your project...</h3>
-                  <p className="text-gray-300 text-lg">This may take a few moments</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">AI is generating your project...</h3>
+                  <p className="text-gray-300 text-base sm:text-lg">This may take a few moments</p>
                   <div className="flex space-x-2 justify-center mt-6" aria-hidden="true">
                     <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -598,18 +598,18 @@ function BuilderPageContent() {
                   // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
                 />
               ) : (
-                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6">
+                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6 text-center">
                   <div className="relative mb-6">
                     <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
                       <div className="text-4xl">🚀</div>
                     </div>
                     <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-pulse" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-3">Ready to create?</h3>
-                  <p className="text-gray-300 text-lg max-w-md mx-auto text-center">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">Ready to create?</h3>
+                  <p className="text-gray-300 text-base sm:text-lg max-w-md mx-auto">
                     Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
                   </p>
-                  <div className="flex items-center justify-center space-x-4 text-sm text-gray-400 mt-6">
+                  <div className="flex flex-wrap items-center justify-center space-x-4 text-sm text-gray-400 mt-6">
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-blue-500 rounded-full" />Frontend</div>
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-purple-500 rounded-full" />Backend</div>
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-green-500 rounded-full" />Database</div>
@@ -619,13 +619,13 @@ function BuilderPageContent() {
             </div>
           </div>
         ) : actionMode === 'edit' && currentProject ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-300px)] overflow-auto">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-250px)]">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
                   <Save className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-white">Edit Your Project</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Edit Your Project</h2>
               </div>
               <div className="space-y-6">
                 <div>
@@ -652,7 +652,7 @@ function BuilderPageContent() {
                     <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white">Generate New Content</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">Generate New Content</h3>
                   </div>
                   <p className="text-sm text-gray-300 mb-4">
                     Describe what you want to add or modify in your existing project. The AI will integrate the new content with your current project structure.
@@ -752,7 +752,7 @@ function BuilderPageContent() {
                   </div>
                 </div>
                 
-                <div className="flex space-x-4 pt-6">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 pt-6">
                   <Button 
                     onClick={() => handleSaveProject()}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-2 px-6 transition-all duration-200 transform hover:scale-105"
@@ -773,13 +773,13 @@ function BuilderPageContent() {
             </div>
 
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden">
-              <div className="p-6 border-b border-gray-600/50 bg-gradient-to-r from-gray-800 to-gray-700">
+              <div className="p-4 sm:p-6 border-b border-gray-600/50 bg-gradient-to-r from-gray-800 to-gray-700">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                     <Code className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white">Project Code</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">Project Code</h3>
                     <p className="text-gray-300 text-sm">Review and edit your generated code</p>
                   </div>
                 </div>
@@ -798,7 +798,7 @@ function BuilderPageContent() {
             </div>
           </div>
         ) : actionMode === 'edit' && !currentProject ? (
-          <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+          <div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
             <div className="text-center space-y-4">
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
@@ -806,20 +806,20 @@ function BuilderPageContent() {
                 </div>
                 <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Loading Project for Editing...</h3>
-              <p className="text-gray-300 text-lg">Please wait while we load your project files</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Loading Project for Editing...</h3>
+              <p className="text-gray-300 text-base sm:text-lg">Please wait while we load your project files</p>
             </div>
           </div>
         ) : actionMode === 'view' && currentProject ? (
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600/50 shadow-2xl">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl">
             <div className="mb-8">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <Eye className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-white mb-2">{currentProject.name}</h2>
-                  <p className="text-gray-300 text-lg">{currentProject.prompt}</p>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{currentProject.name}</h2>
+                  <p className="text-gray-300 text-base sm:text-lg">{currentProject.prompt}</p>
                 </div>
               </div>
             </div>
@@ -836,7 +836,7 @@ function BuilderPageContent() {
             />
           </div>
         ) : actionMode === 'download' ? (
-          <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+          <div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
             <div className="text-center space-y-4">
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto">
@@ -844,12 +844,12 @@ function BuilderPageContent() {
                 </div>
                 <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-full opacity-20 animate-ping" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Preparing Download...</h3>
-              <p className="text-gray-300 text-lg">Creating ZIP file with your project files</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Preparing Download...</h3>
+              <p className="text-gray-300 text-base sm:text-lg">Creating ZIP file with your project files</p>
             </div>
           </div>
         ) : actionMode === 'github' ? (
-          <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+          <div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
             <div className="text-center space-y-4">
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center mx-auto">
@@ -857,13 +857,13 @@ function BuilderPageContent() {
                 </div>
                 <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full opacity-20 animate-ping" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Setting up GitHub Push...</h3>
-              <p className="text-gray-300 text-lg">Connecting to GitHub and preparing your repository</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Setting up GitHub Push...</h3>
+              <p className="text-gray-300 text-base sm:text-lg">Connecting to GitHub and preparing your repository</p>
             </div>
           </div>
         ) : (
           // Loading and fallback UI for unhandled modes or loading states
-          <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+          <div className="flex items-center justify-center min-h-[calc(100vh-250px)]">
             <div className="text-center space-y-4">
               <div className="relative">
                 <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
@@ -871,8 +871,8 @@ function BuilderPageContent() {
                 </div>
                 <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Loading...</h3>
-              <p className="text-gray-300 text-lg">Please wait...</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Loading...</h3>
+              <p className="text-gray-300 text-base sm:text-lg">Please wait...</p>
             </div>
           </div>
         )}

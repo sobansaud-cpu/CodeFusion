@@ -150,36 +150,36 @@ export const CodePreview: React.FC<CodePreviewProps> = ({
   return (
     <div className="h-full flex flex-col bg-gray-900">
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2 p-4 border-b border-gray-700 bg-gray-800">
+      <div className="flex flex-wrap gap-2 p-2 sm:p-4 border-b border-gray-700 bg-gray-800">
         <Button 
           size="sm" 
           onClick={onDownload} 
           variant="outline"
-          className="bg-gray-700 hover:bg-gray-600"
+          className="bg-gray-700 hover:bg-gray-600 text-xs sm:text-sm"
         >
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="h-4 w-4 mr-1 sm:mr-2" />
           Download ZIP
         </Button>
         <Button
           size="sm"
           onClick={onGithubPush}
           variant="outline"
-          className="bg-gray-700 hover:bg-gray-600"
+          className="bg-gray-700 hover:bg-gray-600 text-xs sm:text-sm"
         >
-          <Github className="h-4 w-4 mr-2" />
+          <Github className="h-4 w-4 mr-1 sm:mr-2" />
           Push to GitHub
         </Button>
         <Button
           size="sm"
           onClick={fixProject}
           variant="outline"
-          className="bg-orange-700 hover:bg-orange-600"
+          className="bg-orange-700 hover:bg-orange-600 text-xs sm:text-sm"
           disabled={isFixing}
         >
           {isFixing ? (
-            <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+            <RefreshCw className="h-4 w-4 mr-1 sm:mr-2 animate-spin" />
           ) : (
-            <Wrench className="h-4 w-4 mr-2" />
+            <Wrench className="h-4 w-4 mr-1 sm:mr-2" />
           )}
           {isFixing ? 'Fixing...' : 'Fix Project'}
         </Button>
@@ -189,106 +189,91 @@ export const CodePreview: React.FC<CodePreviewProps> = ({
       <div className="flex border-b border-gray-700">
         {/* Only show code and terminal buttons, remove previewMode logic */}
         <button
-          className={`flex items-center px-4 py-2 text-sm font-medium bg-gray-700 text-white border-b-2 border-blue-500`}
+          className={`flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium bg-gray-700 text-white border-b-2 border-blue-500`}
         >
-          <Code className="h-4 w-4 mr-2" />
+          <Code className="h-4 w-4 mr-1 sm:mr-2" />
           Code
         </button>
         
         {/* Terminal button is commented out for backend projects */}
         {false && (
           <button
-            className={`flex items-center px-4 py-2 text-sm font-medium text-gray-400 hover:text-white`}
+            className={`flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-400 hover:text-white`}
           >
-            <Terminal className="h-4 w-4 mr-2" />
+            <Terminal className="h-4 w-4 mr-1 sm:mr-2" />
             Terminal
           </button>
         )}
       </div>
 
-      <div className="flex-1 flex overflow-hidden">
-        {/* Only render code and terminal views, remove previewMode logic */}
-        {/* Code View */}
-        <>
-          {/* File Tree */}
-          <div className="w-64 bg-gray-800 border-r border-gray-700 p-4 overflow-y-auto">
-            <h3 className="text-sm font-medium text-gray-300 mb-3">Files</h3>
-            <div className="space-y-1">
-              {validFiles.length > 0 ? (
-                validFiles.map((file, index) => (
-                  <button
-                    key={`${file.path}-${index}`}
-                    onClick={() => setSelectedFile(file.path)}
-                    className={`block w-full text-left px-3 py-2 rounded text-sm truncate ${
-                      selectedFile === file.path
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700'
-                    }`}
-                    title={file.path}
-                  >
-                    {file.path}
-                  </button>
-                ))
-              ) : (
-                <div className="text-gray-400 text-sm p-2">
-                  No files available
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Code Editor */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {currentFile && currentFile.path && currentFile.content ? (
-              <>
-                <div className="flex justify-between items-center p-3 bg-gray-800 border-b border-gray-700">
-                  <span className="text-sm text-gray-300 truncate" title={currentFile.path}>
-                    {currentFile.path}
-                  </span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => copyToClipboard(currentFile.content)}
-                    className="text-gray-300 hover:text-white"
-                  >
-                    <Copy className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex-1 overflow-auto">
-                  <SyntaxHighlighter
-                    language={getLanguage(currentFile.path)}
-                    style={vscDarkPlus}
-                    customStyle={{
-                      margin: 0,
-                      padding: '1rem',
-                      background: 'transparent',
-                      fontSize: '14px',
-                      height: '100%',
-                    }}
-                    showLineNumbers
-                  >
-                    {currentFile.content}
-                  </SyntaxHighlighter>
-                </div>
-              </>
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        {/* File Tree */}
+        <div className="w-full lg:w-64 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-2 sm:p-4 overflow-y-auto max-h-48 lg:max-h-full">
+          <h3 className="text-sm font-medium text-gray-300 mb-3">Files</h3>
+          <div className="space-y-1">
+            {validFiles.length > 0 ? (
+              validFiles.map((file, index) => (
+                <button
+                  key={`${file.path}-${index}`}
+                  onClick={() => setSelectedFile(file.path)}
+                  className={`block w-full text-left px-2 sm:px-3 py-1.5 sm:py-2 rounded text-xs sm:text-sm truncate ${
+                    selectedFile === file.path
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-300 hover:bg-gray-700'
+                  }`}
+                  title={file.path}
+                >
+                  {file.path}
+                </button>
+              ))
             ) : (
-              <div className="flex-1 flex items-center justify-center text-gray-400">
-                <p>No file selected or file content is empty</p>
+              <div className="text-gray-400 text-xs sm:text-sm p-2">
+                No files available
               </div>
             )}
           </div>
-        </>
+        </div>
 
-        {/* TerminalRunner is commented out for backend projects */}
-        {/* {false && (
-          <div className="flex-1">
-            <TerminalRunner
-              files={validFiles}
-              framework={language}
-              projectId={projectId || ''}
-            />
-          </div>
-        )} */}
+        {/* Code Editor */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {currentFile && currentFile.path && currentFile.content ? (
+            <>
+              <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-800 border-b border-gray-700">
+                <span className="text-xs sm:text-sm text-gray-300 truncate" title={currentFile.path}>
+                  {currentFile.path}
+                </span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => copyToClipboard(currentFile.content)}
+                  className="text-gray-300 hover:text-white"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex-1 overflow-auto">
+                <SyntaxHighlighter
+                  language={getLanguage(currentFile.path)}
+                  style={vscDarkPlus}
+                  customStyle={{
+                    margin: 0,
+                    padding: '1rem',
+                    background: 'transparent',
+                    fontSize: '12px',
+                    height: '100%',
+                  }}
+                  showLineNumbers
+                >
+                  {currentFile.content}
+                </SyntaxHighlighter>
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-gray-400 p-4 text-center">
+              <p>No file selected or file content is empty</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
