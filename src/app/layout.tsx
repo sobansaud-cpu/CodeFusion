@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://codefusion-ai.com',
   },
+    icons: {
+    icon: '/CODEFUSION.png',
+    shortcut: '/CODEFUSION.png',
+    apple: '/CODEFUSION.png',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
