@@ -1,7 +1,12 @@
 {
-  "name": "CodeFusion AI",
-  "short_name": "CodeFusion",
-  "description": "AI-powered website builder",
+  "name": "CodeFusion AI - AI-Powered Website Builder",
+  "short_name": "CodeFusion AI",
+  "description": "Transform your ideas into beautiful websites using the power of AI. Generate, customize, and deploy websites in minutes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/CODEFUSION.png",
@@ -13,9 +18,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#a855f7"
+  ]
 }
