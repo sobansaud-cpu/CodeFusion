@@ -54,18 +54,24 @@ export const Navbar: React.FC = () => {
               style={{ animation: 'spin 6s linear infinite' }}
             />
           </div>
-          <span className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-wide">
+           <img
+              src="/logostart.png"
+              alt="CodeFusionAI Logo"
+              className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full shadow-lg transition-transform group-hover:scale-110 animate-spin-slow"
+              style={{ animation: 'spin 6s linear infinite' }}
+            />
+          <span className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-wide whitespace-nowrap">
             CodeFusion AI
           </span>
         </Link>
 
   {/* Desktop Navigation */}
-  <div className="hidden md:flex space-x-12 items-center">
+  <div className="hidden md:flex space-x-12 items-center md:ml-16 lg:ml-20">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="relative text-gray-300 hover:text-white transition duration-200 font-medium tracking-wide group"
+              className={`relative text-gray-300 hover:text-white transition duration-200 font-medium tracking-wide group ${label === 'Contact' ? 'mr-6' : ''}`}
             >
               {label}
               <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-blue-500 transition-all group-hover:w-full" />
@@ -74,9 +80,10 @@ export const Navbar: React.FC = () => {
         </div>
 
   {/* Right Section */}
-  <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-6">
           {user ? (
             <>
+             
               <Link href="/dashboard">
                 <Button variant="ghost" className="text-white hover:bg-white/10">
                   <User className="h-4 w-4 mr-2" />
