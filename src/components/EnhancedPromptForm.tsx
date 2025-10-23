@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef , useEffect} from 'react';
+import { useAuth } from "@/context/AuthContext";
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
@@ -40,6 +41,7 @@ interface EnhancedPromptFormProps {
   loading: boolean;
   remainingGenerations: number;
   initialPrompt?: string;
+  userPlan?: string; // 'free' | 'pro' etc. Controls which frameworks/databases to show
 }
 
 const FRONTEND_FRAMEWORKS = [
@@ -99,6 +101,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   loading,
   remainingGenerations,
   initialPrompt = ''
+  , userPlan = 'free'
 }) => {
   const [prompt, setPrompt] = useState(initialPrompt);
   const [projectType, setProjectType] = useState<'frontend' | 'backend' | 'fullstack'>('frontend');
@@ -112,6 +115,49 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [expandedSection, setExpandedSection] = useState<'frontend' | 'backend' | 'database' | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  
+  // Determine plan: prefer prop, otherwise context
+  const { userProfile } = useAuth();
+  const plan = (userPlan as string) || userProfile?.plan || 'free';
+  const isPremium = plan === 'pro' || plan === 'premium';
+
+  // Filtered option lists based on plan
+  const frontendOptions = isPremium
+    ? FRONTEND_FRAMEWORKS
+    : FRONTEND_FRAMEWORKS.filter((f) => ['html', 'nextjs', 'gatsby', 'vue'].includes(f.value));
+
+  const backendOptions = isPremium
+    ? BACKEND_FRAMEWORKS
+    : [
+        // selected 8 backend options for free users
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
+      ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
+
+  const databaseOptions = isPremium
+    ? DATABASE_TYPES
+    : DATABASE_TYPES.filter((d) => ['mongodb', 'redis', 'oracle', 'couchdb', 'mysql'].includes(d.value));
+
+  // Ensure selected values remain valid if user plan changes or lists are filtered
+  useEffect(() => {
+    if (!frontendOptions.some((f) => f.value === frontendFramework)) {
+      setFrontendFramework(frontendOptions[0]?.value || 'html');
+    }
+    if (!backendOptions.some((b) => b.value === backendFramework)) {
+      setBackendFramework(backendOptions[0]?.value || BACKEND_FRAMEWORKS[0].value);
+    }
+    if (!databaseOptions.some((d) => d.value === databaseType)) {
+      setDatabaseType(databaseOptions[0]?.value || DATABASE_TYPES[0].value);
+    }
+  }, [plan]);
+
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -181,7 +227,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
     } else if (projectType === 'backend') {
       return 'Generate a backend API with database integration and terminal execution';
     } else {
-      return `Generate a complete full-stack application with ${FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.label} frontend, ${BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.label} backend, and ${DATABASE_TYPES.find(d => d.value === databaseType)?.label} database`;
+      return `Generate a complete full-stack application with ${frontendOptions.find(f => f.value === frontendFramework)?.label} frontend, ${backendOptions.find(f => f.value === backendFramework)?.label} backend, and ${databaseOptions.find(d => d.value === databaseType)?.label} database`;
     }
   };
 
@@ -368,7 +414,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                     <div className="text-left">
                       <h3 className="font-semibold">Frontend Framework</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.label}
+                        {frontendOptions.find(f => f.value === frontendFramework)?.label}
                       </p>
                     </div>
                   </div>
@@ -386,7 +432,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         <SelectValue placeholder="Select a frontend framework" />
                       </SelectTrigger>
                       <SelectContent>
-                        {FRONTEND_FRAMEWORKS.map((framework) => (
+                          {frontendOptions.map((framework) => (
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
@@ -397,7 +443,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       </SelectContent>
                     </Select>
                     <p className="text-xs text-gray-500 mt-2">
-                      {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.description}
+                      {frontendOptions.find(f => f.value === frontendFramework)?.description}
                     </p>
                   </div>
                 )}
@@ -424,7 +470,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                     <div className="text-left">
                       <h3 className="font-semibold">Backend Framework</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.label}
+                        {backendOptions.find(f => f.value === backendFramework)?.label}
                       </p>
                     </div>
                   </div>
@@ -442,7 +488,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         <SelectValue placeholder="Select a backend framework" />
                       </SelectTrigger>
                       <SelectContent>
-                        {BACKEND_FRAMEWORKS.map((framework) => (
+                        {backendOptions.map((framework) => (
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
@@ -453,7 +499,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       </SelectContent>
                     </Select>
                     <p className="text-xs text-gray-500 mt-2">
-                      {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.description}
+                      {backendOptions.find(f => f.value === backendFramework)?.description}
                     </p>
                   </div>
                 )}
@@ -502,7 +548,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         <SelectValue placeholder="Select a frontend framework" />
                       </SelectTrigger>
                       <SelectContent>
-                        {FRONTEND_FRAMEWORKS.map((framework) => (
+                        {frontendOptions.map((framework) => (
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
@@ -513,7 +559,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       </SelectContent>
                     </Select>
                     <p className="text-xs text-gray-500 mt-2">
-                      {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.description}
+                      {frontendOptions.find(f => f.value === frontendFramework)?.description}
                     </p>
                   </div>
                 )}
@@ -532,7 +578,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                     <div className="text-left">
                       <h3 className="font-semibold">Backend Framework</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.label}
+                        {backendOptions.find(f => f.value === backendFramework)?.label}
                       </p>
                     </div>
                   </div>
@@ -550,7 +596,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         <SelectValue placeholder="Select a backend framework" />
                       </SelectTrigger>
                       <SelectContent>
-                        {BACKEND_FRAMEWORKS.map((framework) => (
+                        {backendOptions.map((framework) => (
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
@@ -561,7 +607,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       </SelectContent>
                     </Select>
                     <p className="text-xs text-gray-500 mt-2">
-                      {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.description}
+                      {backendOptions.find(f => f.value === backendFramework)?.description}
                     </p>
                   </div>
                 )}
@@ -580,7 +626,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                     <div className="text-left">
                       <h3 className="font-semibold">Database</h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {DATABASE_TYPES.find(d => d.value === databaseType)?.label}
+                        {databaseOptions.find(d => d.value === databaseType)?.label}
                       </p>
                     </div>
                   </div>
@@ -598,7 +644,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         <SelectValue placeholder="Select a database" />
                       </SelectTrigger>
                       <SelectContent>
-                        {DATABASE_TYPES.map((db) => (
+                        {databaseOptions.map((db) => (
                           <SelectItem key={db.value} value={db.value}>
                             <div className="flex items-center gap-2">
                               <span>{db.icon}</span>
@@ -609,7 +655,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       </SelectContent>
                     </Select>
                     <p className="text-xs text-gray-500 mt-2">
-                      {DATABASE_TYPES.find(d => d.value === databaseType)?.description}
+                      {databaseOptions.find(d => d.value === databaseType)?.description}
                     </p>
                   </div>
                 )}
@@ -750,14 +796,14 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 'Full-Stack Application'
               }</p>
               {projectType === 'frontend' ? (
-                <p><strong>Framework:</strong> {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.label}</p>
+                <p><strong>Framework:</strong> {frontendOptions.find(f => f.value === frontendFramework)?.label}</p>
               ) : projectType === 'backend' ? (
-                <p><strong>Framework:</strong> {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.label}</p>
+                <p><strong>Framework:</strong> {backendOptions.find(f => f.value === backendFramework)?.label}</p>
               ) : (
                 <>
-                  <p><strong>Frontend:</strong> {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.label}</p>
-                  <p><strong>Backend:</strong> {BACKEND_FRAMEWORKS.find(f => f.value === backendFramework)?.label}</p>
-                  <p><strong>Database:</strong> {DATABASE_TYPES.find(d => d.value === databaseType)?.label}</p>
+                  <p><strong>Frontend:</strong> {frontendOptions.find(f => f.value === frontendFramework)?.label}</p>
+                  <p><strong>Backend:</strong> {backendOptions.find(f => f.value === backendFramework)?.label}</p>
+                  <p><strong>Database:</strong> {databaseOptions.find(d => d.value === databaseType)?.label}</p>
                 </>
               )}
               <p><strong>AI Model:</strong> {AI_MODELS.find(m => m.value === aiModel)?.label}</p>

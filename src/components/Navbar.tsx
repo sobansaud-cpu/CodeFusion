@@ -9,6 +9,8 @@ import {
   LogOut,
   User,
   Linkedin,
+  Youtube,
+  Github,
   Twitter,
   Menu,
   X,
@@ -22,6 +24,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { href: '/tutorials', label: 'Tutorials' },
+    { href: '/features', label: 'Features' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
@@ -56,8 +59,8 @@ export const Navbar: React.FC = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-8 items-center">
+  {/* Desktop Navigation */}
+  <div className="hidden md:flex space-x-12 items-center">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -70,8 +73,8 @@ export const Navbar: React.FC = () => {
           ))}
         </div>
 
-        {/* Right Section */}
-        <div className="hidden md:flex items-center space-x-3">
+  {/* Right Section */}
+  <div className="hidden md:flex items-center space-x-6">
           {user ? (
             <>
               <Link href="/dashboard">
@@ -175,6 +178,12 @@ export const Navbar: React.FC = () => {
                   onClick={closeMobileMenu}
                 >
                   <Linkedin className="h-5 w-5" />
+                </a>
+                    <a href="http://www.youtube.com/@CodeVerseSoban" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">
+                <Youtube className='h-5 w-5'/>
+                </a>
+                <a href="https://github.com/Sobansaud" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">
+                <Github className='h-5 w-5'/>
                 </a>
               </div>
 

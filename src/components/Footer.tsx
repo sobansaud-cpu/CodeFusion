@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Code2, Github, Twitter, X, Linkedin, Mail } from 'lucide-react';
+import { Code2, Github, Twitter,Youtube , X, Linkedin, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -25,6 +25,7 @@ export const Footer: React.FC = () => {
               >
                 <Github className="h-5 w-5 text-gray-400 hover:text-white transition" />
               </a>
+           
               <a
                 href="https://x.com/Sobansaud12345"
                 target="_blank"
@@ -41,6 +42,14 @@ export const Footer: React.FC = () => {
               >
                 <Linkedin className="h-5 w-5 text-gray-400 hover:text-white transition" />
               </a>
+                   <a
+                href="http://www.youtube.com/@CodeVerseSoban"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <Youtube className="h-5 w-5 text-gray-400 hover:text-white transition" />
+              </a>
             </div>
           </div>
 
@@ -50,6 +59,9 @@ export const Footer: React.FC = () => {
             <div className="space-y-2">
               <Link href="/builder" className="block text-gray-400 hover:text-white text-sm">
                 Website Builder
+              </Link>
+              <Link href="/features" className="block text-gray-400 hover:text-white text-sm">
+                Features
               </Link>
               <Link href="/tutorials" className="block text-gray-400 hover:text-white text-sm">
                 Tutorials
@@ -64,6 +76,14 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Community</h3>
             <div className="space-y-2">
+              <a
+                href="https://www.linkedin.com/in/muhammad-soban-saud-235a6b2ba"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-gray-400 hover:text-white text-sm"
+              >
+                LinkedIn
+              </a>
               <a
                 href="https://x.com/Sobansaud12345"
                 target="_blank"
@@ -80,14 +100,16 @@ export const Footer: React.FC = () => {
               >
                 GitHub
               </a>
-              <a
-                href="https://www.linkedin.com/in/muhammad-soban-saud-235a6b2ba"
-                target="_blank"
-                rel="noopener noreferrer"
+                     <a 
+                href="http://www.youtube.com/@CodeVerseSoban"
+                target='_blank'
+                rel="noopener norefferer"
                 className="block text-gray-400 hover:text-white text-sm"
-              >
-                LinkedIn
+                >
+                YouTube
               </a>
+              
+
             </div>
           </div>
 

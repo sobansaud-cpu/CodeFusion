@@ -65,7 +65,7 @@ export default function AboutPage() {
         {/* My Profile */}
         <div className="flex flex-col items-center text-center mb-16">
           <motion.img
-            src="/pro2.png" // Make sure this path is correct for your updated image
+            src="/professional.png" // Make sure this path is correct for your updated image
             alt="Soban Saud"
             className="w-48 h-48 rounded-full mb-4 object-cover border-4 border-blue-600 shadow-lg hover:scale-105 transition-transform"
             whileHover={{ rotate: 2 }}
@@ -166,7 +166,7 @@ export default function AboutPage() {
             <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="flex-1 flex justify-center">
                 <img
-                  src="/pro2.png" // Make sure this path is correct for your updated image
+                  src="/about.png" // Make sure this path is correct for your updated image
                   alt="Soban Saud"
                   className="rounded-2xl shadow-md object-cover w-full md:w-[80%] max-w-sm" // Adjusted for better sizing
                 />

@@ -563,6 +563,7 @@ function BuilderPageContent() {
                   loading={isGenerating}
                   remainingGenerations={remainingGenerations}
                   initialPrompt={initialPrompt}
+                  userPlan={userProfile?.plan}
                 />
               </div>
             </div>
