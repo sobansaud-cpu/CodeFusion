@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Code2, Users, Zap, Globe, Heart } from 'lucide-react';
 import { FaLinkedin, FaXTwitter, FaGithub } from 'react-icons/fa6'
 import { motion } from 'framer-motion';
+import { FaYoutube } from 'react-icons/fa';
 
 export default function AboutPage() {
   const stats = [
@@ -196,6 +197,14 @@ export default function AboutPage() {
                     className="text-white hover:text-blue-500 transition"
                   >
                     <FaLinkedin size={32} />
+                  </a>
+                  <a
+                    href="http://www.youtube.com/@CodeVerseSoban"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-gray-400 transition"
+                  >
+                    <FaYoutube size={32} />
                   </a>
                   <a
                     href="https://github.com/Sobansaud"
