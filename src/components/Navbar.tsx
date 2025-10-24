@@ -46,14 +46,14 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2 group" onClick={closeMobileMenu}>
-          <div className="flex items-center justify-center">
+          {/* <div className="flex items-center justify-center">
             <img
               src="/logostart.png"
               alt="CodeFusionAI Logo"
               className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full shadow-lg transition-transform group-hover:scale-110 animate-spin-slow"
               style={{ animation: 'spin 6s linear infinite' }}
             />
-          </div>
+          </div> */}
            <img
               src="/logostart.png"
               alt="CodeFusionAI Logo"
