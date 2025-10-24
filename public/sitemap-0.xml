@@ -22,12 +22,12 @@
     </url>
 
     <!-- Core Product Pages -->
-    <url>
+    <!-- <url>
         <loc>https://codefusion.site/builder</loc>
         <lastmod>2025-10-11T21:30:23.900Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
-    </url>
+    </url> -->
 
     <url>
         <loc>https://codefusion.site/features</loc>
@@ -66,12 +66,12 @@
     </url>
 
     <!-- User Pages -->
-    <url>
+    <!-- <url>
         <loc>https://codefusion.site/dashboard</loc>
         <lastmod>2025-10-11T21:30:23.900Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
-    </url>
+    </url> -->
 
     <url>
         <loc>https://codefusion.site/login</loc>
@@ -103,12 +103,12 @@
     </url>
 
     <!-- Additional Pages -->
-    <url>
+    <!-- <url>
         <loc>https://codefusion.site/chat</loc>
         <lastmod>2025-10-11T21:30:23.900Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
-    </url>
+    </url> -->
 
     <url>
         <loc>https://codefusion.site/preview</loc>
