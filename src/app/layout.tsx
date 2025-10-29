@@ -66,12 +66,13 @@ export default function RootLayout({
             }),
           }}
         />
+        <meta name="google-adsense-account" content="ca-pub-6372962861432779"></meta>
       </Head>
       <body className={`${inter.className} bg-black text-white min-h-screen`}>
         <AuthProvider>
           <ProjectProvider>
             <div className="flex flex-col min-h-screen">
-              <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT}`}
+              <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6372962861432779"
      crossOrigin="anonymous"></Script>
               <Navbar />
               <main className="flex-1">
