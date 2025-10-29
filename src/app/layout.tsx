@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProjectProvider } from "@/context/ProjectConext";
 import { Toaster } from "@/components/ui/sonner";
@@ -66,11 +67,12 @@ export default function RootLayout({
           }}
         />
       </Head>
-
       <body className={`${inter.className} bg-black text-white min-h-screen`}>
         <AuthProvider>
           <ProjectProvider>
             <div className="flex flex-col min-h-screen">
+              <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT}`}
+     crossOrigin="anonymous"></Script>
               <Navbar />
               <main className="flex-1">
                 {children}
