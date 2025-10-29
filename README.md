@@ -116,7 +116,7 @@ Explore the live site: [https://www.codefusion.site/](https://www.codefusion.sit
 **EasyPaisa/JazzCash**  
 - Account Name: Muhammad Noaman Saud  
 - Account Number: 03232204085  
-- Amount: Rs. 6000 (Pro Plan)  
+- Amount: Rs. 2800 (Pro Plan)  
 
 **Polar.sh**  
 - Credit/Debit Cards: Visa, MasterCard, American Express  
