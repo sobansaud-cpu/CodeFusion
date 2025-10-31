@@ -1,6 +1,28 @@
+# Global rules
 User-agent: *
-Disallow:
+Allow: /
 
-# Allow Google and other bots to crawl everything by default. If you have private
-# areas behind auth, they should remain inaccessible without login.
+# Specific rules for Google bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+# Host preference (canonical)
+Host: https://codefusion.site
+
+# Sitemap
 Sitemap: https://codefusion.site/sitemap.xml
+
+# Important: Keep auth-required pages secure through proper auth checks,
+# not through robots.txt restrictions
