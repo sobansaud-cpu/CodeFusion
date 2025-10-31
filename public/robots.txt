@@ -1,0 +1,6 @@
+User-agent: *
+Disallow:
+
+# Allow Google and other bots to crawl everything by default. If you have private
+# areas behind auth, they should remain inaccessible without login.
+Sitemap: https://codefusion.site/sitemap.xml

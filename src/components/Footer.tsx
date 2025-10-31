@@ -130,6 +130,12 @@ export const Footer: React.FC = () => {
                 <Mail className="h-4 w-4 mr-2" />
                 sobansaud3@gmail.com
               </a>
+              <Link href={'/privacy' as any} className="block text-gray-400 hover:text-white text-sm mt-2">
+                Privacy Policy
+              </Link>
+              <Link href={'/terms' as any} className="block text-gray-400 hover:text-white text-sm mt-1">
+                Terms &amp; Conditions
+              </Link>
               <p className="text-gray-500 text-xs mt-2">
                 Based in Pakistan, building globally with ❤️
               </p>
