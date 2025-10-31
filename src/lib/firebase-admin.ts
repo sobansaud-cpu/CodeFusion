@@ -14,7 +14,7 @@ const app = getApps().length === 0
     })
   : getApps()[0];
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export const auth = {
   async getUserProjects(userId: string) {

@@ -69,6 +69,9 @@ export const Footer: React.FC = () => {
               <Link href="/pricing" className="block text-gray-400 hover:text-white text-sm">
                 Pricing
               </Link>
+              <Link href={'/feedback' as any} className="block text-gray-400 hover:text-white text-sm">
+                Feedback
+              </Link>
             </div>
           </div>
 
