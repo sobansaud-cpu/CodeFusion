@@ -69,9 +69,9 @@ export const Footer: React.FC = () => {
               <Link href="/pricing" className="block text-gray-400 hover:text-white text-sm">
                 Pricing
               </Link>
-              <Link href={'/feedback' as any} className="block text-gray-400 hover:text-white text-sm">
+              {/* <Link href={'/feedback' as any} className="block text-gray-400 hover:text-white text-sm">
                 Feedback
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -79,6 +79,9 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Community</h3>
             <div className="space-y-2">
+              <Link href="/feedback" className="block text-gray-400 hover:text-white text-sm">
+                Feedback
+              </Link>
               <a
                 href="https://www.linkedin.com/in/muhammad-soban-saud-235a6b2ba"
                 target="_blank"
