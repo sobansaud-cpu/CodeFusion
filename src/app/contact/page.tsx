@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, FormEvent, ChangeEvent } from 'react';
@@ -6,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin, MessageCircle, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ export default function ContactPage() {
       if (res.success) {
         setSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
       } else {
         alert("Submission failed. Try again.");
       }
@@ -62,150 +65,170 @@ export default function ContactPage() {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email',
       content: 'sobansaud3@gmail.com',
-      description: 'Send us an email anytime',
+      description: '24/7 available',
+      color: 'from-purple-400 to-purple-300'
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone',
       content: '+92 329 9274846',
-      description: '',
+      description: 'Mon-Fri 9AM-6PM',
+      color: 'from-indigo-400 to-indigo-300'
     },
     {
       icon: <MapPin className="h-6 w-6" />,
-      title: 'Residence',
+      title: 'Location',
       content: 'Karachi, Pakistan',
-      description: 'Located in the heart of the city',
+      description: 'Heart of innovation',
+      color: 'from-cyan-400 to-cyan-300'
     },
     {
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'Live Chat',
       content: 'Available 24/7',
-      description: 'Chat with our support team',
+      description: 'Instant support',
+      color: 'from-purple-400 to-cyan-400'
     },
   ];
 
-const faqs = [
-  {
-    question: 'How does CodeFusion AI work?',
-    answer:
-      'Just describe your idea in plain English, and our AI instantly generates a complete, functional, and responsive website with clean code.',
-  },
-  {
-    question: 'What technologies does it support?',
-    answer:
-      'CodeFusion AI supports 30+ programming languages and frameworks including HTML, CSS, JavaScript, React, Next.js, Vue.js, Angular, Python, Django, Flask, Node.js, and many more.',
-  },
-  {
-    question: 'Can I customize the generated code?',
-    answer:
-      'Yes! You get full access to the source code. You can edit, modify, and extend it however you like with no restrictions.',
-  },
-  {
-    question: 'Is there a free trial available?',
-    answer:
-      'Yes, you can explore CodeFusion AI for free with limited features. Upgrade anytime to unlock the full power of automation.',
-  },
-  {
-    question: 'Will I be able to preview and deploy my projects?',
-    answer:
-      'Currently, you can generate and edit projects, but live preview and one-click deploy options are coming very soon in future updates.',
-  },
-  {
-    question: 'Does CodeFusion AI integrate with GitHub?',
-    answer:
-      'Absolutely! You can export your projects directly to GitHub for version control, collaboration, or deployment.',
-  },
-];
-
+  const faqs = [
+    {
+      question: 'How does CodeFusion AI work?',
+      answer: 'Just describe your idea in plain English, and our AI instantly generates a complete, functional, and responsive website with clean code.',
+    },
+    {
+      question: 'What technologies does it support?',
+      answer: 'CodeFusion AI supports 30+ programming languages and frameworks including HTML, CSS, JavaScript, React, Next.js, Vue.js, Angular, Python, Django, Flask, Node.js, and many more.',
+    },
+    {
+      question: 'Can I customize the generated code?',
+      answer: 'Yes! You get full access to the source code. You can edit, modify, and extend it however you like with no restrictions.',
+    },
+    {
+      question: 'Is there a free trial available?',
+      answer: 'Yes, you can explore CodeFusion AI for free with limited features. Upgrade anytime to unlock the full power of automation.',
+    },
+    {
+      question: 'Will I be able to preview and deploy my projects?',
+      answer: 'Currently, you can generate and edit projects, but live preview and one-click deploy options are coming very soon in future updates.',
+    },
+    {
+      question: 'Does CodeFusion AI integrate with GitHub?',
+      answer: 'Absolutely! You can export your projects directly to GitHub for version control, collaboration, or deployment.',
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] 
+                        bg-gradient-radial from-purple-600/20 via-transparent to-transparent blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px]
+                        bg-gradient-to-t from-cyan-500/10 via-transparent to-transparent blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Hero */}
+        <div className="text-center mb-20">
+          <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-6 tracking-tight">
             Get in Touch
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Have questions about CodeFusion AI? We'd love to hear from you. 
-            Send us a message and we'll respond as soon as possible.
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
+            Have questions, feedback, or partnership ideas? We're here 24/7 to help you build the future.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {/* Contact Form */}
-          <Card className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Send us a message</CardTitle>
+          <Card className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl overflow-hidden">
+            <CardHeader className="pb-8">
+              <CardTitle className="text-3xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                Send us a message
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {submitted ? (
-                <div className="text-center py-8">
-                  <div className="text-green-500 text-6xl mb-4">✓</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
-                  <p className="text-gray-400">
-                    Thank you for contacting us. We'll get back to you within 24 hours.
+                <div className="text-center py-16">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <CheckCircle2 className="h-24 w-24 mx-auto mb-6 text-cyan-400" />
+                  </motion.div>
+                  <h3 className="text-3xl font-black text-white mb-3">Message Sent!</h3>
+                  <p className="text-gray-300 text-lg">
+                    Thank you for reaching out. We'll get back to you within 24 hours.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={submitHandler} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form onSubmit={submitHandler} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="name" className="text-gray-300">Name</Label>
+                      <Label htmlFor="name" className="text-gray-300 font-medium">Name</Label>
                       <Input
                         id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="mt-2 bg-white/5 border border-white/10 text-white rounded-2xl focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all h-12"
+                        placeholder="John Doe"
                         required
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="text-gray-300">Email</Label>
+                      <Label htmlFor="email" className="text-gray-300 font-medium">Email</Label>
                       <Input
                         id="email"
                         name="email"
                         type="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="mt-2 bg-white/5 border border-white/10 text-white rounded-2xl focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all h-12"
+                        placeholder="john@example.com"
                         required
                       />
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="subject" className="text-gray-300">Subject</Label>
+                    <Label htmlFor="subject" className="text-gray-300 font-medium">Subject</Label>
                     <Input
                       id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      className="bg-gray-700 border-gray-600 text-white"
+                      className="mt-2 bg-white/5 border border-white/10 text-white rounded-2xl focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all h-12"
+                      placeholder="Partnership / Feature Request / Support"
                       required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="message" className="text-gray-300">Message</Label>
+                    <Label htmlFor="message" className="text-gray-300 font-medium">Message</Label>
                     <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={5}
-                      className="bg-gray-700 border-gray-600 text-white"
+                      rows={6}
+                      className="mt-2 bg-white/5 border border-white/10 text-white rounded-2xl focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                      placeholder="Tell us everything..."
                       required
                     />
                   </div>
                   <Button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-700 hover:via-indigo-700 hover:to-cyan-700 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 h-14"
                     disabled={loading}
                   >
                     {loading ? (
-                      'Sending...'
+                      <span className="flex items-center">
+                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-3" />
+                        Sending...
+                      </span>
                     ) : (
                       <>
-                        <Send className="h-4 w-4 mr-2" />
+                        <Send className="h-5 w-5 mr-3" />
                         Send Message
                       </>
                     )}
@@ -216,43 +239,74 @@ const faqs = [
           </Card>
 
           {/* Contact Information */}
-          <div className="space-y-6">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-2xl text-white">Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="text-blue-500 mt-1">{info.icon}</div>
+          <div className="space-y-8">
+            <h2 className="text-3xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+              Contact Information
+            </h2>
+            <div className="grid grid-cols-1 gap-6">
+              {contactInfo.map((info, index) => (
+                <div
+                  key={index}
+                  className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500"
+                >
+                  <div className="flex items-start gap-5">
+                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${info.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      {info.icon}
+                    </div>
                     <div>
-                      <h3 className="text-white font-semibold">{info.title}</h3>
-                      <p className="text-blue-400">{info.content}</p>
-                      <p className="text-gray-400 text-sm">{info.description}</p>
+                      <h3 className="text-xl font-bold text-white mb-1">{info.title}</h3>
+                      <p className="text-2xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                        {info.content}
+                      </p>
+                      <p className="text-gray-400 text-sm mt-1">{info.description}</p>
                     </div>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div>
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+        <div className="mt-32">
+          <h2 className="text-5xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-16 text-center tracking-tight">
             Frequently Asked Questions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {faqs.map((faq, index) => (
-              <Card key={index} className="bg-gray-800 border-gray-700">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">
+              <Card
+                key={index}
+                className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-xl rounded-3xl hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 group"
+              >
+                <CardContent className="p-8">
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">
                     {faq.question}
                   </h3>
-                  <p className="text-gray-400">{faq.answer}</p>
+                  <p className="text-gray-300 text-base leading-relaxed">
+                    {faq.answer}
+                  </p>
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+
+        {/* Final CTA */}
+        <div className="mt-32 text-center">
+          <div className="bg-gradient-to-r from-purple-600/10 to-cyan-600/10 backdrop-blur-xl rounded-3xl p-12 border border-white/10">
+            <h2 className="text-4xl font-black text-white mb-6">
+              Ready to build something amazing?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+              Join 15K+ developers who are already building the future with CodeFusion AI.
+            </p>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-700 hover:via-indigo-700 hover:to-cyan-700 text-white font-bold text-xl px-12 py-7 rounded-3xl shadow-2xl hover:shadow-purple-500/60 transition-all duration-300"
+              onClick={() => window.location.href = '/builder'}
+            >
+              Start Building Free
+            </Button>
           </div>
         </div>
       </div>

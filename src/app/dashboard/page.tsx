@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -198,33 +197,38 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+  <div className="min-h-screen bg-gradient-to-br from-[#0a0a13] via-[#181825] to-[#0a0a13] text-gray-100">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      <div className="sticky top-0 z-20 bg-gradient-to-b from-[#181825]/80 via-transparent to-transparent backdrop-blur-xl border-b border-[#232336]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between py-4 gap-4">
+          <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <h1 className="text-xl font-bold text-slate-900">CodeFusion</h1>
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-900 via-indigo-600 to-blue-900 rounded-lg flex items-center justify-center shadow-md">
+              <img 
+              src="/CODEFUSION.png" 
+              alt="CodeFusionAI Logo" 
+              className="h-10 w-10 rounded-full shadow-md transition-all duration-300 group-hover:shadow-purple-500/50"
+              />  
               </div>
-              <span className="hidden md:inline text-slate-400">|</span>
-              <span className="hidden md:inline text-slate-600 font-medium">Dashboard</span>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-100">CodeFusion</h1>
+              </div>
+              <span className="text-cyan-300/60">|</span>
+              <span className="text-cyan-200 font-medium">Dashboard</span>
             </div>
-            
-            <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-end">
-              <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-initial">
+
+            {/* Desktop Buttons */}
+            <div className="hidden sm:flex items-center space-x-3">
+              <Button variant="outline" size="sm" asChild className="border-cyan-700 text-cyan-200">
                 <Link href="/builder">
                   <Plus className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">New Project</span>
+                  New Project
                 </Link>
               </Button>
-              <Button size="sm" asChild className="flex-1 sm:flex-initial">
+              <Button size="sm" asChild className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500">
                 <Link href="/builder">
-                  <Zap className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Generate</span>
+                  <Zap className="w-4 h-4 mr-2 text-white" />
+                  Generate
                 </Link>
               </Button>
             </div>
@@ -232,33 +236,47 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-10">
         {/* Welcome Section */}
         <div className="mb-8">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-            <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+          <div className="flex flex-col sm:flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6">
+            <div className="w-full md:w-auto">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 mb-2">
                 Welcome back, {userProfile?.displayName || user.email?.split('@')[0] || 'User'}! 👋
               </h1>
-              <p className="text-slate-600 text-base md:text-lg">
+              <p className="text-cyan-200 text-base max-w-xl">
                 Manage your AI-generated websites and create amazing new projects
               </p>
+              {/* Mobile Buttons Below Title */}
+              <div className="flex flex-col sm:hidden w-full gap-2 mt-4">
+                <Button variant="outline" size="sm" asChild className="w-full border-cyan-700 text-cyan-200">
+                  <Link href="/builder">
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Project
+                  </Link>
+                </Button>
+                <Button size="sm" asChild className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500">
+                  <Link href="/builder">
+                    <Zap className="w-4 h-4 mr-2 text-white" />
+                    Generate
+                  </Link>
+                </Button>
+              </div>
             </div>
-            
             {/* Stats Cards */}
-            <div className="flex space-x-2 sm:space-x-4 w-full lg:w-auto">
-              <Card className="flex-1 lg:w-32 text-center">
-                <CardContent className="p-4 md:pt-4">
-                  <div className="text-xl md:text-2xl font-bold text-blue-600">{projects.length}</div>
-                  <div className="text-xs md:text-sm text-slate-600">Projects</div>
+            <div className="flex flex-row w-full md:w-auto space-x-2 sm:space-x-4 mt-4 md:mt-0 justify-start md:justify-end">
+              <Card className="w-1/2 sm:w-28 text-center bg-[#181825] border border-cyan-800">
+                <CardContent className="pt-4">
+                  <div className="text-xl font-bold text-cyan-400">{projects.length}</div>
+                  <div className="text-xs text-cyan-200">Projects</div>
                 </CardContent>
               </Card>
-              <Card className="flex-1 lg:w-32 text-center">
-                <CardContent className="p-4 md:pt-4">
-                  <div className="text-xl md:text-2xl font-bold text-green-600">
+              <Card className="w-1/2 sm:w-28 text-center bg-[#181825] border border-cyan-800">
+                <CardContent className="pt-4">
+                  <div className="text-xl font-bold text-green-400">
                     {userProfile?.plan === 'pro' ? '20' : '3'}
                   </div>
-                  <div className="text-xs md:text-sm text-slate-600">Daily Limit</div>
+                  <div className="text-xs text-cyan-200">Daily Limit</div>
                 </CardContent>
               </Card>
             </div>
@@ -267,22 +285,22 @@ export default function DashboardPage() {
 
         {/* Account Status */}
         <div className="mb-8">
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-            <CardContent className="p-4 md:p-6">
+          <Card className="bg-[#181825] border border-cyan-800">
+            <CardContent className="p-6">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 rounded-full flex items-center justify-center shadow-md">
                     {userProfile?.plan === 'pro' ? (
-                      <Crown className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                      <Crown className="w-6 h-6 text-white" />
                     ) : (
-                      <Star className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                      <Star className="w-6 h-6 text-white" />
                     )}
                   </div>
                   <div>
-                    <h3 className="text-base md:text-lg font-semibold text-slate-900">
+                    <h3 className="text-base font-semibold text-gray-100">
                       {userProfile?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
                     </h3>
-                    <p className="text-slate-600 text-sm md:text-base">
+                    <p className="text-cyan-200 text-sm">
                       {userProfile?.plan === 'pro' 
                         ? 'Unlimited projects with 20 generations per day' 
                         : 'Upgrade to Pro for unlimited projects and 20 generations per day'
@@ -291,7 +309,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 {userProfile?.plan !== 'pro' && (
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 w-full md:w-auto">
+                  <Button className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500">
                     <Crown className="w-4 h-4 mr-2" />
                     Upgrade to Pro
                     <Link href="/payment-selection"></Link>
@@ -304,28 +322,28 @@ export default function DashboardPage() {
 
         {/* Search and Filters */}
         <div className="mb-6">
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-            <div className="w-full md:max-w-md">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-between w-full">
+            <div className="flex-1 w-full max-w-lg">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-300 w-4 h-4" />
                 <Input
-                  placeholder="Search projects..."
+                  placeholder="Search projects by name or description..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-slate-900 placeholder-slate-500 font-medium"
+                  className="pl-10 bg-[#0b1220] border border-blue-800 focus:border-indigo-500 focus:ring-indigo-500 text-blue-100 placeholder-blue-300 font-medium"
                   style={{
-                    color: searchTerm ? '#1e293b' : '#64748b',
+                    color: searchTerm ? '#e6eef8' : '#9fb0c9',
                     fontWeight: searchTerm ? '600' : '500'
                   }}
                 />
                 {searchLoading && (
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                    <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
                   </div>
                 )}
                 {!searchLoading && searchTerm && (
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <span className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                    <span className="text-xs text-blue-300 bg-[#071024]/40 px-2 py-1 rounded-full">
                       {filteredProjects.length} found
                     </span>
                   </div>
@@ -333,39 +351,39 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="flex items-center space-x-2 md:space-x-4 w-full md:w-auto">
+            <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
               <select
                 value={selectedFramework}
                 onChange={(e) => setSelectedFramework(e.target.value)}
-                className="px-3 py-2 md:px-4 md:py-2.5 border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-medium shadow-sm hover:border-slate-300 transition-colors w-full md:w-auto text-sm md:text-base"
+                className="px-4 py-2.5 border border-blue-800 rounded-lg bg-[#071024] text-blue-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium shadow-sm hover:border-blue-700 transition-colors"
               >
                 {frameworks.map(framework => (
-                  <option key={framework} value={framework}>
+                  <option key={framework} value={framework} className="bg-[#071024] text-blue-100">
                     {framework === 'all' 
-                      ? '🌐 All Frameworks' 
-                      : `⚡ ${(framework || 'unknown').toString().toUpperCase()}`
-                    }
+  ? '🌐 All Frameworks' 
+  : `⚡ ${(framework || 'unknown').toString().toUpperCase()}`}
+
                   </option>
                 ))}
               </select>
               
-              <div className="flex border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+              <div className="flex border border-blue-800 rounded-lg bg-[#071024] shadow-sm overflow-hidden w-full sm:w-auto">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 md:p-2.5 transition-all duration-200 ${
+                  className={`p-2.5 w-1/2 sm:w-auto transition-all duration-200 ${
                     viewMode === 'grid' 
-                      ? 'bg-blue-100 text-blue-600 border-r border-slate-200' 
-                      : 'text-slate-600 hover:bg-slate-50'
+                      ? 'bg-[#0b1220] text-indigo-300 border-r border-blue-800' 
+                      : 'text-blue-300 hover:bg-[#071024]/60'
                   }`}
                 >
                   <Grid3X3 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 md:p-2.5 transition-all duration-200 ${
+                  className={`p-2.5 w-1/2 sm:w-auto transition-all duration-200 ${
                     viewMode === 'list' 
-                      ? 'bg-blue-100 text-blue-600' 
-                      : 'text-slate-600 hover:bg-slate-50'
+                      ? 'bg-[#0b1220] text-indigo-300' 
+                      : 'text-blue-300 hover:bg-[#071024]/60'
                   }`}
                 >
                   <List className="w-4 h-4" />
@@ -377,14 +395,14 @@ export default function DashboardPage() {
 
         {/* Projects Section */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
-              <h2 className="text-xl md:text-2xl font-bold text-slate-900">
+              <h2 className="text-xl font-bold text-gray-100">
                 Your Projects ({filteredProjects.length})
               </h2>
               {(searchTerm || selectedFramework !== 'all') && (
                 <div className="flex items-center space-x-2">
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200 text-xs">
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
                     🔍 Filtered
                   </Badge>
                   <Button 
@@ -394,14 +412,14 @@ export default function DashboardPage() {
                       setSearchTerm('');
                       setSelectedFramework('all');
                     }}
-                    className="text-xs text-slate-500 hover:text-slate-700 hidden sm:block"
+                    className="text-xs text-slate-500 hover:text-slate-700"
                   >
                     Clear filters
                   </Button>
                 </div>
               )}
             </div>
-            <Button asChild className="w-full sm:w-auto">
+            <Button asChild>
               <Link href="/builder">
                 <Plus className="w-4 h-4 mr-2" />
                 Create New Project
@@ -412,24 +430,24 @@ export default function DashboardPage() {
           {loading ? (
             <div className="flex items-center justify-center h-64">
               <div className="text-center">
-                <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-blue-600" />
-                <p className="text-slate-600">Loading your projects...</p>
+                <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-indigo-400" />
+                <p className="text-blue-200">Loading your projects...</p>
               </div>
             </div>
           ) : filteredProjects.length === 0 ? (
-            <Card className="text-center py-12 md:py-16">
+            <Card className="text-center py-16 bg-[#0b1220] border border-blue-800">
               <CardContent>
-                <div className="mx-auto h-20 w-20 md:h-24 md:w-24 text-slate-300 mb-4">
+                <div className="mx-auto h-24 w-24 text-blue-300 mb-4">
                   {searchTerm || selectedFramework !== 'all' ? (
                     <Search className="w-full h-full" />
                   ) : (
                     <Code className="w-full h-full" />
                   )}
                 </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">
+                <h3 className="text-lg font-medium text-white mb-2">
                   {searchTerm || selectedFramework !== 'all' ? 'No projects found' : 'No projects yet'}
                 </h3>
-                <p className="text-slate-600 mb-6 text-sm md:text-base">
+                <p className="text-blue-200 mb-6">
                   {searchTerm || selectedFramework !== 'all' 
                     ? `No projects match your search "${searchTerm}" or framework "${selectedFramework}". Try adjusting your filters.`
                     : 'Start building amazing websites with AI. Your first project is just a prompt away!'
@@ -442,14 +460,14 @@ export default function DashboardPage() {
                       setSearchTerm('');
                       setSelectedFramework('all');
                     }}
-                    className="text-sm md:text-base"
+                    className="text-blue-200 border-blue-700"
                   >
                     Clear Filters
                   </Button>
                 ) : (
-                  <Button asChild className="text-sm md:text-base">
+                  <Button asChild className="bg-gradient-to-r from-blue-600 to-indigo-600">
                     <Link href="/builder">
-                      <Sparkles className="w-4 h-4 mr-2" />
+                      <Sparkles className="w-4 h-4 mr-2 text-white" />
                       Create Your First Project
                     </Link>
                   </Button>
@@ -457,21 +475,18 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className={viewMode === 'grid' 
-              ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6' 
-              : 'space-y-4'
-            }>
+            <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6' : 'space-y-4'}>
               {filteredProjects.map((project) => (
-                <Card key={project.id} className="group hover:shadow-lg transition-all duration-200 border-slate-200 hover:border-blue-300 h-full flex flex-col">
+                    <Card key={project.id} className="group hover:shadow-xl transition-all duration-200 bg-[#181825] border border-cyan-800">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <CardTitle className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                        <CardTitle className="text-base font-semibold text-gray-100 group-hover:text-cyan-300 transition-colors">
                           {project.name}
                         </CardTitle>
-                        <div className="flex items-center space-x-2 mt-2 flex-wrap gap-y-2">
+                        <div className="flex items-center space-x-2 mt-2">
                           {getFrameworkBadge(project.framework)}
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-blue-300">
                             {formatDate(project.createdAt)}
                           </span>
                         </div>
@@ -479,10 +494,10 @@ export default function DashboardPage() {
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="sm" className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <MoreVertical className="h-4 w-4" />
+                            <MoreVertical className="h-4 w-4 text-blue-200" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="end" className="bg-[#071024] border border-blue-800">
                           <DropdownMenuItem asChild>
                             <Link href={`/builder?edit=${project.id}`}>
                               <Edit className="w-4 h-4 mr-2" />
@@ -518,20 +533,22 @@ export default function DashboardPage() {
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="pb-4 flex-1">
-                    <p className="text-slate-600 text-sm line-clamp-2 mb-4">
+                  <CardContent className="pb-4">
+                        <p className="text-cyan-200 text-xs line-clamp-2 mb-4">
                       {project.prompt}
                     </p>
                     
-                    <div className="flex items-center space-x-2 text-xs text-slate-500">
-                      <Calendar className="w-3 h-3" />
-                      <span>Created {formatDate(project.createdAt)}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2 text-xs text-cyan-300">
+                        <Calendar className="w-3 h-3" />
+                        <span>Created {formatDate(project.createdAt)}</span>
+                      </div>
                     </div>
                   </CardContent>
                   
                   <CardFooter className="pt-0">
                     <div className="flex space-x-2 w-full">
-                      <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Button variant="outline" size="sm" className="flex-1 border-cyan-700 text-cyan-200" asChild>
                         <Link href={`/builder?edit=${project.id}`}>
                           <Edit className="w-4 h-4 mr-2" />
                           Edit
@@ -546,7 +563,7 @@ export default function DashboardPage() {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-400 hover:text-red-500 hover:bg-red-900/30 border-red-800"
                         onClick={() => setShowDeleteDialog(project.id)}
                       >
                         <Trash2 className="w-4 h-4" />
@@ -561,54 +578,54 @@ export default function DashboardPage() {
 
         {/* Quick Actions */}
         <div className="mb-8">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h3 className="text-base font-semibold text-gray-100 mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <Link href="/builder">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
-                <CardContent className="p-4 md:p-6">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer group bg-[#181825] border border-cyan-800">
+                <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                      <Sparkles className="w-6 h-6 text-white" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">Generate New Website</h4>
-                      <p className="text-sm text-slate-600 line-clamp-2">Create a new AI-powered website</p>
+                    <div>
+                      <h4 className="font-semibold text-gray-100">Generate New Website</h4>
+                      <p className="text-xs text-cyan-200">Create a new AI-powered website</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-cyan-300 group-hover:text-cyan-400 transition-colors ml-auto" />
                   </div>
                 </CardContent>
               </Card>
             </Link>
             
             <Link href="/tutorials">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
-                <CardContent className="p-4 md:p-6">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer group bg-[#181825] border border-cyan-800">
+                <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                      <FileText className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                      <FileText className="w-6 h-6 text-white" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">View Tutorials</h4>
-                      <p className="text-sm text-slate-600 line-clamp-2">Learn how to use CodeFusion</p>
+                    <div>
+                      <h4 className="font-semibold text-gray-100">View Tutorials</h4>
+                      <p className="text-xs text-cyan-200">Learn how to use CodeFusion</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-green-600 transition-colors flex-shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-cyan-300 group-hover:text-emerald-300 transition-colors ml-auto" />
                   </div>
                 </CardContent>
               </Card>
             </Link>
             
             <Link href="/pricing">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
-                <CardContent className="p-4 md:p-6">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer group bg-[#181825] border border-cyan-800">
+                <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                      <Crown className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                      <img src="/logostart.png" alt="Logo" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-slate-900 text-sm md:text-base">Upgrade Plan</h4>
-                      <p className="text-sm text-slate-600 line-clamp-2">Get unlimited generations</p>
+                    <div>
+                      <h4 className="font-semibold text-gray-100">Upgrade Plan</h4>
+                      <p className="text-xs text-cyan-200">Get unlimited generations</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-purple-600 transition-colors flex-shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-cyan-300 group-hover:text-cyan-400 transition-colors ml-auto" />
                   </div>
                 </CardContent>
               </Card>
@@ -619,22 +636,22 @@ export default function DashboardPage() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={!!showDeleteDialog} onOpenChange={() => setShowDeleteDialog(null)}>
-        <DialogContent className="max-w-md">
+  <DialogContent className="bg-[#181825] border border-cyan-800 text-cyan-100">
           <DialogHeader>
-            <DialogTitle>Delete Project</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-white">Delete Project</DialogTitle>
+            <DialogDescription className="text-blue-200">
               Are you sure you want to delete this project? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
-            <Button variant="outline" onClick={() => setShowDeleteDialog(null)} className="w-full sm:w-auto">
+          <div className="flex justify-end space-x-3">
+            <Button variant="outline" onClick={() => setShowDeleteDialog(null)} className="text-blue-200 border-blue-700">
               Cancel
             </Button>
             <Button 
               variant="destructive" 
               onClick={() => showDeleteDialog && handleDelete(showDeleteDialog)}
               disabled={deletingId === showDeleteDialog}
-              className="w-full sm:w-auto"
+              className="bg-red-600 hover:bg-red-700 border-red-700"
             >
               {deletingId === showDeleteDialog ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -649,3 +666,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+

@@ -246,15 +246,15 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+  <div className="space-y-5 text-gray-200">
       {/* Project Type Selection */}
-      <Card>
+  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Sparkles className="h-5 w-5 text-blue-400" />
             Project Type
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-slate-300">
             Choose your project type: Frontend, Backend, or Full-Stack application
           </CardDescription>
         </CardHeader>
@@ -265,13 +265,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               onClick={() => setProjectType('frontend')}
               className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'frontend'
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-blue-400 bg-gradient-to-br from-[#04263f] to-[#07243a] shadow-lg'
+                  : 'border-slate-700 bg-[#071024] hover:border-slate-600'
               }`}
             >
-              <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-500" />
-              <h3 className="font-semibold">Frontend</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Website UI/UX</p>
+              <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-300" />
+              <h3 className="font-semibold text-white">Frontend</h3>
+              <p className="text-sm text-slate-300">Website UI/UX</p>
             </button>
 
             <button
@@ -279,13 +279,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               onClick={() => setProjectType('backend')}
               className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'backend'
-                  ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-emerald-400 bg-gradient-to-br from-[#03343a] to-[#072a36] shadow-lg'
+                  : 'border-slate-700 bg-[#071024] hover:border-slate-600'
               }`}
             >
-              <Settings className="h-8 w-8 mx-auto mb-2 text-green-500" />
-              <h3 className="font-semibold">Backend</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">API & database logic</p>
+              <Settings className="h-8 w-8 mx-auto mb-2 text-emerald-300" />
+              <h3 className="font-semibold text-white">Backend</h3>
+              <p className="text-sm text-slate-300">API & database logic</p>
             </button>
 
             <button
@@ -293,23 +293,23 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               onClick={() => setProjectType('fullstack')}
               className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
                 projectType === 'fullstack'
-                  ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-lg'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-indigo-400 bg-gradient-to-br from-[#2b1b3b] to-[#071024] shadow-lg'
+                  : 'border-slate-700 bg-[#071024] hover:border-slate-600'
               }`}
             >
-              <Globe className="h-8 w-8 mx-auto mb-2 text-purple-500" />
-              <h3 className="font-semibold">Full-Stack</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Complete application</p>
+              <Globe className="h-8 w-8 mx-auto mb-2 text-indigo-300" />
+              <h3 className="font-semibold text-white">Full-Stack</h3>
+              <p className="text-sm text-slate-300">Complete application</p>
             </button>
           </div>
         </CardContent>
       </Card>
 
       {/* Project Description with Enhanced Features */}
-      <Card>
+  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
-          <CardTitle>Project Description</CardTitle>
-          <CardDescription>Describe what you want to build in detail</CardDescription>
+          <CardTitle className="text-white">Project Description</CardTitle>
+          <CardDescription className="text-cyan-200">Describe what you want to build in detail</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative">
@@ -317,7 +317,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe your project in detail... For example: 'Create a modern e-commerce website with user authentication, product catalog, shopping cart, and payment integration. Include a responsive design with dark mode support.'"
-              className="min-h-[120px] resize-none pr-20"
+              className="min-h-[120px] resize-none pr-20 bg-[#0b1220] text-gray-100 placeholder-cyan-300"
               disabled={loading}
             />
             
@@ -336,10 +336,10 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={() => fileInputRef.current?.click()}
-                className="h-8 w-8 rounded-full bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800"
+                className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:opacity-90"
                 disabled={loading}
               >
-                <ImageIcon className="h-4 w-4 text-blue-600" />
+                <ImageIcon className="h-4 w-4 text-blue-100" />
               </Button>
               
               {/* Enhance Prompt Button */}
@@ -348,24 +348,24 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={enhancePrompt}
-                className="h-8 w-8 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900 dark:hover:bg-purple-800"
+                className="h-8 w-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white hover:opacity-90"
                 disabled={loading || !prompt.trim()}
               >
-                <Wand2 className="h-4 w-4 text-purple-600" />
+                <Wand2 className="h-4 w-4 text-white" />
               </Button>
             </div>
           </div>
           
           {/* Image Preview */}
           {imagePreview && (
-            <div className="mt-4 p-3 border rounded-lg relative">
+            <div className="mt-4 p-3 border rounded-lg relative border-[#232336] bg-[#0b1220]">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium">Image Preview</span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={removeImage}
-                  className="h-6 w-6 p-0 text-gray-500 hover:text-red-500"
+                  className="h-6 w-6 p-0 text-slate-300 hover:text-red-500"
                   aria-label="Remove image"
                 >
                   <X className="h-4 w-4" />
@@ -382,23 +382,23 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Framework Selection */}
-      <Card>
+  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Code2 className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Code2 className="h-5 w-5 text-blue-300" />
             {projectType === 'frontend' ? 'Frontend Framework' : 
               projectType === 'backend' ? 'Backend Framework' : 'Technology Stack'}
           </CardTitle>
-          <CardDescription>{getProjectTypeDescription()}</CardDescription>
+          <CardDescription className="text-cyan-200">{getProjectTypeDescription()}</CardDescription>
         </CardHeader>
         <CardContent>
           {projectType === 'frontend' ? (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <Label className="text-base font-semibold">Choose Frontend Framework</Label>
+                <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+                <Label className="text-sm font-medium text-cyan-200">Choose Frontend Framework</Label>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-slate-300">
                 Select your preferred frontend technology. Live preview will be available in future.
               </p>
               {/* Frontend Framework Dropdown */}
@@ -406,27 +406,27 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleSection('frontend')}
-                  className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  className="flex items-center justify-between w-full p-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-[#071024] transition-all"
                   aria-expanded={expandedSection === 'frontend'}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
                     <div className="text-left">
-                      <h3 className="font-semibold">Frontend Framework</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <h3 className="font-semibold text-white">Frontend Framework</h3>
+                      <p className="text-sm text-slate-300">
                         {frontendOptions.find(f => f.value === frontendFramework)?.label}
                       </p>
                     </div>
                   </div>
                   {expandedSection === 'frontend' ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-slate-300" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-300" />
                   )}
                 </button>
 
                 {expandedSection === 'frontend' && (
-                  <div className="pl-8 pr-4 pb-4">
+                    <div className="pl-8 pr-4 pb-4">
                     <Select value={frontendFramework} onValueChange={setFrontendFramework}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a frontend framework" />
@@ -436,13 +436,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
-                              <span>{framework.label}</span>
+                              <span className="text-sm">{framework.label}</span>
                             </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-cyan-200 mt-2">
                       {frontendOptions.find(f => f.value === frontendFramework)?.description}
                     </p>
                   </div>
@@ -452,32 +452,32 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
           ) : projectType === 'backend' ? (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <Label className="text-base font-semibold">Choose Backend Framework</Label>
+                <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                <Label className="text-sm font-medium text-cyan-200">Choose Backend Framework</Label>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-slate-300">
                 Select your preferred backend technology. One click deploy in future.
               </p>
               <div className="space-y-4">
                 <button
                   type="button"
                   onClick={() => toggleSection('backend')}
-                  className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  className="flex items-center justify-between w-full p-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-[#071024] transition-all"
                   aria-expanded={expandedSection === 'backend'}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
                     <div className="text-left">
-                      <h3 className="font-semibold">Backend Framework</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <h3 className="font-semibold text-white">Backend Framework</h3>
+                      <p className="text-sm text-slate-300">
                         {backendOptions.find(f => f.value === backendFramework)?.label}
                       </p>
                     </div>
                   </div>
                   {expandedSection === 'backend' ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-slate-300" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-300" />
                   )}
                 </button>
 
@@ -498,7 +498,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-cyan-200 mt-2">
                       {backendOptions.find(f => f.value === backendFramework)?.description}
                     </p>
                   </div>
@@ -508,36 +508,36 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
           ) : (
             <div className="space-y-6">
               {/* Technology Stack Overview */}
-              <div className="text-center py-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg border border-green-200 dark:border-green-700">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  Full-Stack Technology Stack
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Choose your preferred technologies for a complete application
-                </p>
-              </div>
+                <div className="text-center py-4 rounded-lg border border-[#232336] bg-gradient-to-r from-[#071022] to-[#0b1220]">
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    Full-Stack Technology Stack
+                  </h3>
+                  <p className="text-sm text-slate-300">
+                    Choose your preferred technologies for a complete application
+                  </p>
+                </div>
 
               {/* Frontend Framework Dropdown */}
               <div className="space-y-4">
                 <button
                   type="button"
                   onClick={() => toggleSection('frontend')}
-                  className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  className="flex items-center justify-between w-full p-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-[#071024] transition-all"
                   aria-expanded={expandedSection === 'frontend'}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
                     <div className="text-left">
-                      <h3 className="font-semibold">Frontend Framework</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <h3 className="font-semibold text-white">Frontend Framework</h3>
+                      <p className="text-sm text-slate-300">
                         {FRONTEND_FRAMEWORKS.find(f => f.value === frontendFramework)?.label}
                       </p>
                     </div>
                   </div>
                   {expandedSection === 'frontend' ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-slate-300" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-300" />
                   )}
                 </button>
 
@@ -558,7 +558,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-cyan-200 mt-2">
                       {frontendOptions.find(f => f.value === frontendFramework)?.description}
                     </p>
                   </div>
@@ -570,22 +570,22 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleSection('backend')}
-                  className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  className="flex items-center justify-between w-full p-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-[#071024] transition-all"
                   aria-expanded={expandedSection === 'backend'}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
                     <div className="text-left">
-                      <h3 className="font-semibold">Backend Framework</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <h3 className="font-semibold text-white">Backend Framework</h3>
+                      <p className="text-sm text-slate-300">
                         {backendOptions.find(f => f.value === backendFramework)?.label}
                       </p>
                     </div>
                   </div>
                   {expandedSection === 'backend' ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-slate-300" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-300" />
                   )}
                 </button>
 
@@ -606,7 +606,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-cyan-200 mt-2">
                       {backendOptions.find(f => f.value === backendFramework)?.description}
                     </p>
                   </div>
@@ -618,22 +618,22 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleSection('database')}
-                  className="flex items-center justify-between w-full p-4 rounded-lg border border-gray-200 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all"
+                  className="flex items-center justify-between w-full p-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-[#071024] transition-all"
                   aria-expanded={expandedSection === 'database'}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
                     <div className="text-left">
-                      <h3 className="font-semibold">Database</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <h3 className="font-semibold text-white">Database</h3>
+                      <p className="text-sm text-slate-300">
                         {databaseOptions.find(d => d.value === databaseType)?.label}
                       </p>
                     </div>
                   </div>
                   {expandedSection === 'database' ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-slate-300" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-300" />
                   )}
                 </button>
 
@@ -654,7 +654,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-cyan-200 mt-2">
                       {databaseOptions.find(d => d.value === databaseType)?.description}
                     </p>
                   </div>
@@ -666,13 +666,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Advanced Options with More Models */}
-      <Card>
+  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Settings className="h-5 w-5 text-slate-200" />
             Advanced Options
           </CardTitle>
-          <CardDescription>Customize AI model and additional settings</CardDescription>
+          <CardDescription className="text-cyan-200">Customize AI model and additional settings</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -684,13 +684,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 onChange={(e) => setShowAdvancedOptions(e.target.checked)}
                 className="rounded"
               />
-              <Label htmlFor="showAdvanced">Show advanced options</Label>
+              <Label htmlFor="showAdvanced" className="text-slate-200">Show advanced options</Label>
             </div>
 
             {showAdvancedOptions && (
-              <div className="space-y-4 pl-6 border-l-2 border-gray-200">
+              <div className="space-y-4 pl-6 border-l-2 border-slate-700">
                 <div className="space-y-2">
-                  <Label>AI Model</Label>
+                  <Label className="text-sm">AI Model</Label>
                   <Select value={aiModel} onValueChange={setAiModel}>
                     <SelectTrigger>
                       <SelectValue />
@@ -698,7 +698,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                     <SelectContent>
                       {AI_MODELS.map((model) => (
                         <SelectItem key={model.value} value={model.value}>
-                          {model.label} - {model.description}
+                          <div className="text-sm">{model.label} - <span className="text-xs text-cyan-200">{model.description}</span></div>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -707,14 +707,14 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
 
                 {aiModel === 'openrouter' && (
                   <div className="space-y-2">
-                    <Label>OpenRouter API Key</Label>
+                    <Label className="text-sm">OpenRouter API Key</Label>
                     <Input
                       type="password"
                       placeholder="Enter your OpenRouter API key"
                       value={customApiKey}
                       onChange={(e) => setCustomApiKey(e.target.value)}
                     />
-                    <p className="text-xs text-gray-500">Required for OpenRouter models</p>
+                    <p className="text-xs text-cyan-200">Required for OpenRouter models</p>
                   </div>
                 )}
 
@@ -728,7 +728,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                       value={customApiKey}
                       onChange={(e) => setCustomApiKey(e.target.value)}
                     />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-cyan-200">
                       Leave empty to use our default API key (limited availability)
                     </p>
                   </div>
@@ -740,21 +740,21 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Generation Limits */}
-      <Card className="border-orange-200 bg-orange-50 dark:bg-orange-900/20">
-        <CardContent className="pt-6">
+      <Card className="border border-[#c86a2b] bg-gradient-to-br from-[#3a1f09] to-[#071022]">
+        <CardContent className="pt-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-orange-500" />
+            <div className="flex items-center gap-2 text-slate-200">
+              <AlertCircle className="h-5 w-5 text-orange-400" />
               <span className="font-medium">Generation Limits</span>
             </div>
             <Badge variant={remainingGenerations === 0 ? "destructive" : "secondary"}>
               {remainingGenerations} remaining
             </Badge>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-sm text-cyan-200 mt-2">
             You have <span className={getGenerationLimitColor()}>{remainingGenerations}</span> generations remaining today.
             {remainingGenerations === 0 && (
-              <span className="text-red-500 font-medium"> Upgrade to Pro for more generations!</span>
+              <span className="text-red-400 font-medium"> Upgrade to Pro for more generations!</span>
             )}
           </p>
         </CardContent>
@@ -765,17 +765,16 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
         type="submit"
         onClick={handleSubmit}
         disabled={loading || remainingGenerations === 0 || !prompt.trim()}
-        className="w-full h-12 text-lg font-semibold"
-        size="lg"
+        className="w-full h-10 text-sm font-medium rounded-md bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white shadow-md"
       >
         {loading ? (
           <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
             Generating...
           </>
         ) : (
           <>
-            <Sparkles className="h-5 w-5 mr-2" />
+            <Sparkles className="h-4 w-4 mr-2" />
             {projectType === 'fullstack' ? 'Generate Full-Stack App' : 'Generate Website'}
           </>
         )}
@@ -783,13 +782,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
 
       {/* Project Summary */}
       {prompt.trim() && (
-        <Card className="border-blue-200 bg-blue-50 dark:bg-blue-900/20">
-          <CardContent className="pt-6">
+        <Card className="bg-[#071022] border border-[#232336]">
+          <CardContent className="pt-4 text-cyan-200">
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle className="h-5 w-5 text-blue-500" />
+              <CheckCircle className="h-5 w-5 text-blue-400" />
               <span className="font-medium">Project Summary</span>
             </div>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm text-slate-300">
               <p><strong>Type:</strong> {
                 projectType === 'frontend' ? 'Frontend Application' :
                 projectType === 'backend' ? 'Backend Application' :

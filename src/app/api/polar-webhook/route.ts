@@ -15,7 +15,9 @@ export async function POST(req: NextRequest) {
   try {
     // Handle Polar.sh Live  order events
     if ((body.type === 'order.created' || body.type === 'order.updated' || body.type === 'order.paid') && body.data.product_id === POLAR_PRO_PRODUCT_ID && body.data.status === 'paid') {
-      const data = body.data;
+  const data = body.data;
+  // Use Polar order ID (or payment id) as idempotency key when available
+  const polarOrderId = data.id || data.order_id || data.payment_id || (data.order && (data.order.id || data.order._id)) || '';
       const userEmail = data.customer?.email || '';
       const cardNumber = data.card_last4 || data.customer?.id || '';
 
@@ -33,32 +35,42 @@ export async function POST(req: NextRequest) {
         console.error('Error looking up user UID for payment request:', e);
       }
 
-      // Prevent duplicate payment requests for same user/order/plan on same day
+      // First try to dedupe by Polar order id if provided (best idempotency)
       let existingId = '';
       try {
         const { collection, getDocs, query, where } = await import('firebase/firestore');
         const paymentRequestsRef = collection(db, 'paymentRequests');
-        // Check for same userEmail, accountNumber, plan, and createdAt (same day)
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        const q = query(
-          paymentRequestsRef,
-          where('userEmail', '==', userEmail),
-          where('accountNumber', '==', cardNumber),
-          where('plan', '==', 'pro'),
-          where('paymentMethod', '==', 'polar')
-        );
-        const querySnap = await getDocs(q);
-        querySnap.forEach(docSnap => {
-          const d = docSnap.data();
-          if (d.createdAt) {
-            const created = new Date(d.createdAt);
-            created.setHours(0,0,0,0);
-            if (created.getTime() === today.getTime()) {
-              existingId = docSnap.id;
-            }
+        if (polarOrderId) {
+          const qId = query(paymentRequestsRef, where('polarOrderId', '==', polarOrderId));
+          const snap = await getDocs(qId);
+          if (!snap.empty) {
+            existingId = snap.docs[0].id;
           }
-        });
+        }
+        // If we couldn't find by polarOrderId, fall back to previous same-day heuristic
+        if (!existingId) {
+          // Check for same userEmail, accountNumber, plan, and createdAt (same day)
+          const today = new Date();
+          today.setHours(0,0,0,0);
+          const q = query(
+            paymentRequestsRef,
+            where('userEmail', '==', userEmail),
+            where('accountNumber', '==', cardNumber),
+            where('plan', '==', 'pro'),
+            where('paymentMethod', '==', 'polar')
+          );
+          const querySnap = await getDocs(q);
+          querySnap.forEach(docSnap => {
+            const d = docSnap.data();
+            if (d.createdAt) {
+              const created = new Date(d.createdAt);
+              created.setHours(0,0,0,0);
+              if (created.getTime() === today.getTime()) {
+                existingId = docSnap.id;
+              }
+            }
+          });
+        }
       } catch (e) {
         console.error('Error checking for duplicate payment request:', e);
       }
@@ -75,7 +87,9 @@ export async function POST(req: NextRequest) {
           status: 'pending',
           accountName: data.customer?.public_name || '',
           accountNumber: cardNumber,
-          createdAt: new Date().toISOString(),
+          // keep original createdAt if present, but update processedAt/time
+          updatedAt: new Date().toISOString(),
+          polarOrderId: polarOrderId || null,
         });
       } else {
         // Create a new payment request
@@ -91,6 +105,7 @@ export async function POST(req: NextRequest) {
           accountName: data.customer?.public_name || '',
           accountNumber: cardNumber,
           createdAt: new Date().toISOString(),
+          polarOrderId: polarOrderId || null,
         });
       }
     }

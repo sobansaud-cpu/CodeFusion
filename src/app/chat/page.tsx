@@ -323,25 +323,36 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="h-screen bg-gray-900 text-white flex flex-col md:flex-row overflow-hidden">
+    <div className="h-[100dvh] bg-gradient-to-br from-[#0a0a13] via-[#181825] to-[#0a0a13] text-gray-100 flex flex-col md:flex-row overflow-hidden">
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
       {/* Sidebar */}
       <motion.div
         initial={false}
-        animate={{ width: sidebarOpen ? (window.innerWidth < 768 ? "100%" : 260) : 0 }}
+        animate={{ width: sidebarOpen ? (typeof window !== 'undefined' && window.innerWidth < 768 ? '80vw' : 260) : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="bg-gray-950 border-r border-gray-800 flex flex-col overflow-hidden shrink-0 z-20 md:w-64"
+        className="fixed md:relative top-0 left-0 h-full bg-gradient-to-b from-[#181825] to-[#0a0a13] border-r border-[#232336] flex flex-col overflow-hidden shrink-0 z-40 md:w-64 shadow-xl"
+        style={{ minWidth: sidebarOpen ? (typeof window !== 'undefined' && window.innerWidth < 768 ? '80vw' : 260) : 0, maxWidth: 320 }}
       >
-        <div className="p-4 border-b border-gray-800">
+        <div className="p-4 border-b border-[#232336]">
           <Button
             onClick={createNewConversation}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+            className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500 text-white border-0 rounded-xl shadow-md"
           >
             <Plus className="w-4 h-4 mr-2" />
             New Chat
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 min-w-[220px] max-w-xs md:max-w-none">
+        <div className="flex-1 overflow-y-auto p-2 min-w-[180px] max-w-xs md:max-w-none">
           <AnimatePresence>
             {conversations.map((conversation) => (
               <motion.div
@@ -349,12 +360,12 @@ export default function ChatPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className={`group relative mb-2 rounded-lg p-3 cursor-pointer transition-all hover:bg-gray-800 ${
-                  currentConversationId === conversation.id ? "bg-gray-800" : ""
+                className={`group relative mb-2 rounded-xl p-3 cursor-pointer transition-all duration-200 hover:bg-[#232336] ${
+                  currentConversationId === conversation.id ? "bg-[#232336] border border-purple-600/30" : "border border-transparent"
                 }`}
                 onClick={() => {
                   setCurrentConversationId(conversation.id);
-                  if(window.innerWidth < 768) setSidebarOpen(false);
+                  if(typeof window !== 'undefined' && window.innerWidth < 768) setSidebarOpen(false);
                 }}
               >
                 <div className="flex items-center space-x-2">
@@ -412,19 +423,19 @@ export default function ChatPage() {
           </AnimatePresence>
         </div>
 
-        <div className="p-4 border-t border-gray-800 flex-shrink-0">
+        <div className="p-4 border-t border-[#232336] flex-shrink-0">
           <div className="flex items-center space-x-3 min-w-0">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 rounded-full flex items-center justify-center shrink-0">
               <User className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">{user?.displayName || user?.email || "User"}</p>
+              <p className="text-sm font-medium text-gray-100 truncate">{user?.displayName || user?.email || "User"}</p>
             </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={signOut}
-              className="text-gray-400 hover:text-white h-8 w-8 p-0 shrink-0"
+              className="text-gray-400 hover:text-purple-400 h-8 w-8 p-0 shrink-0"
               aria-label="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -436,22 +447,22 @@ export default function ChatPage() {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800 p-4 flex items-center justify-between flex-shrink-0">
+        <div className="bg-gradient-to-r from-[#181825] to-[#232336] backdrop-blur-xl border-b border-[#232336] p-3 sm:p-4 flex items-center justify-between flex-shrink-0 sticky top-0 z-10">
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-gray-400 hover:text-white md:hidden"
+              className="text-gray-400 hover:text-white transition-colors duration-200 -ml-2 md:hidden"
               aria-label="Toggle Sidebar"
             >
-              {sidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              <Menu className="w-5 h-5" />
             </Button>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 rounded-lg flex items-center justify-center shrink-0">
                 <Bot className="w-4 h-4 text-white" />
               </div>
-              <h1 className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent select-none">
+              <h1 className="text-xl font-semibold bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent select-none">
                 Ask CodeFusion
               </h1>
             </div>
@@ -465,8 +476,8 @@ export default function ChatPage() {
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-6">
-          <div className="max-w-4xl mx-auto flex flex-col space-y-6">
+        <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-4 md:py-6 scrollbar-thin scrollbar-thumb-purple-600/50 hover:scrollbar-thumb-purple-500 scrollbar-track-transparent">
+          <div className="w-full max-w-3xl mx-auto flex flex-col space-y-4 md:space-y-6">
             <AnimatePresence>
               {messages.map((message) => (
                 <motion.div
@@ -479,15 +490,15 @@ export default function ChatPage() {
                   }`}
                 >
                   <div
-                    className={`flex space-x-4 max-w-full sm:max-w-[85%] md:max-w-[70%] ${
-                      message.role === "user" ? "flex-row-reverse space-x-reverse" : ""
+                    className={`flex items-end gap-2 sm:gap-4 w-full max-w-[90%] sm:max-w-[85%] md:max-w-[70%] ${
+                      message.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                         message.role === "user"
-                          ? "bg-gradient-to-r from-blue-500 to-blue-600"
-                          : "bg-gradient-to-r from-purple-500 to-pink-500"
+                          ? "bg-gradient-to-r from-purple-600 to-cyan-600"
+                          : "bg-gradient-to-r from-indigo-600 to-cyan-600"
                       }`}
                     >
                       {message.role === "user" ? (
@@ -499,10 +510,10 @@ export default function ChatPage() {
 
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`rounded-2xl p-4 break-words ${
+                        className={`rounded-2xl p-3 sm:p-4 break-words ${
                           message.role === "user"
-                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white max-w-full"
-                            : "bg-gray-800/50 backdrop-blur-sm text-gray-100 border border-gray-700/50"
+                            ? "bg-gradient-to-r from-purple-700 via-indigo-700 to-cyan-700 text-white max-w-full border border-purple-700/30 shadow-md"
+                            : "bg-[#181825]/80 backdrop-blur-md text-gray-100 border border-[#232336] shadow"
                         }`}
                       >
                         {message.imageUrl && (
@@ -608,8 +619,8 @@ export default function ChatPage() {
         </div>
 
         {/* Input Area */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border-t border-gray-800 p-4 flex-shrink-0">
-          <div className="max-w-4xl mx-auto px-2 sm:px-0">
+        <div className="bg-gradient-to-r from-[#181825] to-[#232336] backdrop-blur-xl border-t border-[#232336] p-3 sm:p-4 flex-shrink-0 sticky bottom-0">
+          <div className="max-w-3xl mx-auto">
             {selectedImage && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -639,12 +650,12 @@ export default function ChatPage() {
               </motion.div>
             )}
 
-            <div className="relative flex items-end space-x-3">
+            <div className="relative flex items-end gap-2 sm:gap-3">
               <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Message CodeFusion AI... (Try: 'Generate an image of a sunset' or 'Create a React component')"
-                className="min-h-[60px] max-h-[200px] bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 resize-none rounded-2xl px-4 py-3 pr-12 backdrop-blur-sm focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 flex-1"
+                placeholder="Message CodeFusion AI..."
+                className="min-h-[50px] max-h-[200px] bg-[#181825]/80 border border-[#232336] text-gray-100 placeholder-gray-400 resize-none rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3 pr-12 backdrop-blur-xl focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 flex-1 text-sm sm:text-base shadow"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
@@ -654,8 +665,7 @@ export default function ChatPage() {
                 disabled={isLoading}
                 aria-label="Chat input"
               />
-
-              <div className="absolute right-12 bottom-3 flex items-center space-x-5">
+              <div className="absolute right-12 bottom-2 flex items-center gap-3">
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -668,17 +678,16 @@ export default function ChatPage() {
                   size="sm"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isLoading}
-                  className="text-yellow-400 hover:text-white h-12 w-12 p-0"
+                  className="text-cyan-400 hover:text-white h-10 w-10 p-0"
                   aria-label="Upload image"
                 >
-                  <ImageIcon className="w-8 h-8" />
+                  <ImageIcon className="w-6 h-6" />
                 </Button>
               </div>
-
               <Button
                 onClick={handleSendMessage}
                 disabled={isLoading || (!input.trim() && !selectedImage)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 h-13 w-10 px-8 rounded-2xl shadow-lg flex items-center justify-center"
+                className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500 text-white border-0 h-12 w-12 rounded-2xl shadow-lg flex items-center justify-center"
                 aria-label="Send message"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4" />}

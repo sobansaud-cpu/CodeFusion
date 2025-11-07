@@ -9,13 +9,13 @@ export interface PricingPlan {
 }
 
 export const pricingPlans: PricingPlan[] = [
-  {
+ {
     id: 'free',
     name: 'Free',
     price: 0,
     currency: 'USD',
     interval: 'month',
-    features: ['3 generations per day', 'All programming languages', 'Community support', 'GitHub integration'],
+    features: ['3 generations per day', '15 programming languages', 'Community support', 'GitHub integration'],
     maxSites: 3,
   },
   {
@@ -24,7 +24,7 @@ export const pricingPlans: PricingPlan[] = [
     price: 10,
     currency: 'USD',
     interval: 'month',
-    features: ['20 generations per day', 'All programming languages', 'Priority support', 'Advanced features'],
+    features: ['20 generations per day', 'All programming languages', '24/7 support', 'Advanced features'],
     maxSites: 20,
   },
   {

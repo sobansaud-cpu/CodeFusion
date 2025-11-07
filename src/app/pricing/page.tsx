@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { PricingCard } from '@/components/PricingCard';
 import { pricingPlans } from '@/lib/payment';
-import { Check } from 'lucide-react';
+import { Check, Zap } from 'lucide-react';
 
 export default function PricingPage() {
   const { user, userProfile } = useAuth();
@@ -19,7 +19,6 @@ export default function PricingPage() {
       return;
     }
 
-    // Redirect to payment selection page
     window.location.href = `/payment-selection?plan=${plan.id}`;
   };
 
@@ -33,84 +32,98 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Background Glows - Perfectly matched with homepage */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] 
+                        bg-gradient-radial from-purple-600/15 via-transparent to-transparent blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1400px] h-[600px]
+                        bg-gradient-to-t from-cyan-500/10 via-transparent to-transparent blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+
+        {/* Hero */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl rounded-full px-6 py-3 mb-8 border border-white/10">
+            <Zap className="h-5 w-5 text-purple-400" />
+            <span className="text-purple-300 font-medium">Simple, Transparent Pricing</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-6 tracking-tight">
             Choose Your Plan
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
             Start building amazing websites with AI. Upgrade anytime as your needs grow.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-24">
           {pricingPlans.map((plan) => (
             <PricingCard
               key={plan.id}
               plan={plan}
               isCurrentPlan={userProfile?.plan === plan.id}
               onSelect={handleSelectPlan}
+              className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl hover:border-purple-500/30 hover:shadow-purple-500/20 transition-all duration-500"
             />
           ))}
         </div>
 
-        {/* Features Comparison */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        {/* All Plans Include */}
+        <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-12 mb-24">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-12 bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
             All plans include
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {features.map((feature, index) => (
-              <div key={index} className="flex items-center text-gray-300">
-                <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                <span>{feature}</span>
+              <div
+                key={index}
+                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm rounded-2xl px-6 py-5 border border-white/10 hover:border-purple-500/30 transition-all duration-300"
+              >
+                <Check className="h-6 w-6 text-cyan-400 flex-shrink-0" />
+                <span className="text-gray-200 text-lg">{feature}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+        <div className="mt-10">
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-16 bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-800 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-2">
-                Can I change my plan later?
-              </h3>
-              <p className="text-gray-400">
-                Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.
-              </p>
-            </div>
-            <div className="bg-gray-800 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-2">
-                What payment methods do you accept?
-              </h3>
-              <p className="text-gray-400">
-                We accept all major credit cards through Stripe, as well as JazzCash and Easypaisa for local payments.
-              </p>
-            </div>
-            <div className="bg-gray-800 rounded-lg p-6 justify-center gap-6">
-              <h3 className="text-lg font-semibold text-white mb-2">
-                Is there a free trial?
-              </h3>
-              <p className="text-gray-400">
-                Our free plan lets you generate up to 3 websites per month with no time limit.
-              </p>
-            </div>
-            <div className="bg-gray-800 rounded-lg p-6 justify-center gap-6">
-              <h3 className="text-lg font-semibold text-white mb-2">
-                Do I need coding skills?
-              </h3>
-              <p className="text-gray-400">
-                Not at all. Our builder is beginner-friendly, but developers can also customize the code.
-              </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            {[
+              {
+                q: "Can I change my plan later?",
+                a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
+              },
+              {
+                q: "What payment methods do you accept?",
+                a: "We accept all major credit cards through Stripe, as well as JazzCash and Easypaisa for local payments."
+              },
+              {
+                q: "Is there a free trial?",
+                a: "Our free plan lets you generate up to 3 websites per month with no time limit."
+              },
+              {
+                q: "Do I need coding skills?",
+                a: "Not at all. Our builder is beginner-friendly, but developers can also customize the code."
+              }
+            ].map((faq, i) => (
+              <div
+                key={i}
+                className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500"
+              >
+                <h3 className="text-xl font-bold text-white mb-4">{faq.q}</h3>
+                <p className="text-gray-300 leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
           </div>
         </div>
+
+       
       </div>
     </div>
   );

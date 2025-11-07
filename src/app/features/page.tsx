@@ -1,193 +1,175 @@
+
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { Check, Zap, Code2, Database, Globe, Rocket, Shield, Download } from 'lucide-react';
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <header className="text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white">
-            Features — What CodeFusion AI Builds for You
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Background Glows - Same as Homepage */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] 
+                        bg-gradient-radial from-purple-600/15 via-transparent to-transparent blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1400px] h-[600px]
+                        bg-gradient-to-t from-cyan-500/10 via-transparent to-transparent blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+
+        {/* Hero */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl rounded-full px-6 py-3 mb-8 border border-white/10">
+            <Zap className="h-5 w-5 text-purple-400" />
+            <span className="text-purple-300 font-medium">Production-Ready AI Builder</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-6 tracking-tight">
+            Build Anything. Instantly.
           </h1>
-          <p className="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-lg">
-            A powerful AI website builder that generates complete, production-ready websites across
-            frontend frameworks, backend stacks and databases — with clear plan limits and pro-only
-            capabilities.
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
+            Full-stack websites generated in seconds — 30+ frameworks, 8 databases, zero setup.
           </p>
-        </header>
+        </div>
 
-        <main className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left column: summary & limits */}
-          <section className="lg:col-span-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Quick Summary</h2>
-            <p className="mt-3 text-gray-600 dark:text-gray-300 text-sm">
-              CodeFusion AI auto-generates websites using a curated set of frontend frameworks,
-              backend frameworks and databases. Each generated website can include a full stack
-              (frontend + backend + database) using any supported combination.
-            </p>
-
-            <div className="mt-6 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Front-end</span>
-                <span className="text-sm text-gray-500">8 frameworks</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Back-end</span>
-                <span className="text-sm text-gray-500">15 frameworks</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Databases</span>
-                <span className="text-sm text-gray-500">8 databases</span>
-              </div>
-
-              <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 border rounded-lg">
-                <p className="text-sm text-gray-700 dark:text-gray-200">
-                  Total supported languages/stacks per generated website: <strong>31</strong>
-                </p>
-              </div>
-
-              <div className="mt-4">
-                <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">Generation limits</h3>
-                <ul className="mt-2 text-sm text-gray-600 dark:text-gray-300 space-y-2">
-                  <li>
-                    <strong>Free plan:</strong> 3 generations per day. Access to a core set of
-                    popular languages and frameworks (see lists below).
-                  </li>
-                  <li>
-                    <strong>Pro / Premium:</strong> 20 generations per day and the ability to
-                    generate full websites across 30+ languages and stacks with advanced features.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-4">
-                <Link href="/pricing" className="inline-block w-full text-center px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:opacity-95">
-                  Compare Plans
-                </Link>
-              </div>
+        {/* Stats Bar */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {[
+            { label: "Frontend", value: "8 Frameworks", icon: <Globe className="h-6 w-6" /> },
+            { label: "Backend", value: "15 Stacks", icon: <Code2 className="h-6 w-6" /> },
+            { label: "Databases", value: "8 Options", icon: <Database className="h-6 w-6" /> },
+            { label: "Total", value: "31+ Stacks", icon: <Rocket className="h-6 w-6" /> },
+          ].map((stat, i) => (
+            <div key={i} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-center hover:border-purple-500/30 transition-all duration-300">
+              <div className="text-purple-400 mb-3">{stat.icon}</div>
+              <div className="text-3xl font-black text-white">{stat.value}</div>
+              <div className="text-gray-400 text-sm mt-1">{stat.label}</div>
             </div>
-          </section>
+          ))}
+        </div>
 
-          {/* Middle column: Supported languages */}
-          <section className="lg:col-span-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Supported Frontend Frameworks (8)</h2>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">We generate responsive, accessible UI using modern frontend tools.</p>
-
-            <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <li className="text-sm text-gray-700 dark:text-gray-200">• React.js</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Next.js</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Vue.js</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Gatsby</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Svelte</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Nuxt.js</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Plain HTML/CSS/JS</li>
-              <li className="text-sm text-gray-700 dark:text-gray-200">• Angular</li>
-            </ul>
-
-            <div className="mt-6 border-t pt-4">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Supported Databases (8)</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Choose the right persistence for your project.</p>
-              <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-200">
-                <li>• MongoDB</li>
-                <li>• Redis</li>
-                <li>• MySQL</li>
-                <li>• PostgreSQL</li>
-                <li>• Oracle</li>
-                <li>• CouchDB</li>
-                <li>• SQLite</li>
-                <li>• SQL Server</li>
-              </ul>
-            </div>
-          </section>
-
-          {/* Right column: Backends and features */}
-          <section className="lg:col-span-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Supported Backend Frameworks (15)</h2>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">From lightweight microservices to enterprise-grade APIs.</p>
-
-            <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-200">
-              <li>• Node.js (Express)</li>
-              <li>• Node.js (NestJS)</li>
-              <li>• Python (Django)</li>
-              <li>• Python (Flask)</li>
-              <li>• Python (FastAPI)</li>
-              <li>• PHP (Laravel)</li>
-              <li>• PHP (CodeIgniter)</li>
-              <li>• Ruby (Rails)</li>
-              <li>• Ruby (Sinatra)</li>
-              <li>• Java (Spring Boot)</li>
-              <li>• C# (.NET Core)</li>
-              <li>• Go (Gin)</li>
-              <li>• Go (Echo)</li>
-              <li>• Rust (Actix)</li>
-              <li>• Rust (Rocket)</li>
-            </ul>
-
-            <div className="mt-6 border-t pt-4">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Key product features</h3>
-              <ul className="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-200">
-                <li>• Full project generation: frontend, backend, and database wiring in a single run.</li>
-                <li>• Responsive, accessible UI built with modern best practices.</li>
-                <li>• Clean, maintainable project structure with setup and deployment guides.</li>
-                <li>• Code preview, download (ZIP), and GitHub push integrations.</li>
-                <li>• Optional image-based prompt enhancement (analyze an image and include it in the generated UI).</li>
-                <li>• Environment-aware templates (Vercel, Netlify, Docker-ready, CI hints).</li>
-                <li>• API endpoints scaffolded with authentication and sample tests.</li>
-                <li>• Feature flags and advanced options for Pro users (more models, custom API keys).</li>
-              </ul>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">How generation works</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                Provide a detailed prompt describing the website, pick the desired stack, and CodeFusion AI will generate a ready-to-run project. Free users get a curated subset of stacks to try; Pro users unlock the full range and higher daily generation limits.
+        {/* Core Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          {[
+            {
+              title: "Full-Stack Generation",
+              desc: "Frontend + Backend + Database — all wired together in one prompt.",
+              icon: <Zap className="h-8 w-8" />,
+              color: "from-purple-400 to-purple-300"
+            },
+            {
+              title: "30+ Frameworks & Languages",
+              desc: "React, Next.js, Django, Laravel, Spring Boot, Go, Rust — you name it.",
+              icon: <Code2 className="h-8 w-8" />,
+              color: "from-indigo-400 to-indigo-300"
+            },
+            {
+              title: "Production Ready",
+              desc: "Clean code, responsive UI, auth templates, Docker, CI/CD hints.",
+              icon: <Shield className="h-8 w-8" />,
+              color: "from-cyan-400 to-cyan-300"
+            },
+            {
+              title: "One-Click Export",
+              desc: "Download ZIP or push directly to GitHub. No lock-in.",
+              icon: <Download className="h-8 w-8" />,
+              color: "from-purple-400 to-cyan-400"
+            },
+            {
+              title: "Image-Powered Prompts",
+              desc: "Upload a sketch or screenshot — AI builds UI around it.",
+              icon: <Globe className="h-8 w-8" />,
+              color: "from-indigo-400 to-purple-400"
+            },
+            {
+              title: "Pro: Unlimited Access",
+              desc: "20 generations/day, advanced models, custom API keys.",
+              icon: <Rocket className="h-8 w-8" />,
+              color: "from-cyan-400 to-purple-400"
+            },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              className="group bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500"
+            >
+              <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${feature.color} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                {feature.icon}
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">
+                {feature.title}
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                {feature.desc}
               </p>
             </div>
-          </section>
-        </main>
+          ))}
+        </div>
 
-        {/* Full-width features section */}
-        <section className="mt-12 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Complete Feature List</h2>
-          <p className="mt-3 text-gray-600 dark:text-gray-300">A concise, professional list of everything CodeFusion AI provides.</p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-200">
-              <li>• Production-ready project scaffolding for frontend, backend and database.</li>
-              <li>• Component-based UI with responsive layouts and accessibility baked in.</li>
-              <li>• SSR and SSG-ready templates for frameworks that support them.</li>
-              <li>• Serverless-ready API scaffolds and Docker support for container deployments.</li>
-              <li>• Authentication templates and example user flows.</li>
-              <li>• Database migrations and seed examples for supported databases.</li>
-              <li>• CI/CD recommendations and sample configuration snippets.</li>
-              <li>• Inline documentation and setup instructions inside the generated repo.</li>
-            </ul>
-
-            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-200">
-              <li>• GitHub integration to push generated projects directly to a repository.</li>
-              <li>• ZIP download for quick local testing and inspection.</li>
-              <li>• Model selection and advanced options for Pro users (custom API keys, larger models).</li>
-              <li>• Image-aware generation: attach an image and the AI will produce UI elements inspired by it.</li>
-              <li>• Reasonable defaults and opinionated patterns to make projects maintainable.</li>
-              <li>• Lightweight telemetry to improve templates (opt-out available).</li>
-              <li>• Priority support and onboarding for Pro customers.</li>
-            </ul>
+        {/* Supported Stacks - Compact */}
+        <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-12 mb-20">
+          <h2 className="text-3xl font-black text-center mb-12 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            Supported Technologies
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+            <div>
+              <h3 className="text-xl font-bold text-purple-300 mb-6">Frontend (8)</h3>
+              <div className="space-y-2 text-gray-300">
+                {["React", "Next.js", "Vue", "Nuxt.js", "Svelte", "Angular", "Gatsby", "HTML/CSS/JS"].map((item) => (
+                  <div key={item} className="flex items-center justify-center gap-3">
+                    <Check className="h-4 w-4 text-purple-400" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-indigo-300 mb-6">Backend (15)</h3>
+              <div className="space-y-2 text-gray-300 text-sm">
+                {["Express", "NestJS", "Django", "FastAPI", "Laravel", "Spring Boot", ".NET Core", "Rails", "Gin", "Actix"].map((item) => (
+                  <div key={item} className="flex items-center justify-center gap-3">
+                    <Check className="h-4 w-4 text-indigo-400" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-cyan-300 mb-6">Databases (8)</h3>
+              <div className="space-y-2 text-gray-300">
+                {["MongoDB", "PostgreSQL", "MySQL", "Redis", "SQLite", "Supabase", "PlanetScale", "Firebase"].map((item) => (
+                  <div key={item} className="flex items-center justify-center gap-3">
+                    <Check className="h-4 w-4 text-cyan-400" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Try it</h3>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Go to the builder and describe your project; pick a stack and generate a website in minutes.</p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <Link href="/builder" className="px-4 py-2 rounded-md bg-gradient-to-r from-green-500 to-blue-600 text-white text-sm">
-                Open Builder
+        {/* Final CTA */}
+        <div className="text-center">
+          <div className="bg-gradient-to-r from-purple-600/10 to-cyan-600/10 backdrop-blur-xl rounded-3xl p-16 border border-white/10">
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              Ready to build your next project?
+            </h2>
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+              Start free — 3 generations/day. Upgrade anytime for unlimited power.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href="/builder">
+                <button className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-700 hover:via-indigo-700 hover:to-cyan-700 text-white font-bold px-12 py-6 rounded-2xl shadow-2xl hover:shadow-purple-500/60 transition-all duration-300 text-lg">
+                  Start Building Free
+                </button>
               </Link>
-              <Link href="/pricing" className="px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200">
-                View Pricing
+              <Link href="/pricing">
+                <button className="border-2 border-white/20 text-white px-10 py-6 rounded-2xl hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300 text-lg font-medium backdrop-blur-sm">
+                  View Plans
+                </button>
               </Link>
             </div>
           </div>
-        </section>
-
+        </div>
       </div>
     </div>
   );

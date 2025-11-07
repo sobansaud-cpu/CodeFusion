@@ -113,6 +113,71 @@ function BuilderPageContent() {
     }
   };
 
+  // Framework and database options (mirrors EnhancedPromptForm filtering for parity in edit mode)
+  const FRONTEND_FRAMEWORKS = [
+    { value: 'html', label: 'HTML/CSS' },
+    { value: 'react', label: 'React' },
+    { value: 'nextjs', label: 'Next.js' },
+    { value: 'vue', label: 'Vue.js' },
+    { value: 'angular', label: 'Angular' },
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'nuxt', label: 'Nuxt.js' },
+    { value: 'gatsby', label: 'Gatsby' }
+  ];
+
+  const BACKEND_FRAMEWORKS = [
+    { value: 'nodejs-express', label: 'Node.js (Express)' },
+    { value: 'nodejs-nestjs', label: 'Node.js (NestJS)' },
+    { value: 'python-django', label: 'Python (Django)' },
+    { value: 'python-flask', label: 'Python (Flask)' },
+    { value: 'python-fastapi', label: 'Python (FastAPI)' },
+    { value: 'php-laravel', label: 'PHP (Laravel)' },
+    { value: 'php-codeigniter', label: 'PHP (CodeIgniter)' },
+    { value: 'ruby-rails', label: 'Ruby (Rails)' },
+    { value: 'ruby-sinatra', label: 'Ruby (Sinatra)' },
+    { value: 'java-spring', label: 'Java (Spring Boot)' },
+    { value: 'csharp-dotnet', label: 'C# (.NET Core)' },
+    { value: 'go-gin', label: 'Go (Gin)' },
+    { value: 'go-echo', label: 'Go (Echo)' },
+    { value: 'rust-actix', label: 'Rust (Actix)' },
+    { value: 'rust-rocket', label: 'Rust (Rocket)' }
+  ];
+
+  const DATABASE_TYPES = [
+    { value: 'sqlite', label: 'SQLite' },
+    { value: 'postgresql', label: 'PostgreSQL' },
+    { value: 'mysql', label: 'MySQL' },
+    { value: 'mongodb', label: 'MongoDB' },
+    { value: 'redis', label: 'Redis' },
+    { value: 'sqlserver', label: 'SQL Server' },
+    { value: 'oracle', label: 'Oracle' },
+    { value: 'couchdb', label: 'CouchDB' }
+  ];
+
+  const plan = userProfile?.plan || 'free';
+  const isPremium = String(plan) === 'pro' || String(plan) === 'premium';
+
+  const frontendOptions = isPremium
+    ? FRONTEND_FRAMEWORKS
+    : FRONTEND_FRAMEWORKS.filter((f) => ['html', 'nextjs', 'gatsby', 'vue'].includes(f.value));
+
+  const backendOptions = isPremium
+    ? BACKEND_FRAMEWORKS
+    : [
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
+        BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
+      ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
+
+  const databaseOptions = isPremium
+    ? DATABASE_TYPES
+    : DATABASE_TYPES.filter((d) => ['mongodb', 'redis', 'oracle', 'couchdb', 'mysql'].includes(d.value));
+
   const loadProjectForEdit = async (projectId: string) => {
     try {
       setIsGenerating(true);
@@ -462,24 +527,24 @@ function BuilderPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 sm:p-6 md:p-8">
-      <div className="max-w-full mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] p-3 sm:p-6 md:p-8 text-gray-100">
+      <div className="max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
-        <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center space-y-6 md:space-y-0">
-          <div className="space-y-3 flex-1 min-w-0">
+        <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0">
+          <div className="space-y-2 flex-1 min-w-0">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gradient-to-r from-blue-900 via-indigo-600 to-blue-900">
+                <img src="/CODEFUSION.png" alt="CodeFusion" className="w-8 h-8 object-contain" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent truncate">
+                <h1 className="text-2xl sm:text-3xl md:text-3xl font-semibold text-gray-100 truncate">
                   {actionMode === 'edit' ? 'Edit Project' :
                    actionMode === 'view' ? 'View Project' :
                    actionMode === 'download' ? 'Downloading...' :
                    actionMode === 'github' ? 'Push to GitHub' :
                    'AI Website Builder'}
                 </h1>
-                <p className="text-gray-300 text-base sm:text-lg truncate">
+                <p className="text-cyan-200 text-sm sm:text-base truncate">
                   {actionMode === 'edit' ? 'Add new features or modify your existing project' :
                    actionMode === 'view' ? 'Review your project code' :
                    actionMode === 'download' ? 'Downloading your project files...' :
@@ -490,25 +555,27 @@ function BuilderPageContent() {
             </div>
             {userProfile && actionMode === 'generate' && (
               <div className="flex flex-wrap gap-4 mt-4">
-                <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700 flex-shrink-0">
-                  <div className={`w-3 h-3 rounded-full ${userProfile.plan === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-blue-500'}`}></div>
-                  <span className="text-sm text-gray-300 truncate">{userProfile.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}</span>
+                <div className="flex items-center space-x-2 bg-[#061a2a]/80 px-4 py-2 rounded-lg border border-slate-700 flex-shrink-0">
+                  <div className={`w-3 h-3 rounded-full ${userProfile.plan === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-blue-400'}`}></div>
+                  <span className="text-sm text-slate-300 truncate">{userProfile.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}</span>
                 </div>
-                <div className="flex items-center space-x-2 bg-gray-800/50 px-4 py-2 rounded-lg border border-gray-700 flex-shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="text-sm text-gray-300 truncate">{remainingGenerations} generations remaining</span>
+                <div className="flex items-center space-x-2 bg-[#061a2a] px-4 py-2 rounded-lg border border-slate-700 flex-shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
+                  <span className="text-sm text-slate-300 truncate">{remainingGenerations} generations remaining</span>
                 </div>
               </div>
             )}
           </div>
           {actionMode !== 'generate' && (
-            <Button
-              variant="outline"
-              onClick={() => router.push('/dashboard')}
-              className="text-white border-gray-600 hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 px-6 py-2 flex-shrink-0"
-            >
-              ← Back to Dashboard
-            </Button>
+            <div className="flex-shrink-0 w-full md:w-auto">
+              <Button
+                variant="outline"
+                onClick={() => router.push('/dashboard')}
+                className="w-full md:w-auto text-gray-100 border-[#232336] hover:bg-[#232336] hover:border-cyan-500 transition-all duration-200 px-4 py-2"
+              >
+                ← Back to Dashboard
+              </Button>
+            </div>
           )}
         </div>
 
@@ -548,14 +615,14 @@ function BuilderPageContent() {
 
         {/* Main Content by Action Mode */}
         {actionMode === 'generate' ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-250px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[calc(100vh-240px)]">
             {/* Left Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl flex flex-col">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white truncate">Describe Your Project</h2>
+            <div className="bg-gradient-to-br from-[#0b1220] to-[#0b1220] rounded-2xl p-4 sm:p-6 md:p-6 border border-[#232336] shadow-lg flex flex-col">
+              <div className="flex items-center space-x-3 mb-4">
+                 <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gradient-to-r ">
+                <img src="/CODEFUSION.png" alt="CodeFusion" className="w-8 h-8 object-contain" />
+              </div>
+                <h2 className="text-lg sm:text-xl font-semibold text-white truncate">Describe Your Project</h2>
               </div>
               <div className="flex-grow min-h-0 overflow-auto">
                 <EnhancedPromptForm
@@ -569,17 +636,18 @@ function BuilderPageContent() {
             </div>
 
             {/* Right Panel */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden flex flex-col">
+            <div className="bg-gradient-to-br from-[#0b1220] to-[#0b1220] rounded-2xl border border-[#232336] shadow-lg overflow-hidden flex flex-col">
               {isGenerating ? (
-                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6 text-center">
+                <div className="flex-grow flex flex-col items-center justify-center p-6 text-center">
                   <div className="relative mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
-                      <Loader2 className="w-10 h-10 text-white animate-spin" />
+                    <div className="w-20 h-20 bg-gradient-to-r from-blue-900 to-blue-900 rounded-full flex items-center justify-center mx-auto">
+                      {/* Animated CodeFusion logo replaces the generic spinner for a more branded feel */}
+                      <img src="/CODEFUSION.png" alt="CodeFusion" className="w-10 h-10 animate-[spin_1.8s_linear_infinite]" />
                     </div>
-                    <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-ping" />
+                    <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full opacity-20 animate-ping" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">AI is generating your project...</h3>
-                  <p className="text-gray-300 text-base sm:text-lg">This may take a few moments</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">CodeFusion is building your project...</h3>
+                  <p className="text-gray-300 text-sm sm:text-base">This may take a few moments</p>
                   <div className="flex space-x-2 justify-center mt-6" aria-hidden="true">
                     <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -599,17 +667,20 @@ function BuilderPageContent() {
                   // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
                 />
               ) : (
-                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 p-6 text-center">
-                  <div className="relative mb-6">
-                    <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
-                      <div className="text-4xl">🚀</div>
+                <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-[#041E35] to-[#071024] p-6 text-center">
+                    <div className="relative mb-6 px-4 sm:px-0">
+                      <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full flex items-center justify-center mx-auto">
+                        <div className="text-4xl">🚀</div>
+                      </div>
+                      <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full opacity-20 animate-pulse" />
                     </div>
-                    <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-20 animate-pulse" />
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">Ready to create?</h3>
-                  <p className="text-gray-300 text-base sm:text-lg max-w-md mx-auto">
-                    Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
-                  </p>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                      <span className="block lg:hidden">Welcome to CodeFusion</span>
+                      <span className="hidden lg:block">Ready to create?</span>
+                    </h3>
+                    <p className="text-slate-300 text-base sm:text-lg max-w-full sm:max-w-md mx-auto px-4 sm:px-0">
+                      Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
+                    </p>
                   <div className="flex flex-wrap items-center justify-center space-x-4 text-sm text-gray-400 mt-6">
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-blue-500 rounded-full" />Frontend</div>
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-purple-500 rounded-full" />Backend</div>
@@ -621,7 +692,7 @@ function BuilderPageContent() {
           </div>
         ) : actionMode === 'edit' && currentProject ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[calc(100vh-250px)]">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl">
+            <div className="bg-gradient-to-br from-[#041E35] to-[#071024] rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800/40 shadow-2xl">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
                   <Save className="w-5 h-5 text-white" />
@@ -691,45 +762,23 @@ function BuilderPageContent() {
 >
   {/* Frontend Frameworks */}
   <optgroup label="Frontend Frameworks">
-    <option value="html">HTML/CSS</option>
-    <option value="react">React</option>
-    <option value="nextjs">Next.js</option>
-    <option value="vue">Vue.js</option>
-    <option value="angular">Angular</option>
-    <option value="svelte">Svelte</option>
-    <option value="nuxt">Nuxt.js</option>
-    <option value="gatsby">Gatsby</option>
+    {frontendOptions.map((f) => (
+      <option key={f.value} value={f.value}>{f.label}</option>
+    ))}
   </optgroup>
 
   {/* Backend Frameworks */}
   <optgroup label="Backend Frameworks">
-    <option value="nodejs-express">Node.js (Express)</option>
-    <option value="nodejs-nestjs">Node.js (NestJS)</option>
-    <option value="python-django">Python (Django)</option>
-    <option value="python-flask">Python (Flask)</option>
-    <option value="python-fastapi">Python (FastAPI)</option>
-    <option value="php-laravel">PHP (Laravel)</option>
-    <option value="php-codeigniter">PHP (CodeIgniter)</option>
-    <option value="ruby-rails">Ruby (Rails)</option>
-    <option value="ruby-sinatra">Ruby (Sinatra)</option>
-    <option value="java-spring">Java (Spring Boot)</option>
-    <option value="csharp-dotnet">C# (.NET Core)</option>
-    <option value="go-gin">Go (Gin)</option>
-    <option value="go-echo">Go (Echo)</option>
-    <option value="rust-actix">Rust (Actix)</option>
-    <option value="rust-rocket">Rust (Rocket)</option>
+    {backendOptions.map((b) => (
+      <option key={b.value} value={b.value}>{b.label}</option>
+    ))}
   </optgroup>
 
   {/* Database Types */}
   <optgroup label="Databases">
-    <option value="sqlite">SQLite</option>
-    <option value="postgresql">PostgreSQL</option>
-    <option value="mysql">MySQL</option>
-    <option value="mongodb">MongoDB</option>
-    <option value="redis">Redis</option>
-    <option value="sqlserver">SQL Server</option>
-    <option value="oracle">Oracle</option>
-    <option value="couchdb">CouchDB</option>
+    {databaseOptions.map((d) => (
+      <option key={d.value} value={d.value}>{d.label}</option>
+    ))}
   </optgroup>
 </select>
 
@@ -773,15 +822,15 @@ function BuilderPageContent() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600/50 shadow-2xl overflow-hidden">
+            <div className="bg-gradient-to-br from-[#041E35] to-[#071024] rounded-2xl border border-slate-800/40 shadow-2xl overflow-hidden">
               <div className="p-4 sm:p-6 border-b border-gray-600/50 bg-gradient-to-r from-gray-800 to-gray-700">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center">
                     <Code className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-white">Project Code</h3>
-                    <p className="text-gray-300 text-sm">Review and edit your generated code</p>
+                    <p className="text-slate-300 text-sm">Review and edit your generated code</p>
                   </div>
                 </div>
               </div>
@@ -812,15 +861,15 @@ function BuilderPageContent() {
             </div>
           </div>
         ) : actionMode === 'view' && currentProject ? (
-          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-600/50 shadow-2xl">
+          <div className="bg-gradient-to-br from-[#041E35] to-[#071024] rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800/40 shadow-2xl">
             <div className="mb-8">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center">
                   <Eye className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{currentProject.name}</h2>
-                  <p className="text-gray-300 text-base sm:text-lg">{currentProject.prompt}</p>
+                  <p className="text-slate-300 text-base sm:text-lg">{currentProject.prompt}</p>
                 </div>
               </div>
             </div>
