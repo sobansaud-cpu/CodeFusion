@@ -12,30 +12,143 @@ export default function TermsPage() {
           <p className="text-gray-400 text-sm">Last updated: {new Date().toDateString()}</p>
         </div>
         <section className="prose prose-invert prose-headings:text-indigo-300 prose-a:text-indigo-300 max-w-none mb-8 text-gray-300">
-          <h2>Welcome to CodeFusion AI</h2>
+          <h2>Acceptance of Terms</h2>
           <p>
-            By using CodeFusion AI ("the Service") you agree to these Terms and Conditions. Please read them carefully.
+            Welcome to CodeFusion AI. These Terms and Conditions (&quot;Terms&quot;) govern your use of our website, services, and AI-powered platform for generating websites (collectively, the &quot;Service&quot;). By accessing or using CodeFusion AI, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our Service.
           </p>
-          <h3>Use of Service</h3>
           <p>
-            You may use the Service for lawful purposes only. You agree not to misuse the Service or attempt to access restricted areas.
+            These Terms constitute a legally binding agreement between you and CodeFusion AI. We reserve the right to modify these Terms at any time, with changes taking effect immediately upon posting on our website. Your continued use of the Service after such modifications constitutes acceptance of the updated Terms.
           </p>
-          <h3>Content</h3>
+
+          <h2>Description of Service</h2>
           <p>
-            You are responsible for content you upload or publish. Do not upload copyrighted or illegal material.
+            CodeFusion AI is an AI-powered platform that allows users to generate complete, functional websites using natural language prompts. Our Service includes:
           </p>
-          <h3>Liability</h3>
+          <ul>
+            <li>AI-driven website generation across multiple frameworks and technologies</li>
+            <li>Code preview, editing, and export capabilities</li>
+            <li>Integration with GitHub and other development tools</li>
+            <li>Free and premium subscription plans with varying features and limits</li>
+            <li>Customer support and educational resources</li>
+          </ul>
           <p>
-            The Service is provided "as is". We are not liable for damages arising from use of the Service.
+            We strive to provide accurate and functional code, but all generated content should be reviewed and tested before deployment.
           </p>
-          <h3>Changes</h3>
+
+          <h2>User Accounts and Registration</h2>
           <p>
-            We may update these Terms; continued use of the Service constitutes acceptance of changes.
+            To access certain features of our Service, you must create an account. You agree to:
           </p>
-          <h3>Contact</h3>
+          <ul>
+            <li>Provide accurate, current, and complete information during registration</li>
+            <li>Maintain and update your account information</li>
+            <li>Keep your password secure and confidential</li>
+            <li>Notify us immediately of any unauthorized use of your account</li>
+          </ul>
           <p>
-            For questions about these Terms, contact <a href="mailto:sobansaud3@gmail.com">sobansaud3@gmail.com</a>.
+            You are responsible for all activities that occur under your account. We reserve the right to suspend or terminate accounts that violate these Terms.
           </p>
+
+          <h2>Use of Service</h2>
+          <p>
+            You may use the Service only for lawful purposes and in accordance with these Terms. You agree not to:
+          </p>
+          <ul>
+            <li>Use the Service to create harmful, offensive, or illegal content</li>
+            <li>Attempt to reverse engineer, decompile, or disassemble our software</li>
+            <li>Interfere with or disrupt the Service or servers</li>
+            <li>Use automated tools to access the Service without permission</li>
+            <li>Impersonate any person or entity or misrepresent your affiliation</li>
+            <li>Upload or transmit viruses, malware, or other harmful code</li>
+          </ul>
+
+          <h2>Content Ownership and Rights</h2>
+          <h3>User-Generated Content</h3>
+          <p>
+            You retain ownership of the content you create using our Service. However, by using CodeFusion AI, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, and display your content solely for the purpose of providing and improving our Service.
+          </p>
+
+          <h3>Our Intellectual Property</h3>
+          <p>
+            The Service, including all software, algorithms, designs, and content, is owned by CodeFusion AI and protected by intellectual property laws. You may not copy, modify, distribute, or create derivative works based on our Service without our written permission.
+          </p>
+
+          <h3>Generated Code</h3>
+          <p>
+            Code generated by our AI is provided to you for your use. You are responsible for ensuring that generated code complies with applicable laws and does not infringe on third-party rights. We do not guarantee the accuracy, completeness, or suitability of generated code for any particular purpose.
+          </p>
+
+          <h2>Payment Terms</h2>
+          <p>
+            Some features of our Service require payment. By subscribing to a paid plan, you agree to:
+          </p>
+          <ul>
+            <li>Pay all fees associated with your chosen plan</li>
+            <li>Provide accurate billing information</li>
+            <li>Authorize us to charge your payment method for recurring fees</li>
+          </ul>
+          <p>
+            All payments are processed through secure third-party providers. Subscription fees are non-refundable except as required by law. We reserve the right to change pricing with 30 days&apos; notice.
+          </p>
+
+          <h2>Privacy and Data Protection</h2>
+          <p>
+            Your privacy is important to us. Our collection and use of personal information is governed by our Privacy Policy, which is incorporated into these Terms by reference. By using our Service, you consent to the collection and use of your information as described in our Privacy Policy.
+          </p>
+
+          <h2>Disclaimers and Limitation of Liability</h2>
+          <p>
+            The Service is provided &#34;as is&#34; and &#34;as available&#34; without warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or secure.
+          </p>
+          <p>
+            To the maximum extent permitted by law, CodeFusion AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to loss of profits, data, or business opportunities.
+          </p>
+          <p>
+            Our total liability for any claim related to the Service shall not exceed the amount you paid us in the 12 months preceding the claim.
+          </p>
+
+          <h2>Indemnification</h2>
+          <p>
+            You agree to indemnify and hold CodeFusion AI, its officers, directors, employees, and agents harmless from any claims, damages, losses, or expenses arising from your use of the Service, violation of these Terms, or infringement of any third-party rights.
+          </p>
+
+          <h2>Termination</h2>
+          <p>
+            We may terminate or suspend your account and access to the Service immediately, without prior notice, for any reason, including breach of these Terms. Upon termination, your right to use the Service will cease immediately.
+          </p>
+          <p>
+            You may terminate your account at any time by contacting us. Termination does not relieve you of obligations incurred prior to termination.
+          </p>
+
+          <h2>Governing Law and Dispute Resolution</h2>
+          <p>
+            These Terms shall be governed by and construed in accordance with the laws of Pakistan, without regard to its conflict of law provisions. Any disputes arising from these Terms shall be resolved through binding arbitration in Karachi, Pakistan.
+          </p>
+
+          <h2>Miscellaneous</h2>
+          <h3>Severability</h3>
+          <p>
+            If any provision of these Terms is found to be unenforceable, the remaining provisions will remain in full force and effect.
+          </p>
+
+          <h3>Entire Agreement</h3>
+          <p>
+            These Terms constitute the entire agreement between you and CodeFusion AI regarding the use of our Service and supersede all prior agreements.
+          </p>
+
+          <h3>Waiver</h3>
+          <p>
+            Our failure to enforce any provision of these Terms does not constitute a waiver of that provision.
+          </p>
+
+          <h2>Contact Information</h2>
+          <p>
+            If you have any questions about these Terms and Conditions, please contact us at:
+          </p>
+          <ul>
+            <li>Email: <a href="mailto:sobansaud3@gmail.com">sobansaud3@gmail.com</a></li>
+            <li>Address: Karachi, Pakistan</li>
+          </ul>
         </section>
         <div className="text-center">
           <Link href="/" className="inline-block bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-500 text-white px-6 py-2 rounded-xl font-medium shadow-md transition-all border border-white/10">Back to Home</Link>
