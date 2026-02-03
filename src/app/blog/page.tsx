@@ -83,7 +83,7 @@ export default function BlogIndexPage() {
                 {filteredPosts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredPosts.map((post) => (
-                            <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
+                            <div key={post.slug} className="group relative">
                                 <Card className="bg-white/5 border-white/10 overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 group-hover:shadow-[0_20px_50px_rgba(139,92,246,0.15)] rounded-[32px] h-full flex flex-col">
                                     <div className="relative h-56 overflow-hidden">
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
@@ -104,23 +104,26 @@ export default function BlogIndexPage() {
                                             <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {post.readTime}</span>
                                         </div>
                                         <CardTitle className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors line-clamp-2 leading-tight">
-                                            {post.title}
+                                            <Link href={`/blog/${post.slug}`}>
+                                                <span className="absolute inset-0 z-0" aria-hidden="true" />
+                                                {post.title}
+                                            </Link>
                                         </CardTitle>
                                         <CardDescription className="text-gray-400 mt-4 line-clamp-3 leading-relaxed text-base font-light">
                                             {post.excerpt}
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent className="p-8 pt-0 mt-auto border-t border-white/5 bg-black/20 flex items-center justify-between">
-                                        <Link href={`/author/soban-saud`} className="flex items-center gap-2 group/author">
+                                        <Link href={`/author/soban-saud`} className="flex items-center gap-2 group/author relative z-10">
                                             <User className="w-4 h-4 text-purple-400" />
                                             <span className="text-sm font-medium text-gray-300 group-hover/author:text-white transition-colors">{post.author}</span>
                                         </Link>
-                                        <div className="flex items-center gap-1 text-purple-400 font-black text-sm group-hover:gap-2 transition-all">
+                                        <div className="flex items-center gap-1 text-purple-400 font-black text-sm group-hover:gap-2 transition-all relative z-10">
                                             Read <ArrowRight className="w-4 h-4" />
                                         </div>
                                     </CardContent>
                                 </Card>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 ) : (
