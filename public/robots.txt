@@ -1,28 +1,30 @@
-# Global rules
+# *
 User-agent: *
 Allow: /
 
-# Specific rules for Google bots
+# Googlebot
 User-agent: Googlebot
 Allow: /
 
+# Googlebot-Image
 User-agent: Googlebot-Image
 Allow: /
 
+# Googlebot-Mobile
 User-agent: Googlebot-Mobile
 Allow: /
 
+# AdsBot-Google
 User-agent: AdsBot-Google
 Allow: /
 
+# Mediapartners-Google
 User-agent: Mediapartners-Google
 Allow: /
 
-# Host preference (canonical)
+# Host
 Host: https://codefusion.site
 
-# Sitemap
+# Sitemaps
 Sitemap: https://codefusion.site/sitemap.xml
-
-# Important: Keep auth-required pages secure through proper auth checks,
-# not through robots.txt restrictions
+Sitemap: https://codefusion.site/sitemap-0.xml

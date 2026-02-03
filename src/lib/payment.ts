@@ -9,7 +9,7 @@ export interface PricingPlan {
 }
 
 export const pricingPlans: PricingPlan[] = [
- {
+  {
     id: 'free',
     name: 'Free',
     price: 0,
@@ -29,7 +29,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: 'unlimited',
-    name: 'Coming Soon',
+    name: 'Enterprise',
     price: 20,
     currency: 'USD',
     interval: 'month',

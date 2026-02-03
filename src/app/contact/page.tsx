@@ -110,7 +110,7 @@ export default function ContactPage() {
     },
     {
       question: 'Will I be able to preview and deploy my projects?',
-      answer: 'Currently, you can generate and edit projects, but live preview and one-click deploy options are coming very soon in future updates.',
+      answer: 'Yes! CodeFusion AI currently supports full project generation with one-click GitHub export. We are continuously enhancing our deployment pipelines to offer even more seamless integration with cloud providers.',
     },
     {
       question: 'Does CodeFusion AI integrate with GitHub?',

@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Button } from '@/components/ui/button';
-import { Copy, Download, Github, /* Globe, */ Terminal, Code, Eye, ExternalLink, RefreshCw, Wrench } from 'lucide-react';
+import { Copy, Download, Github,  Terminal, Code, Eye, ExternalLink, RefreshCw, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { useProject } from '@/context/ProjectConext';
-// import { TerminalRunner } from './TerminalRunner';
+
 
 interface ProjectFile {
   path: string;
@@ -27,15 +27,6 @@ interface CodePreviewProps {
   onGithubPush?: () => void;
 }
 
-// Dynamically import Sandpack to avoid SSR issues
-// const SandpackComponent = dynamic(
-//   () => import('./SandpackComponent'),
-//   { 
-//     ssr: false,
-//     loading: () => <div className="flex items-center justify-center h-full">Loading preview...</div>
-//   }
-// )
-
 export const CodePreview: React.FC<CodePreviewProps> = ({
   files,
   language,
@@ -45,16 +36,12 @@ export const CodePreview: React.FC<CodePreviewProps> = ({
   projectId = '',
   onDownload,
   onGithubPush,
-  // onNetlifyDeploy, // COMMENTED OUT
 }) => {
   const { currentProject } = useProject();
   const validFiles = Array.isArray(files) ? files.filter(file => file && file.path && file.content) : [];
   const [selectedFile, setSelectedFile] = useState(validFiles[0]?.path || '');
-  // const [previewMode, setPreviewMode] = useState<'code' | 'preview' | 'terminal'>('code');
-  // const [isPreviewRefreshing, setIsPreviewRefreshing] = useState(false);
-  const [isFixing, setIsFixing] = useState(false);
 
-  // Helper to avoid errors from commented previewMode/setPreviewMode
+  const [isFixing, setIsFixing] = useState(false);
   const previewMode = 'code';
   const setPreviewMode = () => {};
 
