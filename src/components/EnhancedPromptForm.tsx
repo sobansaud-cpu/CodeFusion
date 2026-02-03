@@ -12,7 +12,6 @@ import {
   Sparkles,
   Code2,
   Globe,
-  Settings,
   CheckCircle,
   AlertCircle,
   Image as ImageIcon,
@@ -85,7 +84,7 @@ const DATABASE_TYPES = [
 ];
 
 const AI_MODELS = [
-  { value: 'gemini', label: 'Gemini 2.0 Flash', description: 'Google\'s fastest multimodal model (Recommended)' },
+  { value: 'gemini', label: 'Gemini 2.5 Flash', description: 'Google\'s fastest multimodal model (Recommended)' },
   { value: 'gemini-pro', label: 'Gemini 1.5 Pro', description: 'Google\'s advanced multimodal model' },
   { value: 'gpt-4o', label: 'GPT-4 Omni', description: 'OpenAI\'s flagship multimodal model' },
   { value: 'gpt-4', label: 'GPT-4 Turbo', description: 'OpenAI\'s powerful text model' },

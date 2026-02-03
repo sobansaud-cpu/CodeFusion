@@ -46,7 +46,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
           Most Popular
         </div>
       )}
-      
+
       <CardHeader className="text-center">
         <div className="flex justify-center mb-2 text-blue-500">
           {getIcon()}
@@ -57,7 +57,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
           <span className="text-lg font-normal text-gray-400">/{plan.interval}</span>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-3">
         {plan.features.map((feature, index) => (
           <div key={index} className="flex items-center text-gray-300">
@@ -68,22 +68,20 @@ export const PricingCard: React.FC<PricingCardProps> = ({
       </CardContent>
 
       <CardFooter>
-  <Button
+        <Button
     className={`w-full ${
       plan.id === 'pro'
-        ? 'bg-blue-600 hover:bg-blue-700'
-        : 'bg-gray-700 hover:bg-gray-600'
-    }`}
-    onClick={() => onSelect(plan)}
+              ? 'bg-blue-600 hover:bg-blue-700'
+              : 'bg-gray-700 hover:bg-gray-600'
+            }`}
+          onClick={() => onSelect(plan)}
     disabled={isCurrentPlan || loading || plan.id === 'unlimited'}
-  >
-    {plan.id === 'unlimited'
-      ? 'Choose Coming Soon'
-      : isCurrentPlan
-      ? 'Current Plan'
-      : `Choose ${plan.name}`}
-  </Button>
-</CardFooter>
+        >
+          {isCurrentPlan
+            ? 'Current Plan'
+            : `Choose ${plan.name}`}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

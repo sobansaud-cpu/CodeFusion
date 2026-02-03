@@ -92,9 +92,9 @@ const serviceAccount = parseServiceAccount(process.env.FIREBASE_SERVICE_ACCOUNT 
 
 const app = getApps().length === 0
   ? initializeApp({
-      credential: cert(serviceAccount),
-      databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
-    })
+    credential: cert(serviceAccount),
+    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
+  })
   : getApps()[0];
 
 export const db = getFirestore(app);
@@ -107,7 +107,7 @@ export const auth = {
         .orderBy('createdAt', 'desc')
         .get();
 
-      return snapshot.docs.map(doc => ({
+      return snapshot.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data()
       }));
