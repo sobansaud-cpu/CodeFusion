@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef , useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from "@/context/AuthContext";
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,7 +18,8 @@ import {
   X,
   Wand2,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Settings
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -115,7 +116,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   const [expandedSection, setExpandedSection] = useState<'frontend' | 'backend' | 'database' | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  
+
   // Determine plan: prefer prop, otherwise context
   const { userProfile } = useAuth();
   const plan = (userPlan as string) || userProfile?.plan || 'free';
@@ -129,16 +130,16 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   const backendOptions = isPremium
     ? BACKEND_FRAMEWORKS
     : [
-        // selected 8 backend options for free users
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
-      ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
+      // selected 8 backend options for free users
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
+    ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
 
   const databaseOptions = isPremium
     ? DATABASE_TYPES
@@ -166,13 +167,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
         return;
       }
       setSelectedImage(file);
-      
+
       const reader = new FileReader();
       reader.onload = (e) => {
         setImagePreview(e.target?.result as string);
       };
       reader.readAsDataURL(file);
-      
+
       toast.success('Image uploaded successfully! It will be analyzed with your prompt.');
     }
   };
@@ -245,9 +246,9 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
   };
 
   return (
-  <div className="space-y-5 text-gray-200">
+    <div className="space-y-5 text-gray-200">
       {/* Project Type Selection */}
-  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
+      <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <Sparkles className="h-5 w-5 text-blue-400" />
@@ -262,11 +263,10 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
             <button
               type="button"
               onClick={() => setProjectType('frontend')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
-                projectType === 'frontend'
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${projectType === 'frontend'
                   ? 'border-blue-400 bg-gradient-to-br from-[#04263f] to-[#07243a] shadow-lg'
                   : 'border-slate-700 bg-[#071024] hover:border-slate-600'
-              }`}
+                }`}
             >
               <Code2 className="h-8 w-8 mx-auto mb-2 text-blue-300" />
               <h3 className="font-semibold text-white">Frontend</h3>
@@ -276,11 +276,10 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
             <button
               type="button"
               onClick={() => setProjectType('backend')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
-                projectType === 'backend'
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${projectType === 'backend'
                   ? 'border-emerald-400 bg-gradient-to-br from-[#03343a] to-[#072a36] shadow-lg'
                   : 'border-slate-700 bg-[#071024] hover:border-slate-600'
-              }`}
+                }`}
             >
               <Settings className="h-8 w-8 mx-auto mb-2 text-emerald-300" />
               <h3 className="font-semibold text-white">Backend</h3>
@@ -290,11 +289,10 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
             <button
               type="button"
               onClick={() => setProjectType('fullstack')}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${
-                projectType === 'fullstack'
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md w-full text-center ${projectType === 'fullstack'
                   ? 'border-indigo-400 bg-gradient-to-br from-[#2b1b3b] to-[#071024] shadow-lg'
                   : 'border-slate-700 bg-[#071024] hover:border-slate-600'
-              }`}
+                }`}
             >
               <Globe className="h-8 w-8 mx-auto mb-2 text-indigo-300" />
               <h3 className="font-semibold text-white">Full-Stack</h3>
@@ -305,7 +303,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Project Description with Enhanced Features */}
-  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
+      <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
           <CardTitle className="text-white">Project Description</CardTitle>
           <CardDescription className="text-cyan-200">Describe what you want to build in detail</CardDescription>
@@ -319,7 +317,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               className="min-h-[120px] resize-none pr-20 bg-[#0b1220] text-gray-100 placeholder-cyan-300"
               disabled={loading}
             />
-            
+
             {/* Action buttons inside the textarea */}
             <div className="absolute right-2 bottom-2 flex gap-2">
               {/* Image Upload Button */}
@@ -340,7 +338,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               >
                 <ImageIcon className="h-4 w-4 text-blue-100" />
               </Button>
-              
+
               {/* Enhance Prompt Button */}
               <Button
                 type="button"
@@ -354,7 +352,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
               </Button>
             </div>
           </div>
-          
+
           {/* Image Preview */}
           {imagePreview && (
             <div className="mt-4 p-3 border rounded-lg relative border-[#232336] bg-[#0b1220]">
@@ -381,11 +379,11 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Framework Selection */}
-  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
+      <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <Code2 className="h-5 w-5 text-blue-300" />
-            {projectType === 'frontend' ? 'Frontend Framework' : 
+            {projectType === 'frontend' ? 'Frontend Framework' :
               projectType === 'backend' ? 'Backend Framework' : 'Technology Stack'}
           </CardTitle>
           <CardDescription className="text-cyan-200">{getProjectTypeDescription()}</CardDescription>
@@ -425,13 +423,13 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
                 </button>
 
                 {expandedSection === 'frontend' && (
-                    <div className="pl-8 pr-4 pb-4">
+                  <div className="pl-8 pr-4 pb-4">
                     <Select value={frontendFramework} onValueChange={setFrontendFramework}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a frontend framework" />
                       </SelectTrigger>
                       <SelectContent>
-                          {frontendOptions.map((framework) => (
+                        {frontendOptions.map((framework) => (
                           <SelectItem key={framework.value} value={framework.value}>
                             <div className="flex items-center gap-2">
                               <span>{framework.icon}</span>
@@ -507,14 +505,14 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
           ) : (
             <div className="space-y-6">
               {/* Technology Stack Overview */}
-                <div className="text-center py-4 rounded-lg border border-[#232336] bg-gradient-to-r from-[#071022] to-[#0b1220]">
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    Full-Stack Technology Stack
-                  </h3>
-                  <p className="text-sm text-slate-300">
-                    Choose your preferred technologies for a complete application
-                  </p>
-                </div>
+              <div className="text-center py-4 rounded-lg border border-[#232336] bg-gradient-to-r from-[#071022] to-[#0b1220]">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  Full-Stack Technology Stack
+                </h3>
+                <p className="text-sm text-slate-300">
+                  Choose your preferred technologies for a complete application
+                </p>
+              </div>
 
               {/* Frontend Framework Dropdown */}
               <div className="space-y-4">
@@ -665,7 +663,7 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
       </Card>
 
       {/* Advanced Options with More Models */}
-  <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
+      <Card className="bg-gradient-to-br from-[#0b1220] via-[#151426] to-[#0b1220] border border-[#232336]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <Settings className="h-5 w-5 text-slate-200" />
@@ -719,19 +717,19 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
 
                 {(aiModel === 'gpt-4o' || aiModel === 'gpt-4' ||
                   aiModel === 'claude-3-opus' || aiModel === 'claude-3-sonnet') && (
-                  <div className="space-y-2">
-                    <Label>API Key (Optional)</Label>
-                    <Input
-                      type="password"
-                      placeholder={`Enter your ${aiModel.includes('gpt') ? 'OpenAI' : 'Anthropic'} API key`}
-                      value={customApiKey}
-                      onChange={(e) => setCustomApiKey(e.target.value)}
-                    />
-                    <p className="text-xs text-cyan-200">
-                      Leave empty to use our default API key (limited availability)
-                    </p>
-                  </div>
-                )}
+                    <div className="space-y-2">
+                      <Label>API Key (Optional)</Label>
+                      <Input
+                        type="password"
+                        placeholder={`Enter your ${aiModel.includes('gpt') ? 'OpenAI' : 'Anthropic'} API key`}
+                        value={customApiKey}
+                        onChange={(e) => setCustomApiKey(e.target.value)}
+                      />
+                      <p className="text-xs text-cyan-200">
+                        Leave empty to use our default API key (limited availability)
+                      </p>
+                    </div>
+                  )}
               </div>
             )}
           </div>
@@ -790,8 +788,8 @@ export const EnhancedPromptForm: React.FC<EnhancedPromptFormProps> = ({
             <div className="space-y-2 text-sm text-slate-300">
               <p><strong>Type:</strong> {
                 projectType === 'frontend' ? 'Frontend Application' :
-                projectType === 'backend' ? 'Backend Application' :
-                'Full-Stack Application'
+                  projectType === 'backend' ? 'Backend Application' :
+                    'Full-Stack Application'
               }</p>
               {projectType === 'frontend' ? (
                 <p><strong>Framework:</strong> {frontendOptions.find(f => f.value === frontendFramework)?.label}</p>
