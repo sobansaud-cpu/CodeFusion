@@ -9,55 +9,32 @@ import { generateSite, generateSiteWithImage, pushToGithub, /* deployToNetlify, 
 import { Loader2, AlertCircle, Save, Sparkles, Code, Eye } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
-import { Project} from "@/types"
-import Router from 'next/router';
+import { Project } from "@/types";
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { EnhancedPromptForm } from '@/components/EnhancedPromptForm';
-
-// SearchParamsWrapper component to handle search params safely
-function SearchParamsWrapper({ children }: { children: (searchParams: URLSearchParams) => React.ReactNode }) {
-  const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams());
-  
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
-    }
-  }, []);
-  
-  return <>{children(searchParams)}</>;
-}
 
 // Main content component
 function BuilderPageContent() {
   const { user, userProfile, refreshUserProfile } = useAuth();
   const { currentProject, setCurrentProject, isGenerating, setIsGenerating } = useProject();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [remainingGenerations, setRemainingGenerations] = useState(3);
   const [isEditing, setIsEditing] = useState(false);
   const [actionMode, setActionMode] = useState<'generate' | 'edit' | 'view' | 'download' | 'github'>('generate');
   const [actionMessage, setActionMessage] = useState<string | null>(null);
-  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
 
-  // Get all possible action parameters
-  const editProjectId = searchParams?.get('edit') || null;
-  const viewProjectId = searchParams?.get('view') || null;
-  const downloadProjectId = searchParams?.get('download') || null;
-  const githubProjectId = searchParams?.get('github') || null;
-  const initialPrompt = searchParams?.get('prompt') || '';
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
-    }
-  }, []);
+  // Get parameters directly from the hook
+  const editProjectId = searchParams.get('edit') || null;
+  const viewProjectId = searchParams.get('view') || null;
+  const downloadProjectId = searchParams.get('download') || null;
+  const githubProjectId = searchParams.get('github') || null;
+  const initialPrompt = searchParams.get('prompt') || '';
 
   useEffect(() => {
-    if (!searchParams) return;
-    
     if (!user) {
       router.push('/');
       return;
@@ -80,7 +57,7 @@ function BuilderPageContent() {
     }
 
     checkGenerationLimits();
-  }, [user, router, searchParams, editProjectId, viewProjectId, downloadProjectId, githubProjectId]);
+  }, [user, editProjectId, viewProjectId, downloadProjectId, githubProjectId]);
 
   useEffect(() => {
     if (user && userProfile) {
@@ -95,12 +72,12 @@ function BuilderPageContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user?.uid }),
       });
-      
+
       const data = await response.json();
       if (response.ok) {
         setRemainingGenerations(data.remaining);
         if (data.remaining === 0) {
-          const errorMsg = userProfile?.plan === 'free' 
+          const errorMsg = userProfile?.plan === 'free'
             ? `You have reached your daily limit (3/24h). Upgrade to Pro for 20 generations per day.`
             : `You have reached your daily limit (20/24h). Limit resets in 24 hours from your first generation.`;
           setError(errorMsg);
@@ -164,15 +141,15 @@ function BuilderPageContent() {
   const backendOptions = isPremium
     ? BACKEND_FRAMEWORKS
     : [
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
-        BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
-      ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-express')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'nodejs-nestjs')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-django')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-flask')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'python-fastapi')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'php-laravel')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'ruby-rails')!,
+      BACKEND_FRAMEWORKS.find((b) => b.value === 'java-spring')!,
+    ].filter(Boolean) as typeof BACKEND_FRAMEWORKS;
 
   const databaseOptions = isPremium
     ? DATABASE_TYPES
@@ -185,7 +162,7 @@ function BuilderPageContent() {
       if (!response.ok) {
         throw new Error('Failed to load project');
       }
-      
+
       const project = await response.json();
       setCurrentProject(project);
       setIsEditing(true);
@@ -205,7 +182,7 @@ function BuilderPageContent() {
       if (!response.ok) {
         throw new Error('Failed to load project');
       }
-      
+
       const project = await response.json();
       setCurrentProject(project);
       setActionMode('view');
@@ -222,7 +199,7 @@ function BuilderPageContent() {
     try {
       setIsGenerating(false);
       setActionMessage('📦 Preparing download...');
-      
+
       const blob = await downloadZip(projectId);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -232,11 +209,11 @@ function BuilderPageContent() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
+
       setIsGenerating(false);
       setActionMessage('✅ Download completed successfully! Check your downloads folder.');
       toast.success('🎉 Project downloaded successfully! Check your downloads folder.');
-      
+
       setTimeout(() => {
         setActionMessage('');
         router.push('/dashboard');
@@ -316,10 +293,10 @@ function BuilderPageContent() {
 
   const handleGenerateInEditMode = async (newPrompt: string, language: string, aiModel?: string, apiKey?: string) => {
     if (!user || !currentProject) return;
-    
+
     try {
       setIsGenerating(true);
-      
+
       const response = await generateSite({
         prompt: newPrompt,
         language,
@@ -343,14 +320,14 @@ function BuilderPageContent() {
       };
 
       setCurrentProject(updatedProject);
-      
+
       toast.success('🎉 New content generated and added to your project!');
-      
+
       const promptInput = document.getElementById('newPrompt') as HTMLTextAreaElement;
       if (promptInput) {
         promptInput.value = '';
       }
-      
+
     } catch (error: any) {
       console.error('Generation error:', error);
       toast.error(error.message || 'Failed to generate new content');
@@ -446,7 +423,7 @@ function BuilderPageContent() {
       } else {
         errorMessage = error.message;
       }
-      
+
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -454,13 +431,7 @@ function BuilderPageContent() {
     }
   };
 
-  const generateProjectName = (project: { id: string }): string => {
-    const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
-    const randomId = Math.random().toString(36).substring(2, 6);
-    return `codefusion-${date}-${randomId}`;
-  };
-
-   useEffect(() => {
+  useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isGenerating) {
         e.preventDefault();
@@ -469,22 +440,14 @@ function BuilderPageContent() {
       }
     };
 
-    const handleRouteChange = () => {
-      if (isGenerating && !window.confirm('Your website is still being generated. Are you sure you want to leave?')) {
-        throw 'Route change aborted';
-      }
-    };
-
     window.addEventListener('beforeunload', handleBeforeUnload);
-    Router.events.on('routeChangeStart', handleRouteChange);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      Router.events.off('routeChangeStart', handleRouteChange);
     };
   }, [isGenerating]);
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const savedPrompt = localStorage.getItem('builder_prompt');
@@ -496,7 +459,7 @@ function BuilderPageContent() {
       try {
         const parsedProject = JSON.parse(savedProject);
         setCurrentProject(parsedProject);
-      } catch {}
+      } catch { }
     }
   }, []);
 
@@ -510,18 +473,10 @@ function BuilderPageContent() {
   }, [actionMessage, currentProject]);
 
 
-    if (!searchParams || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="h-12 w-12 animate-spin" />
-      </div>
-    );
-  }
-
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader2 className="h-12 w-12 animate-spin" />
+        <Loader2 className="h-12 w-12 animate-spin text-blue-500" />
       </div>
     );
   }
@@ -539,17 +494,17 @@ function BuilderPageContent() {
               <div className="min-w-0">
                 <h1 className="text-2xl sm:text-3xl md:text-3xl font-semibold text-gray-100 truncate">
                   {actionMode === 'edit' ? 'Edit Project' :
-                   actionMode === 'view' ? 'View Project' :
-                   actionMode === 'download' ? 'Downloading...' :
-                   actionMode === 'github' ? 'Push to GitHub' :
-                   'AI Website Builder'}
+                    actionMode === 'view' ? 'View Project' :
+                      actionMode === 'download' ? 'Downloading...' :
+                        actionMode === 'github' ? 'Push to GitHub' :
+                          'AI Website Builder'}
                 </h1>
                 <p className="text-cyan-200 text-sm sm:text-base truncate">
                   {actionMode === 'edit' ? 'Add new features or modify your existing project' :
-                   actionMode === 'view' ? 'Review your project code' :
-                   actionMode === 'download' ? 'Downloading your project files...' :
-                   actionMode === 'github' ? 'Pushing your project to GitHub...' :
-                   'Create professional websites with AI in any programming language'}
+                    actionMode === 'view' ? 'Review your project code' :
+                      actionMode === 'download' ? 'Downloading your project files...' :
+                        actionMode === 'github' ? 'Pushing your project to GitHub...' :
+                          'Create professional websites with AI in any programming language'}
                 </p>
               </div>
             </div>
@@ -593,17 +548,17 @@ function BuilderPageContent() {
             <div className="bg-gray-800 border border-gray-600 rounded-lg p-8 max-w-md w-full text-center">
               <div className="text-4xl mb-4 select-none">
                 {actionMessage.includes('✅') ? '✅' :
-                 actionMessage.includes('❌') ? '❌' :
-                 actionMessage.includes('📦') ? '📦' : '🎯'}
+                  actionMessage.includes('❌') ? '❌' :
+                    actionMessage.includes('📦') ? '📦' : '🎯'}
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">
                 {actionMessage.includes('Download completed') ? 'Download Successful!' :
-                 actionMessage.includes('Download failed') ? 'Download Failed' :
-                 actionMessage.includes('Preparing download') ? 'Preparing Download' :
-                 'Action Completed'}
+                  actionMessage.includes('Download failed') ? 'Download Failed' :
+                    actionMessage.includes('Preparing download') ? 'Preparing Download' :
+                      'Action Completed'}
               </h3>
               <p className="text-gray-300 break-words">{actionMessage}</p>
-              <button 
+              <button
                 onClick={() => setActionMessage(null)}
                 className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
@@ -619,9 +574,9 @@ function BuilderPageContent() {
             {/* Left Panel */}
             <div className="bg-gradient-to-br from-[#0b1220] to-[#0b1220] rounded-2xl p-4 sm:p-6 md:p-6 border border-[#232336] shadow-lg flex flex-col">
               <div className="flex items-center space-x-3 mb-4">
-                 <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gradient-to-r ">
-                <img src="/CODEFUSION.png" alt="CodeFusion" className="w-8 h-8 object-contain" />
-              </div>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gradient-to-r ">
+                  <img src="/CODEFUSION.png" alt="CodeFusion" className="w-8 h-8 object-contain" />
+                </div>
                 <h2 className="text-lg sm:text-xl font-semibold text-white truncate">Describe Your Project</h2>
               </div>
               <div className="flex-grow min-h-0 overflow-auto">
@@ -664,23 +619,23 @@ function BuilderPageContent() {
                   projectId={currentProject.id}
                   onDownload={() => handleDownload(currentProject.id)}
                   onGithubPush={() => handleGitHubPush(currentProject.id)}
-                  // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
+                // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
                 />
               ) : (
                 <div className="flex-grow flex flex-col items-center justify-center bg-gradient-to-br from-[#041E35] to-[#071024] p-6 text-center">
-                    <div className="relative mb-6 px-4 sm:px-0">
-                      <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full flex items-center justify-center mx-auto">
-                        <div className="text-4xl">🚀</div>
-                      </div>
-                      <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full opacity-20 animate-pulse" />
+                  <div className="relative mb-6 px-4 sm:px-0">
+                    <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full flex items-center justify-center mx-auto">
+                      <div className="text-4xl">🚀</div>
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-                      <span className="block lg:hidden">Welcome to CodeFusion</span>
-                      <span className="hidden lg:block">Ready to create?</span>
-                    </h3>
-                    <p className="text-slate-300 text-base sm:text-lg max-w-full sm:max-w-md mx-auto px-4 sm:px-0">
-                      Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
-                    </p>
+                    <div className="absolute inset-0 w-24 h-24 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-full opacity-20 animate-pulse" />
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                    <span className="block lg:hidden">Welcome to CodeFusion</span>
+                    <span className="hidden lg:block">Ready to create?</span>
+                  </h3>
+                  <p className="text-slate-300 text-base sm:text-lg max-w-full sm:max-w-md mx-auto px-4 sm:px-0">
+                    Describe your project in any language and watch AI build it! Create stunning websites, powerful applications, and more.
+                  </p>
                   <div className="flex flex-wrap items-center justify-center space-x-4 text-sm text-gray-400 mt-6">
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-blue-500 rounded-full" />Frontend</div>
                     <div className="flex items-center space-x-2"><div className="w-2 h-2 bg-purple-500 rounded-full" />Backend</div>
@@ -704,7 +659,7 @@ function BuilderPageContent() {
                   <label className="block text-sm font-medium text-gray-300 mb-2">Project Name</label>
                   <Input
                     value={currentProject.name}
-                    onChange={(e) => setCurrentProject({...currentProject, name: e.target.value})}
+                    onChange={(e) => setCurrentProject({ ...currentProject, name: e.target.value })}
                     className="bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                     placeholder="Enter project name"
                   />
@@ -713,12 +668,12 @@ function BuilderPageContent() {
                   <label className="block text-sm font-medium text-gray-300 mb-2">Current Project Description</label>
                   <textarea
                     value={currentProject.prompt}
-                    onChange={(e) => setCurrentProject({...currentProject, prompt: e.target.value})}
+                    onChange={(e) => setCurrentProject({ ...currentProject, prompt: e.target.value })}
                     className="w-full h-24 bg-gray-700 border border-gray-600 rounded-md p-3 text-white resize-none focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
                     placeholder="Describe your project..."
                   />
                 </div>
-                
+
                 <div className="border-t border-gray-600 pt-6">
                   <div className="flex items-center space-x-3 mb-4">
                     <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
@@ -729,7 +684,7 @@ function BuilderPageContent() {
                   <p className="text-sm text-gray-300 mb-4">
                     Describe what you want to add or modify in your existing project. The AI will integrate the new content with your current project structure.
                   </p>
-                  
+
                   {/* Enhanced loading state for edit form */}
                   {isGenerating && (
                     <div className="mb-4 p-4 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/50 rounded-lg">
@@ -742,7 +697,7 @@ function BuilderPageContent() {
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">New Prompt</label>
@@ -756,34 +711,34 @@ function BuilderPageContent() {
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">Language/Framework</label>
                       <select
-  id="newLanguage"
-  className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
-  disabled={isGenerating}
->
-  {/* Frontend Frameworks */}
-  <optgroup label="Frontend Frameworks">
-    {frontendOptions.map((f) => (
-      <option key={f.value} value={f.value}>{f.label}</option>
-    ))}
-  </optgroup>
+                        id="newLanguage"
+                        className="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:border-blue-500 focus:ring-blue-500 transition-all duration-200"
+                        disabled={isGenerating}
+                      >
+                        {/* Frontend Frameworks */}
+                        <optgroup label="Frontend Frameworks">
+                          {frontendOptions.map((f) => (
+                            <option key={f.value} value={f.value}>{f.label}</option>
+                          ))}
+                        </optgroup>
 
-  {/* Backend Frameworks */}
-  <optgroup label="Backend Frameworks">
-    {backendOptions.map((b) => (
-      <option key={b.value} value={b.value}>{b.label}</option>
-    ))}
-  </optgroup>
+                        {/* Backend Frameworks */}
+                        <optgroup label="Backend Frameworks">
+                          {backendOptions.map((b) => (
+                            <option key={b.value} value={b.value}>{b.label}</option>
+                          ))}
+                        </optgroup>
 
-  {/* Database Types */}
-  <optgroup label="Databases">
-    {databaseOptions.map((d) => (
-      <option key={d.value} value={d.value}>{d.label}</option>
-    ))}
-  </optgroup>
-</select>
+                        {/* Database Types */}
+                        <optgroup label="Databases">
+                          {databaseOptions.map((d) => (
+                            <option key={d.value} value={d.value}>{d.label}</option>
+                          ))}
+                        </optgroup>
+                      </select>
 
                     </div>
-                    <Button 
+                    <Button
                       onClick={() => {
                         const newPrompt = (document.getElementById('newPrompt') as HTMLTextAreaElement).value;
                         const newLanguage = (document.getElementById('newLanguage') as HTMLSelectElement).value;
@@ -801,9 +756,9 @@ function BuilderPageContent() {
                     </Button>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 pt-6">
-                  <Button 
+                  <Button
                     onClick={() => handleSaveProject()}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-2 px-6 transition-all duration-200 transform hover:scale-105"
                     disabled={isGenerating}
@@ -811,8 +766,8 @@ function BuilderPageContent() {
                     {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
                     Save Changes
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => router.push('/dashboard')}
                     className="border-gray-600 text-white hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 px-6 py-2"
                   >
@@ -843,7 +798,7 @@ function BuilderPageContent() {
                 projectId={currentProject.id}
                 onDownload={() => handleDownload(currentProject.id)}
                 onGithubPush={() => handleGitHubPush(currentProject.id)}
-                // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
+              // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
               />
             </div>
           </div>
@@ -882,7 +837,7 @@ function BuilderPageContent() {
               projectId={currentProject.id}
               onDownload={() => handleDownload(currentProject.id)}
               onGithubPush={() => handleGitHubPush(currentProject.id)}
-              // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
+            // onNetlifyDeploy={() => {/* handleDeploy(currentProject.id) */}}
             />
           </div>
         ) : actionMode === 'download' ? (
@@ -927,7 +882,7 @@ function BuilderPageContent() {
           </div>
         )}
       </div>
-      
+
       {/* Bottom spacing for footer */}
       <div className="h-16"></div>
     </div>
@@ -937,13 +892,11 @@ function BuilderPageContent() {
 export default function BuilderPage() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="h-12 w-12 animate-spin" />
+      <div className="flex items-center justify-center h-screen bg-black">
+        <Loader2 className="h-12 w-12 animate-spin text-blue-500" />
       </div>
     }>
-      <SearchParamsWrapper>
-        {(searchParams) => <BuilderPageContent />}
-      </SearchParamsWrapper>
+      <BuilderPageContent />
     </Suspense>
   );
 }
