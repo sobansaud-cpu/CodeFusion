@@ -68,6 +68,13 @@ export default function RootLayout({
             }),
           }}
         />
+
+        {/* ✅ Zanderio Chatbot */}
+        <Script
+          src="https://cdn.zanderio.ai/widget/loader.js"
+          data-id="wdg_UTh5Gt2WdbD6CQAWmrr9cixV"
+          defer
+        />
       </head>
 
       <body className={`${inter.className} bg-black text-white min-h-screen`}>
